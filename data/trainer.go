@@ -1,10 +1,12 @@
 package data
 
+type ItemMap map[ItemName]Item
+
 // save models
 type BaseTrainerSave struct {
-	Name  string           `json:"name"`
+	Name  string          `json:"name"`
 	Party [6]*PokemonSave `json:"party"`
-	Bag   []*Item          `json:"bag"`
+	Bag   ItemMap         `json:"bag"`
 }
 
 type UserSave struct {
@@ -21,12 +23,13 @@ type TrainerSave struct {
 type User struct {
 	BaseTrainer
 	Stats *TrainerStats
+	Money int
 }
 
 type BaseTrainer struct {
 	Name  string      `json:"name"`
 	Party [6]*Pokemon `json:"party"`
-	Bag   []*Item     `json:"bag"`
+	Bag   ItemMap     `json:"bag"`
 }
 
 type Trainer struct {
@@ -36,7 +39,7 @@ type Trainer struct {
 }
 
 type Rewards struct {
-	Items []*Item   `json:"items"`
+	Items ItemMap   `json:"items"`
 	Badge BadgeType `json:"badge_type,omitempty"`
 }
 
@@ -50,10 +53,10 @@ const (
 
 type TrainerStats struct {
 	Badges  []BadgeType `json:"badges,omitempty"`
-	Battles  int         `json:"fights"`
+	Battles int         `json:"fights"`
 	Wins    int         `json:"wins"`
-	Catches int         `json:"catches"`
 	Losses  int         `json:"losses"`
+	Catches int         `json:"catches"`
 	PokeDEX int         `json:"pokedex"`
 }
 
@@ -105,14 +108,14 @@ func (t *TrainerSave) ToTrainer() *Trainer {
 		}
 		party[i] = pokemon.ToPokemon()
 	}
-	
+
 	return &Trainer{
 		BaseTrainer: BaseTrainer{
-			Name: t.Name,
+			Name:  t.Name,
 			Party: party,
-			Bag: t.Bag,
+			Bag:   t.Bag,
 		},
-		Type: t.Type,
+		Type:    t.Type,
 		Rewards: t.Rewards,
 	}
 }
@@ -125,12 +128,12 @@ func (u *UserSave) ToUser() *User {
 		}
 		party[i] = pokemon.ToPokemon()
 	}
-	
+
 	return &User{
 		BaseTrainer: BaseTrainer{
-			Name: u.Name,
+			Name:  u.Name,
 			Party: party,
-			Bag: u.Bag,
+			Bag:   u.Bag,
 		},
 		Stats: u.Stats,
 	}
@@ -144,12 +147,12 @@ func (u *User) ToUserSave() *UserSave {
 		}
 		party[i] = pokemon.ToPokemonSave()
 	}
-	
+
 	return &UserSave{
 		BaseTrainerSave: BaseTrainerSave{
-			Name: u.Name,
+			Name:  u.Name,
 			Party: party,
-			Bag: u.Bag,
+			Bag:   u.Bag,
 		},
 		Stats: u.Stats,
 	}

@@ -34,21 +34,21 @@ type BasePokemon struct {
 }
 
 type BasePokemonStats struct {
-	Speed          int `json:"speed"`
+	HP             int `json:"hp"`
 	Attack         int `json:"attack"`
 	Defense        int `json:"defense"`
 	SpecialAttack  int `json:"special_attack"`
 	SpecialDefense int `json:"special_defense"`
-	HP             int `json:"hp"`
+	Speed          int `json:"speed"`
 }
 
 type PokemonStats struct {
-	Speed          PokemonStat `json:"speed"`
+	HP             PokemonStat `json:"hp"`
 	Attack         PokemonStat `json:"attack"`
 	Defense        PokemonStat `json:"defense"`
 	SpecialAttack  PokemonStat `json:"special_attack"`
 	SpecialDefense PokemonStat `json:"special_defense"`
-	HP             PokemonStat `json:"hp"`
+	Speed          PokemonStat `json:"speed"`
 }
 
 type PokemonStat struct {

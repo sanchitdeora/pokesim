@@ -1,13 +1,24 @@
 package data
 
 type Item struct {
-	Name        string       `json:"name"`
 	Count       int          `json:"count"`
 	Category    ItemCategory `json:"category"`
 	Cost        int          `json:"cost"`
 	Attributes  int          `json:"attributes"`
 	Description string       `json:"description"`
 }
+
+type ItemName string
+
+const (
+	Potion      ItemName = "potion"
+	SuperPotion ItemName = "super-potion"
+	HyperPotion ItemName = "hyper-potion"
+	PokeBall    ItemName = "poke-ball"
+	SuperBall   ItemName = "super-ball"
+	UltraBall   ItemName = "ultra-ball"
+	MasterBall  ItemName = "master-ball"
+)
 
 type ItemCategory string
 
@@ -21,15 +32,11 @@ type BadgeType struct {
 	Region string `json:"region"`
 }
 
-func BagContainsItem(bag []*Item, item *Item) bool {
-	return GetItemFromBag(bag, item) != nil
-}
-
-func GetItemFromBag(bag []*Item, item *Item) *Item {
-	for _, i := range bag {
-		if i.Name == item.Name {
-			return i
-		}
+func AddItemToBag(bag ItemMap, itemNameToAdd ItemName, itemToAdd Item) {
+	if item, exists := bag[itemNameToAdd]; !exists {
+		bag[itemNameToAdd] = itemToAdd
+	} else {
+		item.Count += itemToAdd.Count
+		bag[itemNameToAdd] = item
 	}
-	return nil
 }

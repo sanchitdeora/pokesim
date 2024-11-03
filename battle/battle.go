@@ -15,12 +15,17 @@ type BattleIFace interface {
 	Run()
 	IsBattleOver() bool
 	BattleReport() (*data.BattleReport, error)
+	GetUserActivePokemon() *data.InBattlePokemon
+	GetOpponentActivePokemon() *data.InBattlePokemon
 }
 
-func getPokemonAttackOrder(userActivePokemon *data.InBattlePokemon, trainerActivePokemon *data.InBattlePokemon) (inputs []*data.BattleInput) {
+func getPokemonAttackOrder(userActivePokemon *data.InBattlePokemon, trainerActivePokemon *data.InBattlePokemon, userInputChan <-chan *data.BattleInput) (inputs []*data.BattleInput) {
 	// func (tb *TrainerBattleImpl) GetPokemonAttackOrder() (inputs []*data.BattleInput) {
-	userInput := waitForInput(userActivePokemon, trainerActivePokemon, true)
+	userInput := waitForUserInput(userInputChan)
 	trainerInput := waitForInput(trainerActivePokemon, userActivePokemon, false)
+
+	userSpeed := battleStatCalculator(&userActivePokemon.Pokemon.Stats.Speed, userActivePokemon.Pokemon.Level)
+	targetSpeed := battleStatCalculator(&trainerActivePokemon.Pokemon.Stats.Speed, trainerActivePokemon.Pokemon.Level)
 
 	// if any pokemon's move is higher priority, it will go first. If equal, check speed
 	if userInput.Move.Priority != trainerInput.Move.Priority {
@@ -32,7 +37,7 @@ func getPokemonAttackOrder(userActivePokemon *data.InBattlePokemon, trainerActiv
 	}
 
 	// if user's active pokemon speed >= opposing pokemon's, then user goes first.
-	if userActivePokemon.Pokemon.Stats.Speed.Value >= trainerActivePokemon.Pokemon.Stats.Speed.Value {
+	if userSpeed >= targetSpeed {
 		return append(inputs, userInput, trainerInput)
 	} else {
 		return append(inputs, trainerInput, userInput)
@@ -56,8 +61,8 @@ func switchPokemonWithIndex(switchingPokemonIndex int, activePokemon *data.InBat
 func healPokemon(targetPokemon *data.InBattlePokemon, item *data.Item) {
 	targetPokemon.BattleHP += targetPokemon.BattleHP + item.Attributes
 
-	if targetPokemon.BattleHP > targetPokemon.Pokemon.Stats.HP.Value {
-		targetPokemon.BattleHP = targetPokemon.Pokemon.Stats.HP.Value
+	if targetPokemon.BattleHP > int(battleHPCalculator(&targetPokemon.Pokemon.Stats.HP, targetPokemon.Pokemon.Level)) {
+		targetPokemon.BattleHP = int(battleHPCalculator(&targetPokemon.Pokemon.Stats.HP, targetPokemon.Pokemon.Level))
 	}
 }
 
@@ -68,11 +73,12 @@ func calculateAttackDamage(attackPokemon *data.InBattlePokemon, targetPokemon *d
 	var defenseStat float64 = 0
 
 	if attackMove.DamageClass == data.Physical {
-		attackStat = float64(attackPokemon.Pokemon.Stats.Attack.Value)
-		defenseStat = float64(targetPokemon.Pokemon.Stats.Defense.Value)
+		attackStat = battleStatCalculator(&attackPokemon.Pokemon.Stats.Attack, attackPokemon.Pokemon.Level) 
+		defenseStat = battleStatCalculator(&targetPokemon.Pokemon.Stats.Defense, targetPokemon.Pokemon.Level)
+
 	} else if attackMove.DamageClass == data.Special {
-		attackStat = float64(attackPokemon.Pokemon.Stats.SpecialAttack.Value)
-		defenseStat = float64(targetPokemon.Pokemon.Stats.SpecialDefense.Value)
+		attackStat = battleStatCalculator(&attackPokemon.Pokemon.Stats.SpecialAttack, attackPokemon.Pokemon.Level) 
+		defenseStat = battleStatCalculator(&targetPokemon.Pokemon.Stats.SpecialDefense, targetPokemon.Pokemon.Level)
 	} else {
 		slog.Warn("Move Damage class not supported", "move damage class", attackMove.DamageClass)
 	}
@@ -119,4 +125,12 @@ func calculateAttackDamage(attackPokemon *data.InBattlePokemon, targetPokemon *d
 
 	slog.Debug(fmt.Sprintf("Move Effect Coeff: {%f} * {%f} == {%f}", totalDamage, moveEffect, (totalDamage * float64(moveEffect))))
 	return int(math.Round(totalDamage * float64(moveEffect)))
+}
+
+func battleStatCalculator(stat *data.PokemonStat, level int) float64 {
+	return (((float64(2 * stat.Value) + float64(stat.IV) + float64(stat.EV / 4)) * float64(level)) / 100) + 5
+}
+
+func battleHPCalculator(HP *data.PokemonStat, level int) float64 {
+	return (((float64(2 * HP.Value) + float64(HP.IV) + float64(HP.EV / 4)) * float64(level)) / 100) + 10
 }

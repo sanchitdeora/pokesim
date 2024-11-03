@@ -54,14 +54,8 @@ func (u *UserImpl) PostBattleUpdate(user *data.User, report *data.BattleReport) 
 		}
 		
 		if len(report.BonusItems) > 0 {
-			for _, item := range report.BonusItems {
-				bagItem := data.GetItemFromBag(user.Bag, item)
-				if bagItem != nil {
-					bagItem.Count ++
-				} else {
-					item.Count ++
-					user.Bag = append(user.Bag, item)
-				}
+			for itemName, item := range report.BonusItems {
+				data.AddItemToBag(user.Bag, itemName, item)
 			}
 		}
 

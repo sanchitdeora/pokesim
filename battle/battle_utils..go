@@ -37,8 +37,17 @@ func randomGenerator(min float64, max float64) float64 {
 }
 
 // TODO: move to a different package later
+func waitForUserInput(channel <-chan *data.BattleInput) *data.BattleInput {
+	// slog.Info("Waiting for user input")
+	input := <-channel  // Blocks until input is received
+    // slog.Info("User input received", "input type", input.Type)
+	return input
+}
+
+// TODO: move to a different package later
 func waitForInput(pokemon *data.InBattlePokemon, target *data.InBattlePokemon, isUser bool) *data.BattleInput {
 	time.Sleep(time.Second * 0)
+
 	return &data.BattleInput{
 		Type:           data.Attack,
 		Move:           randomMove(&pokemon.Pokemon.Moveset),

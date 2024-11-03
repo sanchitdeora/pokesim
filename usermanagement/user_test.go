@@ -39,10 +39,8 @@ func TestPostBattleUpdate(t *testing.T) {
 	report := &data.BattleReport{
 		UserWin: true,
 		Money: 100,
-		BonusItems:[]*data.Item{{
-				Name: "Potion",
-				Category: data.MedicalItems,
-			},
+		BonusItems: data.ItemMap{
+			data.Potion:{Category: data.MedicalItems},
 		},
 		BadgeEarned: &data.BadgeType{
 			Name: "test",

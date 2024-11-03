@@ -10,7 +10,7 @@ type InBattlePokemon struct {
 type BattleReport struct {
 	UserWin     bool
 	Money       int
-	BonusItems  []*Item
+	BonusItems  ItemMap
 	BadgeEarned *BadgeType
 }
 
@@ -35,11 +35,3 @@ const (
 	Bag    BattleInputType = "bag"
 	Run    BattleInputType = "run"
 )
-
-func CreateNewInBattlePokemon(pokemon *Pokemon) *InBattlePokemon {
-	return &InBattlePokemon{
-		Pokemon:   pokemon,
-		BattleHP:  pokemon.Stats.HP.Value,
-		IsFainted: false,
-	}
-}
