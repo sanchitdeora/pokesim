@@ -1,22 +1,19 @@
 package main
 
 import (
-	// "fmt"
 
-	"github.com/sanchitdeora/PokeSim/battle"
-	// "github.com/sanchitdeora/PokeSim/data"
+	battle "github.com/sanchitdeora/PokeSim/battle_v1"
 	"github.com/sanchitdeora/PokeSim/gui"
+	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 
-	// "github.com/sanchitdeora/PokeSim/trainermanagement"
 	"github.com/sanchitdeora/PokeSim/usermanagement"
-	// "github.com/sanchitdeora/PokeSim/utils"
 )
 
 type Services struct {
-	UserService usermanagement.User
-	PokemonService pokemon.Service
-	BattleService battle.BattleIFace
+	UserService    usermanagement.UserManager
+	PokemonService pokemon.PokemonManager
+	BattleService  battle.BattleSequence
 }
 
 const (
@@ -24,6 +21,7 @@ const (
 )
 
 func main() {
+	logger.InitLogger()
 
 	userService, pokemonService := initializeService()
 
@@ -32,12 +30,12 @@ func main() {
 
 }
 
-func initializeService() (usermanagement.User, pokemon.Service) {
+func initializeService() (usermanagement.UserManager, pokemon.PokemonManager) {
 	userService := usermanagement.NewUserService(usermanagement.UserOpts{
 		SavedUserPath: SAVED_USER_PATH,
 	})
 
-	pokemonService := pokemon.NewPokemonService(pokemon.PokemonOpts{})
-	
+	pokemonService := pokemon.NewPokemonManager(pokemon.PokemonOpts{})
+
 	return userService, pokemonService
 }

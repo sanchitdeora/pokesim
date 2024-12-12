@@ -1,2 +1,10 @@
 /testfiles
 /saved
+
+# test coverage
+build.ps1
+coverage.html
+coverage.out
+
+# manual interjections
+manual*

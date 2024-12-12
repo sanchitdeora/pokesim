@@ -1,36 +1,45 @@
 package data
 
-import "github.com/sanchitdeora/PokeSim/utils"
+import (
+	"fmt"
+
+	"github.com/sanchitdeora/PokeSim/utils"
+)
+
+type BasePokemonId int
 
 type PokemonSave struct {
-	BasePokemonURL string       `json:"base_pokemon_url"`
+	BasePokemonId  BasePokemonId `json:"base_pokemon_id"`
+	Stats          PokemonStats  `json:"stats"`
+	Level          int           `json:"level"`
+	ExperienceLeft int           `json:"experience_left"`
+	Moveset        Moveset       `json:"moveset"`
+}
+
+type Pokemon struct {
+	BasePokemon
 	Stats          PokemonStats `json:"stats"`
 	Level          int          `json:"level"`
 	ExperienceLeft int          `json:"experience_left"`
 	Moveset        Moveset      `json:"moveset"`
 }
 
-type Pokemon struct {
-	BasePokemon
-	BasePokemonURL string                `json:"base_pokemon_url"`
-	EvolutionChain map[int][]BasePokemon `json:"evolution_chain"`
-	Stats          PokemonStats          `json:"stats"`
-	Level          int                   `json:"level"`
-	ExperienceLeft int                   `json:"experience_left"`
-	Moveset        Moveset               `json:"moveset"`
+type BasePokemon struct {
+	ID             BasePokemonId           `json:"id"`
+	Name           string                  `json:"name"`
+	BaseExperience int                     `json:"base_experience"`
+	GrowthRate     GrowthRateTypes         `json:"growth_rate"`
+	MovesLearned   map[int]Moves           `json:"moves_learned_by_level"`
+	EvolutionChain map[int][]BasePokemonId `json:"evolution_chain"`
+	SpritesURL     Sprites                 `json:"sprites"`
+	BaseStats      PokemonStats            `json:"base_stats"`
+	Type1          PokemonTypeName         `json:"type1"`
+	Type2          PokemonTypeName         `json:"type2,omitempty"`
 }
 
-type BasePokemon struct {
-	ID                  int              `json:"id"`
-	Name                string           `json:"name"`
-	BaseExperience      int              `json:"base_experience"`
-	GrowthRate          GrowthRateTypes  `json:"growth_rate"`
-	MovesLearnedByLevel map[int]Moves    `json:"moves_learned_by_level"`
-	SpritesURL          string           `json:"sprites"`
-	BaseStats           BasePokemonStats `json:"base_stats"`
-	EVYield             BasePokemonStats `json:"ev_yield"`
-	Type1               PokemonTypeName `json:"type1"`
-	Type2               PokemonTypeName `json:"type2,omitempty"`
+type Sprites struct {
+	BackPath  string `json:"back_default"`
+	FrontPath string `json:"front_default"`
 }
 
 type BasePokemonStats struct {
@@ -93,11 +102,11 @@ const (
 	Special  MoveDamageClass = "special"
 )
 
-func (s *PokemonSave) ToPokemon() *Pokemon {
-	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](s.BasePokemonURL)
-	return &Pokemon{
+func (s *PokemonSave) ToPokemon() Pokemon {
+	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonId)
+	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](path)
+	return Pokemon{
 		BasePokemon:    basePokemon,
-		BasePokemonURL: s.BasePokemonURL,
 		Stats:          s.Stats,
 		Level:          s.Level,
 		ExperienceLeft: s.ExperienceLeft,
@@ -105,9 +114,9 @@ func (s *PokemonSave) ToPokemon() *Pokemon {
 	}
 }
 
-func (p *Pokemon) ToPokemonSave() *PokemonSave {
-	return &PokemonSave{
-		BasePokemonURL: p.BasePokemonURL,
+func (p *Pokemon) ToPokemonSave() PokemonSave {
+	return PokemonSave{
+		BasePokemonId:  p.BasePokemon.ID,
 		Stats:          p.Stats,
 		Level:          p.Level,
 		ExperienceLeft: p.ExperienceLeft,

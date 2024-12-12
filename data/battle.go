@@ -1,17 +1,19 @@
 package data
 
-type InBattlePokemon struct {
-	Pokemon   *Pokemon
-	BattleHP  int
-	IsFainted bool
-	CanEvolve bool
+type BattlePokemon struct {
+	Pokemon
+	BattleHP int
+	// deprecated
+	IsFainted    bool
+	CanEvolve    bool
+	PokemonFaced []BattlePokemon
 }
 
-type BattleReport struct {
+type Result struct {
 	UserWin     bool
 	Money       int
 	BonusItems  ItemMap
-	BadgeEarned *BadgeType
+	BadgeEarned BadgeType
 }
 
 type BattleOpts struct {
@@ -19,19 +21,39 @@ type BattleOpts struct {
 }
 
 type BattleInput struct {
-	Type           BattleInputType
-	CurrentPokemon *InBattlePokemon
-	Target         *InBattlePokemon
-	Move           *Moves
-	Item           *Item
-	IsUser         bool
+	Type     BattleActionType
+	Selected *BattlePokemon
+	Target   *BattlePokemon
+	Move     *Moves
+	Item     *Item
+	// deprecated
+	IsUser bool
 }
 
-type BattleInputType string
+type BattleActionType string
 
 const (
-	Attack BattleInputType = "attack"
-	Switch BattleInputType = "switch"
-	Bag    BattleInputType = "bag"
-	Run    BattleInputType = "run"
+	Attack BattleActionType = "attack"
+	Switch BattleActionType = "switch"
+	Bag    BattleActionType = "bag"
+	Run    BattleActionType = "run"
 )
+
+type BattleAction struct {
+	Type   BattleActionType
+	Action interface{}
+}
+
+type ActionAttack struct {
+	Move   Moves
+	Target BattlePokemon
+}
+
+type ActionItem struct {
+	Item   Item
+	Target BattlePokemon
+}
+
+type ActionSwitch struct {
+	Target BattlePokemon
+}

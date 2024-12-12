@@ -1,0 +1,144 @@
+{
+  "id": 1,
+  "name": "bulbasaur",
+  "base_experience": 64,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 45,
+      "name": "growl",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "12": {
+      "id": 75,
+      "name": "razor-leaf",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "15": {
+      "id": 79,
+      "name": "sleep-powder",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "24": {
+      "id": 230,
+      "name": "sweet-scent",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "27": {
+      "id": 235,
+      "name": "synthesis",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "3": {
+      "id": 22,
+      "name": "vine-whip",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 45,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "30": {
+      "id": 388,
+      "name": "worry-seed",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "33": {
+      "id": 438,
+      "name": "power-whip",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "6": {
+      "id": 74,
+      "name": "growth",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "9": {
+      "id": 73,
+      "name": "leech-seed",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      2
+    ],
+    "32": [
+      3
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0001.png",
+    "front_default": "./assets/pokemon/img/0001.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 49,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 49,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison"
+}

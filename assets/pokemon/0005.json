@@ -1,0 +1,125 @@
+{
+  "id": 5,
+  "name": "charmeleon",
+  "base_experience": 142,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 108,
+      "name": "smokescreen",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "12": {
+      "id": 225,
+      "name": "dragon-breath",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "15": {
+      "id": 43,
+      "name": "leer",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "20": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "24": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "26": {
+      "id": 82,
+      "name": "dragon-rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "32": {
+      "id": 481,
+      "name": "flame-burst",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "48": {
+      "id": 517,
+      "name": "inferno",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "special",
+      "type": "fire"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      5
+    ],
+    "36": [
+      6
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0005.png",
+    "front_default": "./assets/pokemon/img/0005.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 58,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 64,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 58,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "fire"
+}

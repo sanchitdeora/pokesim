@@ -2,25 +2,27 @@ package gui
 
 import (
 	"fmt"
+	"log/slog"
+	"math"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
-	"github.com/sanchitdeora/PokeSim/battle"
+	battle "github.com/sanchitdeora/PokeSim/battle_v1"
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
 type BattleArena struct {
 	*GuiOpts
-	Battle             battle.BattleIFace
+	Battle             battle.BattleSequence
 	BattleChan         chan<- *data.BattleInput
 	BattleInputButtons *fyne.Container
 }
 
-func LoadBattleScreen(opts *GuiOpts, battleChan chan<- *data.BattleInput, battle battle.BattleIFace) fyne.CanvasObject {
+func NewBattleArena(opts *GuiOpts, battleChan chan<- *data.BattleInput, battle battle.BattleSequence) *BattleArena {
 	battleArena := &BattleArena{
 		GuiOpts:            opts,
 		Battle:             battle,
@@ -28,39 +30,73 @@ func LoadBattleScreen(opts *GuiOpts, battleChan chan<- *data.BattleInput, battle
 		BattleChan:         battleChan,
 	}
 
-	// Populate initial buttons in the full space of BattleActionButtons
-	battleArena.UpdateBattleInputButtons(battleArena.getDefaultBattleInputButtons())
-
-	// Arrange the sections with opponent, user, and action areas
-	battleArenaContainer := container.NewGridWithRows(3,
-		getOpponentPokemonInfo(battle.GetOpponentActivePokemon()),
-		getUserPokemonInfo(battle.GetUserActivePokemon()),
-		battleArena.BattleInputButtons,
-	)
-
-	label := widget.NewLabel("Battle Arena")
-	battleScreen := container.NewBorder(label, nil, nil, nil,
-		addBorder(battleArenaContainer),
-	)
-
 	go battleArena.InitiateBattle()
 	go battleArena.GuiOpts.LogListener()
 
-	return battleScreen
+	return battleArena
+}
+
+func (b *BattleArena) LoadBattleScreen() fyne.CanvasObject {
+	// Populate initial buttons in the full space of BattleActionButtons
+	b.UpdateBattleInputButtons(b.getDefaultBattleInputButtons())
+
+	// Arrange the sections with opponent, user, and action areas
+	battleArenaContainer := container.NewGridWithRows(3,
+		getOpponentPokemonInfo(b.Battle.GetUserActive(false)),
+		getUserPokemonInfo(b.Battle.GetUserActive(true)),
+		b.BattleInputButtons,
+	)
+
+	label := widget.NewLabel("Battle Arena")
+	return container.NewBorder(label, nil, nil, nil,
+		addBorder(battleArenaContainer),
+	)
+}
+
+func (b *BattleArena) BattleComplete(report *data.Result) fyne.CanvasObject {
+	var title string
+	var subtitle string
+	content := widget.NewLabel("")
+	if report.UserWin {
+		title = "You won the battle!"
+		subtitle = fmt.Sprintf("You earned $%v", report.Money)
+		if report.BadgeEarned != nil {
+			content.Text = fmt.Sprintf("You also earned a %s badge", report.BadgeEarned.Name)
+		}
+	} else {
+		title = "You lost the battle!"
+		subtitle = fmt.Sprintf("You lost $%v", report.Money)
+	}
+
+	return container.NewBorder(widget.NewLabel("Battle Complete"), nil, nil, nil,
+		container.NewCenter(container.NewVBox(
+			widget.NewCard(title, subtitle, content),
+		)),
+	)
 }
 
 func (b *BattleArena) InitiateBattle() {
-	b.Battle.InitiateBattleSequence()
+	report, err := b.Battle.Initiate()
+	if err != nil {
+		slog.Error("error during battle", err)
+		panic("battle threw an error")
+	}
+
+	b.UpdateActionContent(b.BattleComplete(report))
+
 	close(b.BattleChan)
 }
 
-func getOpponentPokemonInfo(inBattlePokemon *data.InBattlePokemon) fyne.CanvasObject {
+func getOpponentPokemonInfo(inBattlePokemon *data.BattlePokemon) fyne.CanvasObject {
+	slog.Info("DEBUG====Opponent", "pokemonName", inBattlePokemon.Pokemon.Name, "Current HP", inBattlePokemon.BattleHP, "Fainted?", inBattlePokemon.IsFainted)
 
 	// Opponent Pokémon Section
 	opponentName := widget.NewLabel(utils.ToCapitalizeFirstLetterOfEachWord(inBattlePokemon.Pokemon.Name))
 	opponentLevel := widget.NewLabel(fmt.Sprintf("Lv. %v", inBattlePokemon.Pokemon.Level))
+
+	opponentMaxHP := battle.BattleHPCalculator(&inBattlePokemon.Pokemon.Stats.HP, inBattlePokemon.Pokemon.Level)
 	opponentHPBar := widget.NewProgressBar()
-	opponentHPBar.Max = float64(inBattlePokemon.Pokemon.Stats.HP.Value)
+	opponentHPBar.Max = opponentMaxHP
 	opponentHPBar.SetValue(float64(inBattlePokemon.BattleHP)) // Example HP, 80/100
 
 	opponentInfoBox := container.NewGridWithRows(3,
@@ -80,13 +116,16 @@ func getOpponentPokemonInfo(inBattlePokemon *data.InBattlePokemon) fyne.CanvasOb
 	return container.NewVBox(opponentSection, widget.NewSeparator())
 }
 
-func getUserPokemonInfo(inBattlePokemon *data.InBattlePokemon) fyne.CanvasObject {
+func getUserPokemonInfo(inBattlePokemon *data.BattlePokemon) fyne.CanvasObject {
+	slog.Info("DEBUG====User", "pokemonName", inBattlePokemon.Pokemon.Name, "Current HP", inBattlePokemon.BattleHP, "Fainted?", inBattlePokemon.IsFainted)
+
 	// User Pokémon Section
 	userName := widget.NewLabel(utils.ToCapitalizeFirstLetterOfEachWord(inBattlePokemon.Pokemon.Name))
 	userLevel := widget.NewLabel(fmt.Sprintf("Lv. %v", inBattlePokemon.Pokemon.Level))
 
+	userMaxHP := battle.BattleHPCalculator(&inBattlePokemon.Pokemon.Stats.HP, inBattlePokemon.Pokemon.Level)
 	userHPBar := widget.NewProgressBar()
-	userHPBar.Max = float64(inBattlePokemon.Pokemon.Stats.HP.Value)
+	userHPBar.Max = userMaxHP
 	userHPBar.SetValue(float64(inBattlePokemon.BattleHP))
 
 	userExpBar := widget.NewProgressBar()
@@ -100,7 +139,7 @@ func getUserPokemonInfo(inBattlePokemon *data.InBattlePokemon) fyne.CanvasObject
 		),
 		container.NewGridWithRows(2,
 			userHPBar,
-			widget.NewLabel(fmt.Sprintf("%v/ %v", inBattlePokemon.BattleHP, inBattlePokemon.Pokemon.Stats.HP.Value)),
+			widget.NewLabel(fmt.Sprintf("%v/ %v", inBattlePokemon.BattleHP, math.Round(userMaxHP))),
 		),
 		container.NewGridWithColumns(2, widget.NewLabel("EXP"), userExpBar),
 	)
@@ -120,7 +159,7 @@ func (b *BattleArena) getDefaultBattleInputButtons() *fyne.Container {
 	return container.NewGridWithColumns(1,
 		container.NewGridWithColumns(2, // This layout will be forced onto BattleActionButtons
 			widget.NewButton("Attack", func() { b.UpdateBattleInputButtons(b.handleAttackSelection()) }),
-			widget.NewButton("Switch", func() {}),
+			widget.NewButton("Switch", func() { b.HandleRun() }),
 			widget.NewButton("Bag", func() {}),
 			widget.NewButton("Run", func() {}),
 		),
@@ -134,10 +173,10 @@ func (b *BattleArena) handleAttackSelection() fyne.CanvasObject {
 
 	return container.NewGridWithColumns(1,
 		container.NewGridWithColumns(2, // Same column count to maintain consistency
-			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move1.Name), func() { b.HandleAttack(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move1) }),
-			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move2.Name), func() { b.HandleAttack(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move2) }),
-			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move3.Name), func() { b.HandleAttack(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move3) }),
-			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move4.Name), func() { b.HandleAttack(b.Battle.GetUserActivePokemon().Pokemon.Moveset.Move4) }),
+			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActive(true).Pokemon.Moveset.Move1.Name), func() { b.HandleAttack(b.Battle.GetUserActive(true).Pokemon.Moveset.Move1) }),
+			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActive(true).Pokemon.Moveset.Move2.Name), func() { b.HandleAttack(b.Battle.GetUserActive(true).Pokemon.Moveset.Move2) }),
+			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActive(true).Pokemon.Moveset.Move3.Name), func() { b.HandleAttack(b.Battle.GetUserActive(true).Pokemon.Moveset.Move3) }),
+			widget.NewButton(utils.ToCapitalizeFirstLetterOfEachWord(b.Battle.GetUserActive(true).Pokemon.Moveset.Move4.Name), func() { b.HandleAttack(b.Battle.GetUserActive(true).Pokemon.Moveset.Move4) }),
 		),
 		container.New(layout.NewCenterLayout(), backButton),
 	)
@@ -148,14 +187,28 @@ func (b *BattleArena) HandleAttack(move *data.Moves) {
 
 	input := &data.BattleInput{
 		Type:           data.Attack,
-		CurrentPokemon: b.Battle.GetUserActivePokemon(),
-		Target:         b.Battle.GetOpponentActivePokemon(),
+		Selected: b.Battle.GetUserActive(true),
+		Target:         b.Battle.GetUserActive(false),
 		Move:           move,
 		Item:           nil,
 		IsUser:         true,
 	}
 
 	b.BattleChan <- input
+	b.UpdateActionContent(b.LoadBattleScreen())
+	// b.UpdateBattleInputButtons(b.getDefaultBattleInputButtons())
+}
+
+func (b *BattleArena) HandleRun() {
+	// slog.Info("move chose", "move", move.Name)
+
+	input := &data.BattleInput{
+		Type:   data.Run,
+		IsUser: true,
+	}
+
+	b.BattleChan <- input
+	b.UpdateActionContent(b.LoadBattleScreen())
 	// b.UpdateBattleInputButtons(b.getDefaultBattleInputButtons())
 }
 

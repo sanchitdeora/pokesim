@@ -4,9 +4,9 @@ type ItemMap map[ItemName]Item
 
 // save models
 type BaseTrainerSave struct {
-	Name  string          `json:"name"`
-	Party [6]*PokemonSave `json:"party"`
-	Bag   ItemMap         `json:"bag"`
+	Name  string        `json:"name"`
+	Party []PokemonSave `json:"party"`
+	Bag   ItemMap       `json:"bag"`
 }
 
 type UserSave struct {
@@ -27,9 +27,9 @@ type User struct {
 }
 
 type BaseTrainer struct {
-	Name  string      `json:"name"`
-	Party [6]*Pokemon `json:"party"`
-	Bag   ItemMap     `json:"bag"`
+	Name  string    `json:"name"`
+	Party []Pokemon `json:"party"`
+	Bag   ItemMap   `json:"bag"`
 }
 
 type Trainer struct {
@@ -49,6 +49,7 @@ const (
 	TrainerPrefix    TrainerClass = "Trainer"
 	GymLeaderPrefix  TrainerClass = "Gym Leader"
 	TournamentPrefix TrainerClass = "Tournament Trainer"
+	RivalPrefix      TrainerClass = "Rival"
 )
 
 type TrainerStats struct {
@@ -64,22 +65,20 @@ var BasePayoutTable map[TrainerClass]int = map[TrainerClass]int{
 	TrainerPrefix:    80,
 	GymLeaderPrefix:  160,
 	TournamentPrefix: 160,
+	RivalPrefix:      160,
 	// TODO: Add more as needed
 }
 
 var BlackOutPayoutTable map[int]int = map[int]int{0: 8, 1: 16, 2: 24, 3: 36, 4: 48, 5: 64, 6: 80, 7: 100, 8: 120}
 
-func GetPrizeMoney(trainer *Trainer) int {
+func GetPrizeMoney(class TrainerClass, party []Pokemon) int {
 	highestLevel := 0
-	for _, pokemon := range trainer.Party {
-		if pokemon == nil {
-			continue
-		}
+	for _, pokemon := range party {
 		if pokemon.Level > highestLevel {
 			highestLevel = pokemon.Level
 		}
 	}
-	return BasePayoutTable[trainer.Type] * highestLevel
+	return BasePayoutTable[class] * highestLevel
 }
 
 func GetMoneyLost(user *User) int {
@@ -90,9 +89,6 @@ func GetMoneyLost(user *User) int {
 
 	highestLevel := 0
 	for _, pokemon := range user.Party {
-		if pokemon == nil {
-			continue
-		}
 		if pokemon.Level > highestLevel {
 			highestLevel = pokemon.Level
 		}
@@ -101,12 +97,9 @@ func GetMoneyLost(user *User) int {
 }
 
 func (t *TrainerSave) ToTrainer() *Trainer {
-	var party [6]*Pokemon
-	for i, pokemon := range t.Party {
-		if pokemon == nil {
-			break
-		}
-		party[i] = pokemon.ToPokemon()
+	var party []Pokemon
+	for _, pokemon := range t.Party {
+		party = append(party, pokemon.ToPokemon())
 	}
 
 	return &Trainer{
@@ -121,12 +114,9 @@ func (t *TrainerSave) ToTrainer() *Trainer {
 }
 
 func (u *UserSave) ToUser() *User {
-	var party [6]*Pokemon
-	for i, pokemon := range u.Party {
-		if pokemon == nil {
-			break
-		}
-		party[i] = pokemon.ToPokemon()
+	var party []Pokemon
+	for _, pokemon := range u.Party {
+		party = append(party, pokemon.ToPokemon())
 	}
 
 	return &User{
@@ -139,16 +129,13 @@ func (u *UserSave) ToUser() *User {
 	}
 }
 
-func (u *User) ToUserSave() *UserSave {
-	var party [6]*PokemonSave
-	for i, pokemon := range u.Party {
-		if pokemon == nil {
-			break
-		}
-		party[i] = pokemon.ToPokemonSave()
+func (u *User) ToUserSave() UserSave {
+	var party []PokemonSave
+	for _, pokemon := range u.Party {
+		party = append(party, pokemon.ToPokemonSave())
 	}
 
-	return &UserSave{
+	return UserSave{
 		BaseTrainerSave: BaseTrainerSave{
 			Name:  u.Name,
 			Party: party,

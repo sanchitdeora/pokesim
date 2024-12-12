@@ -1,0 +1,134 @@
+{
+  "id": 7,
+  "name": "squirtle",
+  "base_experience": 63,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "0": {
+      "id": 266,
+      "name": "follow-me",
+      "accuracy": 0,
+      "priority": 2,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "1": {
+      "id": 39,
+      "name": "tail-whip",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "12": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "24": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "27": {
+      "id": 504,
+      "name": "shell-smash",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "3": {
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "36": {
+      "id": 834,
+      "name": "wave-crash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "6": {
+      "id": 110,
+      "name": "withdraw",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "water"
+    },
+    "9": {
+      "id": 229,
+      "name": "rapid-spin",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      8
+    ],
+    "36": [
+      9
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0007.png",
+    "front_default": "./assets/pokemon/img/0007.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 44,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 48,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 64,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 43,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water"
+}

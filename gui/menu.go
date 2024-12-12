@@ -2,7 +2,7 @@ package gui
 
 import (
 	"fyne.io/fyne/v2"
-	"github.com/sanchitdeora/PokeSim/battle"
+	battle "github.com/sanchitdeora/PokeSim/battle_v1"
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/trainermanagement"
 )
@@ -13,22 +13,10 @@ func (opts *GuiOpts) MainMenu() *fyne.MainMenu {
 			Label: "File",
 			Items: []*fyne.MenuItem{
 				{
-					ChildMenu: &fyne.Menu{
-						Label: "Save Game",
-						Items: []*fyne.MenuItem{
-							{},
-						},
-					},
-					// Icon: theme.DocumentSaveIcon(),
+					Label: "Save Game",
 				},
 				{
-					ChildMenu: &fyne.Menu{
-						Label: "Load Game",
-						Items: []*fyne.MenuItem{
-							{},
-						},
-					},
-					// Icon: theme.DocumentIcon(),
+					Label: "Load Game",
 				},
 			},
 		},
@@ -42,21 +30,21 @@ func (opts *GuiOpts) MainMenu() *fyne.MainMenu {
 						battleLogChan := make(chan string, 1)
 						opts.BattleLogChan = battleLogChan
 
-						opts.UpdateActionContent(
-							LoadBattleScreen(opts,
-								battleChan,
-								battle.NewTrainerBattle(&battle.TrainerBattleOpts{
-									UserService:     opts.UserService,
-									PokemonService:  opts.PokemonService,
-									BattleInputChan: battleChan,
-									BattleLogChan:   battleLogChan,
-								},
-									trainermanagement.NewTrainer(trainermanagement.TrainerOpts{SavedTrainerPath: "C:\\Projects\\Go-projects\\src\\PokéSim\\testfiles\\test_trainer.json"}).GetTrainer(),
-								),
+						// create a new Battle Arena
+						battleArena := NewBattleArena(opts,
+							battleChan,
+							battle.NewTrainerBattle(&battle.TrainerBattleOpts{
+								UserService:     opts.UserService,
+								PokemonService:  opts.PokemonService,
+								BattleInputChan: battleChan,
+								BattleLogChan:   battleLogChan,
+							},
+								trainermanagement.NewTrainerManager(trainermanagement.TrainerOpts{SavedTrainerPath: "C:\\Projects\\Go-projects\\src\\PokéSim\\testfiles\\test_trainer.json"}).GetTrainer(),
 							),
 						)
+
+						opts.UpdateActionContent(battleArena.LoadBattleScreen())
 					},
-					// Icon: theme.CancelIcon(),
 				},
 				{
 					Label: "Wild Pokemon Battle",
@@ -65,39 +53,27 @@ func (opts *GuiOpts) MainMenu() *fyne.MainMenu {
 			},
 		},
 		&fyne.Menu{
-			Label: "Shop",
+			Label: "Trainer",
 			Items: []*fyne.MenuItem{
 				{
-					ChildMenu: &fyne.Menu{
-						Label: "Buy",
-						Items: []*fyne.MenuItem{
-							{},
-						},
-					},
-					// Icon: theme.DesktopIcon(),
+					Label: "PokeDex",
 				},
 				{
-					ChildMenu: &fyne.Menu{
-						Label: "Sell",
-						Items: []*fyne.MenuItem{
-							{},
-						},
-					},
-					// Icon: theme.CheckButtonIcon(),
+					Label: "Trainer Stats",
+				},
+				{
+					Label: "Pokemon Box",
 				},
 			},
 		},
 		&fyne.Menu{
-			Label: "PokeDEX",
+			Label: "PokeMart",
 			Items: []*fyne.MenuItem{
 				{
-					ChildMenu: &fyne.Menu{
-						Label: "Open PokeDex",
-						Items: []*fyne.MenuItem{
-							{},
-						},
-					},
-					// Icon: theme.ComputerIcon(),
+					Label: "Buy",
+				},
+				{
+					Label: "Sell",
 				},
 			},
 		},

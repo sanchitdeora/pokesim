@@ -14,8 +14,8 @@ import (
 )
 
 type GuiOpts struct {
-	UserService    usermanagement.User
-	PokemonService pokemon.Service
+	UserService    usermanagement.UserManager
+	PokemonService pokemon.PokemonManager
 
 	ActionContainer *fyne.Container
 	LogContainer    *fyne.Container
@@ -31,18 +31,18 @@ func InitializeGUI(opts GuiOpts) {
 	if err != nil {
 		slog.Error("Failed to load user", "error", err)
 	}
-	slog.Info("User loaded", "user", user)
+	// slog.Info("User loaded", "user", user)
 	opts.ActionContainer = container.NewStack()
 	opts.LogContainer = container.NewStack()
-	
+
 	// Create the main action area
 	opts.ActionContainer = opts.DefaultActionTab()
 
 	// Create the log area
 	opts.LogContainer = opts.NewLogContainer()
 	logContainer := container.NewVScroll((opts.LogContainer))
-	logContainer.SetMinSize(fyne.NewSize(200, 200))
-	
+	logContainer.SetMinSize(fyne.NewSize(200, 300))
+
 	// Create the trainer sidebar
 	trainerSideBar := opts.GetTrainerSideBar(user)
 

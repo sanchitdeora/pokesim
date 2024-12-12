@@ -1,0 +1,116 @@
+{
+  "id": 9,
+  "name": "blastoise",
+  "base_experience": 265,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 110,
+      "name": "withdraw",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "water"
+    },
+    "12": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "30": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "33": {
+      "id": 61,
+      "name": "bubble-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "35": {
+      "id": 504,
+      "name": "shell-smash",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "56": {
+      "id": 834,
+      "name": "wave-crash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "9": {
+      "id": 229,
+      "name": "rapid-spin",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      8
+    ],
+    "36": [
+      9
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0009.png",
+    "front_default": "./assets/pokemon/img/0009.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 79,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 83,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 105,
+      "iv": 0,
+      "ev": 3
+    },
+    "speed": {
+      "value": 78,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water"
+}

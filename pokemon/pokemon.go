@@ -5,10 +5,11 @@ import (
 	"log/slog"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/utils"
 )
 
-type Service interface {
-	LevelUp(pokemon *data.Pokemon)
+type PokemonManager interface {
+	// LevelUp(pokemon *data.Pokemon)
 	Evolve(pokemon *data.Pokemon)
 	LearnNewMoves(move *data.Moves)
 	ExperienceGain(expGain int, pokemon *data.Pokemon) bool
@@ -20,7 +21,7 @@ type PokemonImpl struct {
 	opts PokemonOpts
 }
 
-func NewPokemonService(opts PokemonOpts) Service {
+func NewPokemonManager(opts PokemonOpts) PokemonManager {
 	return &PokemonImpl{
 		opts: opts,
 	}
@@ -43,11 +44,25 @@ func (p *PokemonImpl) LevelUp(pokemon *data.Pokemon) {
 
 // TODO: add should evolve method. Evolve after battle.
 func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
-	if canPokemonEvolve(pokemon) {
-		evolvedBasePokemon := pokemon.EvolutionChain[pokemon.Level]
-		pokemon.BasePokemon = evolvedBasePokemon[0]
-		statUpgrades(pokemon)
+	if !canPokemonEvolve(pokemon) {
+		return
 	}
+
+	evolvedBasePokemonPath := pokemon.EvolutionChain[pokemon.Level]
+	if len(evolvedBasePokemonPath) > 1 {
+		//TODO: add option to choose which pokemon to evolve to
+		panic("implemenet multiple pokemon evolution")
+	} else if len(evolvedBasePokemonPath) == 0 {
+		slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name)
+	} else {
+		evolvedBasePokemon, err := getBasePokemonFromPath(evolvedBasePokemonPath[0])
+		if err != nil {
+			slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name, "error", err)
+		}
+		pokemon.BasePokemon = *evolvedBasePokemon
+	}
+
+	statUpgrades(pokemon)
 }
 
 func (p *PokemonImpl) LearnNewMoves(move *data.Moves) {
@@ -122,15 +137,15 @@ func (p *PokemonImpl) ExperienceGain(expGain int, pokemon *data.Pokemon) bool {
 }
 
 func statUpgrades(pokemon *data.Pokemon) {
-	hp := calculateHPStatUpgrade(pokemon.BaseStats.HP, &pokemon.Stats.HP, pokemon.Level)
+	hp := calculateHPStatUpgrade(pokemon.BaseStats.HP.Value, &pokemon.Stats.HP, pokemon.Level)
 
-	attack := calculateOtherStatUpgrade(pokemon.BaseStats.Attack, &pokemon.Stats.Attack, pokemon.Level)
-	defense := calculateOtherStatUpgrade(pokemon.BaseStats.Defense, &pokemon.Stats.Defense, pokemon.Level)
+	attack := calculateOtherStatUpgrade(pokemon.BaseStats.Attack.Value, &pokemon.Stats.Attack, pokemon.Level)
+	defense := calculateOtherStatUpgrade(pokemon.BaseStats.Defense.Value, &pokemon.Stats.Defense, pokemon.Level)
 
-	spAttack := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialAttack, &pokemon.Stats.SpecialAttack, pokemon.Level)
-	spDefense := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialDefense, &pokemon.Stats.SpecialDefense, pokemon.Level)
+	spAttack := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialAttack.Value, &pokemon.Stats.SpecialAttack, pokemon.Level)
+	spDefense := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialDefense.Value, &pokemon.Stats.SpecialDefense, pokemon.Level)
 
-	speed := calculateOtherStatUpgrade(pokemon.BaseStats.Speed, &pokemon.Stats.Speed, pokemon.Level)
+	speed := calculateOtherStatUpgrade(pokemon.BaseStats.Speed.Value, &pokemon.Stats.Speed, pokemon.Level)
 
 	slog.Info("Stat upgrade for pokemon:")
 	slog.Info(fmt.Sprintf("HP: +%v", hp-pokemon.Stats.HP.Value))
@@ -194,4 +209,12 @@ func addPokemonEVToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYiel
 
 		return true
 	}
+}
+
+func getBasePokemonFromPath(path data.BasePokemonId) (*data.BasePokemon, error) {
+	pokemon, err := utils.ReadJsonFromFile[data.BasePokemon](string(path))
+	if err != nil {
+		return nil, err
+	}
+	return &pokemon, nil
 }

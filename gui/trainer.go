@@ -22,21 +22,21 @@ func (opts *GuiOpts) GetTrainerSideBar(user *data.User) fyne.CanvasObject {
 }
 
 func (opts *GuiOpts) GetTrainerInfo(user *data.User) fyne.CanvasObject {
-	winPercentage := 0.0
+	// winPercentage := 0.0
 
-	if user.Stats.Battles > 0 {
-		winPercentage = (float64(user.Stats.Wins) / float64(user.Stats.Battles))
-	}
+	// if user.Stats.Battles > 0 {
+	// 	winPercentage = (float64(user.Stats.Wins) / float64(user.Stats.Battles))
+	// }
 
 	return container.NewVBox(
 		widget.NewLabel(fmt.Sprintf("Name:\t\t\t%s", user.Name)),
 		widget.NewLabel(fmt.Sprintf("Money:\t\t\t$%v", user.Money)),
-		widget.NewLabel(fmt.Sprintf("Catches:\t\t\t%v", user.Stats.Catches)),
-		widget.NewLabel(fmt.Sprintf("Battles:\t\t\t%v", user.Stats.Battles)),
-		widget.NewLabel(fmt.Sprintf("Wins:\t\t\t\t%v", user.Stats.Wins)),
-		widget.NewLabel(fmt.Sprintf("Loss/Flees:\t\t\t%v", user.Stats.Losses)),
-		widget.NewLabel(fmt.Sprintf("Win Percentage:\t\t%0.2f%%", winPercentage)),
-		widget.NewLabel(fmt.Sprintf("PokéDEX:\t\t\t%v of 1000", user.Stats.PokeDEX)),
+		// widget.NewLabel(fmt.Sprintf("Catches:\t\t\t%v", user.Stats.Catches)),
+		// widget.NewLabel(fmt.Sprintf("Battles:\t\t\t%v", user.Stats.Battles)),
+		// widget.NewLabel(fmt.Sprintf("Wins:\t\t\t\t%v", user.Stats.Wins)),
+		// widget.NewLabel(fmt.Sprintf("Loss/Flees:\t\t\t%v", user.Stats.Losses)),
+		// widget.NewLabel(fmt.Sprintf("Win Percentage:\t\t%0.2f%%", winPercentage)),
+		// widget.NewLabel(fmt.Sprintf("PokéDEX:\t\t\t%v of 1000", user.Stats.PokeDEX)),
 	)
 }
 
@@ -53,5 +53,16 @@ func (opts *GuiOpts) GetBagInfo(user *data.User) fyne.CanvasObject {
 }
 
 func (opts *GuiOpts) GetPokemonInfo(user *data.User) fyne.CanvasObject {
-	return widget.NewLabel("Add Pokemon Here")
+	party := user.Party
+	partyContainer := container.NewVBox()
+	
+	for _, pokemon := range party {
+		if pokemon == nil {
+			continue
+		}
+		pokemonCard := widget.NewCard(pokemon.Name, "", nil)
+		partyContainer.Add(pokemonCard)
+	}
+
+	return partyContainer
 }

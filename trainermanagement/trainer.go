@@ -8,7 +8,7 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
-type TrainerIFace interface {
+type TrainerManager interface {
 	GetTrainer() *data.Trainer
 }
 
@@ -21,7 +21,7 @@ type trainerImpl struct {
 	Trainer *data.Trainer
 }
 
-func NewTrainer(opts TrainerOpts) TrainerIFace {
+func NewTrainerManager(opts TrainerOpts) TrainerManager {
 	trainer, err := loadTrainer(opts.SavedTrainerPath)
 	if err != nil {
 		slog.Error("failed to load trainer", err)

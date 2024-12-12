@@ -6,4 +6,7 @@ var (
 	// file errors
 	ErrFileDoesNotExist error = errors.New("file does not exist")
 	ErrCouldNotReadFromFile error = errors.New("could not read from file")
+
+	// battle error
+	ErrBattleOngoing error = errors.New("battle is ongoing")
 )

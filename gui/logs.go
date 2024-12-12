@@ -17,7 +17,6 @@ func (opts *GuiOpts) LogListener() {
 
 	// Use a loop to keep listening for log messages
 	for log := range opts.BattleLogChan {
-		slog.Info("Battle log received", "log", log)
 		opts.AppendLogContent(widget.NewLabel(log))
 	}
 	slog.Info("Battle log channel closed") // Optional: log closure of channel

@@ -1,0 +1,126 @@
+{
+  "id": 3,
+  "name": "venusaur",
+  "base_experience": 263,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 74,
+      "name": "growth",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "12": {
+      "id": 75,
+      "name": "razor-leaf",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "15": {
+      "id": 79,
+      "name": "sleep-powder",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "30": {
+      "id": 230,
+      "name": "sweet-scent",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "normal"
+    },
+    "37": {
+      "id": 235,
+      "name": "synthesis",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "44": {
+      "id": 388,
+      "name": "worry-seed",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    },
+    "51": {
+      "id": 438,
+      "name": "power-whip",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "9": {
+      "id": 73,
+      "name": "leech-seed",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "status",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      2
+    ],
+    "32": [
+      3
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0003.png",
+    "front_default": "./assets/pokemon/img/0003.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 82,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 83,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison"
+}
