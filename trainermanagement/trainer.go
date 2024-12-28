@@ -24,7 +24,7 @@ type trainerImpl struct {
 func NewTrainerManager(opts TrainerOpts) TrainerManager {
 	trainer, err := loadTrainer(opts.SavedTrainerPath)
 	if err != nil {
-		slog.Error("failed to load trainer", err)
+		slog.Error("failed to load trainer", "error", err)
 		return nil
 	}
 

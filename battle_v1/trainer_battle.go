@@ -17,7 +17,7 @@ type TrainerBattleOpts struct {
 	BattleUser     BattleUser
 	BattleOpponent BattleUser
 
-	BattleInputChan <-chan *data.BattleInput
+	BattleInputChan <-chan *data.BattleAction
 	BattleLogChan   chan<- string
 }
 
@@ -172,7 +172,7 @@ func (tb *TrainerBattleImpl) evolvePokemon() {
 	}
 }
 
-func (tb *TrainerBattleImpl) Turn(userInput *data.BattleInput) {
+func (tb *TrainerBattleImpl) Turn(userInput *data.BattleAction) {
 	switch userInput.Type {
 	case data.Switch:
 		tb.BattleLog(fmt.Sprintf("%s is switching %s for %s", tb.getTrainerName(userInput.IsUser), userInput.Selected.Pokemon.Name, userInput.Target.Pokemon.Name))

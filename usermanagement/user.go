@@ -8,11 +8,13 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
+//go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_user_manager.go -package=mock_user_manager github.com/sanchitdeora/PokeSim/usermanagement UserManager
 type UserManager interface {
-	SaveUser(user *data.User) error
+	SaveUser() error
 	GetUser() *data.User
 	PostBattleUpdate(user *data.User, report *data.Result) error
 	PostWildUpdate(user *data.User, win bool, caught *data.Pokemon) error
+	StatUpdate(res data.Result)
 }
 
 type UserOpts struct {
@@ -53,18 +55,72 @@ func LoadUser(filepath string) (*data.User, error) {
 	return savedUser.ToUser(), nil
 }
 
+func (u *UserImpl) StatUpdate(result data.Result) {
+	u.user.Stats.Battles++
+
+	if result.Status == data.Won {
+		u.user.Stats.Wins++
+		if result.BadgeEarned.Name != "" {
+			u.user.Stats.Badges = append(u.user.Stats.Badges, result.BadgeEarned)
+		}
+
+		if len(result.BonusItems) > 0 {
+			for itemName, item := range result.BonusItems {
+				u.addItemToBag(u.user.Bag, itemName, item)
+			}
+		}
+
+		u.user.Money += result.Money
+	} else {
+		u.user.Stats.Losses++
+
+		u.user.Money -= result.Money
+		if u.user.Money < 0 {
+			u.user.Money = 0
+		}
+	}
+
+	if err := u.SaveUser(); err != nil {
+		slog.Error("error updating user after trainer battle", "error", err)
+	}
+}
+
+func (u *UserImpl) SaveUser() error {
+	err := utils.WriteJsonToFile(u.opts.SavedUserPath, u.user.ToUserSave())
+	if err != nil {
+		slog.Error("could not write to saved file", "error", err)
+		return errors.ErrCouldNotReadFromFile
+	}
+
+	return nil
+}
+
+func (u *UserImpl) GetUser() *data.User {
+	return u.user
+}
+
+func (u *UserImpl) addItemToBag(bag data.ItemMap, itemName data.ItemName, item data.Item) {
+	if itemFound, exists := bag[itemName]; !exists {
+		bag[itemName] = item
+	} else {
+		itemFound.Count += item.Count
+		bag[itemName] = itemFound
+	}
+}
+
+// v1 code
 func (u *UserImpl) PostBattleUpdate(user *data.User, result *data.Result) error {
 	user.Stats.Battles++
 
 	if result.UserWin {
 		user.Stats.Wins++
-		// if result.BadgeEarned != nil {
-		// 	user.Stats.Badges = append(user.Stats.Badges, *result.BadgeEarned)
-		// }
+		if result.BadgeEarned.Name != "" {
+			user.Stats.Badges = append(user.Stats.Badges, result.BadgeEarned)
+		}
 
 		if len(result.BonusItems) > 0 {
 			for itemName, item := range result.BonusItems {
-				data.AddItemToBag(user.Bag, itemName, item)
+				u.addItemToBag(u.user.Bag, itemName, item)
 			}
 		}
 
@@ -80,7 +136,7 @@ func (u *UserImpl) PostBattleUpdate(user *data.User, result *data.Result) error 
 		}
 	}
 
-	if err := u.SaveUser(user); err != nil {
+	if err := u.SaveUser(); err != nil {
 		slog.Error("error updating user after trainer battle", "error", err)
 		return err
 	}
@@ -100,24 +156,10 @@ func (u *UserImpl) PostWildUpdate(user *data.User, win bool, caught *data.Pokemo
 		user.Stats.Losses++
 	}
 
-	if err := u.SaveUser(user); err != nil {
+	if err := u.SaveUser(); err != nil {
 		slog.Error("error updating user after wild pokemon battle", "error", err)
 		return err
 	}
 
 	return nil
-}
-
-func (u *UserImpl) SaveUser(user *data.User) error {
-	err := utils.WriteJsonToFile(u.opts.SavedUserPath, user.ToUserSave())
-	if err != nil {
-		slog.Error("could not write to saved file", "error", err)
-		return errors.ErrCouldNotReadFromFile
-	}
-
-	return nil
-}
-
-func (u *UserImpl) GetUser() *data.User {
-	return u.user
 }

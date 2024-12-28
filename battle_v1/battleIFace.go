@@ -13,19 +13,19 @@ type BattleSequence interface {
 }
 
 type BattleUser interface {
-	WaitForUserInput() *data.BattleInput
+	WaitForUserInput() *data.BattleAction
 }
 
 type BattleUserImpl struct {
-	UserInputChan <-chan *data.BattleInput
+	UserInputChan <-chan *data.BattleAction
 }
 
-func NewBattleUser(userInputChan <-chan *data.BattleInput) BattleUser {
+func NewBattleUser(userInputChan <-chan *data.BattleAction) BattleUser {
 	return &BattleUserImpl{
 		UserInputChan: userInputChan,
 	}
 }   
 
-func (bu *BattleUserImpl) WaitForUserInput() *data.BattleInput {
+func (bu *BattleUserImpl) WaitForUserInput() *data.BattleAction {
 	return <-bu.UserInputChan
 }

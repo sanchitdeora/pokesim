@@ -5,26 +5,32 @@ import (
 	"log/slog"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
+//go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_pokemon_manager.go -package=mock_pokemon_manager github.com/sanchitdeora/PokeSim/pokemon PokemonManager
 type PokemonManager interface {
 	// LevelUp(pokemon *data.Pokemon)
 	Evolve(pokemon *data.Pokemon)
 	LearnNewMoves(move *data.Moves)
-	ExperienceGain(expGain int, pokemon *data.Pokemon) bool
+	ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.Pokemon)
+	EvGain(pokemon *data.Pokemon, evYieldToAdd data.PokemonStats)
 }
 
-type PokemonOpts struct{}
+type PokemonOpts struct {
+	Logger logger.Logger
+}
 
 type PokemonImpl struct {
 	opts PokemonOpts
 }
 
 func NewPokemonManager(opts PokemonOpts) PokemonManager {
-	return &PokemonImpl{
-		opts: opts,
+	if opts.Logger == nil {
+		opts.Logger = logger.NewDefaultLogger()
 	}
+	return &PokemonImpl{opts: opts}
 }
 
 func (p *PokemonImpl) LevelUp(pokemon *data.Pokemon) {
@@ -42,9 +48,9 @@ func (p *PokemonImpl) LevelUp(pokemon *data.Pokemon) {
 	// }
 }
 
-// TODO: add should evolve method. Evolve after battle.
 func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 	if !canPokemonEvolve(pokemon) {
+		slog.Debug("pokemon cannot evolve", "pokemon", pokemon.Name, "pokemonUUID", pokemon.PokemonUUID)
 		return
 	}
 
@@ -52,10 +58,11 @@ func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 	if len(evolvedBasePokemonPath) > 1 {
 		//TODO: add option to choose which pokemon to evolve to
 		panic("implemenet multiple pokemon evolution")
+
 	} else if len(evolvedBasePokemonPath) == 0 {
 		slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name)
 	} else {
-		evolvedBasePokemon, err := getBasePokemonFromPath(evolvedBasePokemonPath[0])
+		evolvedBasePokemon, err := getBasePokemonByID(evolvedBasePokemonPath[0])
 		if err != nil {
 			slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name, "error", err)
 		}
@@ -69,57 +76,59 @@ func (p *PokemonImpl) LearnNewMoves(move *data.Moves) {
 	// input which move should be replaced.
 }
 
-func (p *PokemonImpl) EVGain(expGain int, pokemon *data.Pokemon, evYield *data.BasePokemonStats) {
-    // Calculate total EVs and determine how many to add
+func (p *PokemonImpl) EvGain(pokemon *data.Pokemon, evYieldToAdd data.PokemonStats) {
+	// Calculate total EVs and determine how many to add
 	stats := pokemon.Stats
-	userPokemonEV := stats.HP.EV + stats.Attack.EV + stats.Defense.EV + stats.SpecialAttack.EV + stats.SpecialDefense.EV + stats.Speed.EV
-	if userPokemonEV >= 510 {
-		slog.Info("Pokemon is fully trained !!!", "total pokemon ev", userPokemonEV)
+	userPokemonEv := stats.HP.EV + stats.Attack.EV + stats.Defense.EV + stats.SpecialAttack.EV + stats.SpecialDefense.EV + stats.Speed.EV
+	if userPokemonEv >= 510 {
+		slog.Info("Pokemon is fully trained !!!", "total pokemon ev", userPokemonEv)
 		return
 	}
 
 	// Calculate remaining EV space
-	targetEVYield := evYield.HP + evYield.Attack + evYield.Defense + evYield.SpecialAttack + evYield.SpecialDefense + evYield.Speed
-	evPointsToAdd := targetEVYield
+	targetYield := evYieldToAdd.HP.EV + evYieldToAdd.Attack.EV + evYieldToAdd.Defense.EV + evYieldToAdd.SpecialAttack.EV + evYieldToAdd.SpecialDefense.EV + evYieldToAdd.Speed.EV
+	evPointsToAdd := targetYield
 
-	if userPokemonEV + targetEVYield > 510 {
-		evPointsToAdd = 510 - userPokemonEV
+	if userPokemonEv+targetYield > 510 {
+		evPointsToAdd = 510 - userPokemonEv
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.HP, evYield.HP) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "HP")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.HP, evYieldToAdd.HP.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "HP")
 		return
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.Attack, evYield.Attack) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "Attack")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.Attack, evYieldToAdd.Attack.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "Attack")
 		return
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.Defense, evYield.Defense) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "Defence")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.Defense, evYieldToAdd.Defense.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "Defence")
 		return
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.SpecialAttack, evYield.SpecialAttack) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "Special Attack")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.SpecialAttack, evYieldToAdd.SpecialAttack.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "Special Attack")
 		return
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.SpecialDefense, evYield.SpecialDefense) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "Special Defense")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.SpecialDefense, evYieldToAdd.SpecialDefense.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "Special Defense")
 		return
 	}
 
-	if addPokemonEVToStats(&evPointsToAdd, &stats.Speed, evYield.Speed) {
-		slog.Info("Adding EV to Pokemon", "pokemonStat", "Speed")
+	if addPokemonEvToStats(&evPointsToAdd, &stats.Speed, evYieldToAdd.Speed.EV) {
+		slog.Debug("Adding EV to Pokemon", "pokemonStat", "Speed")
 		return
 	}
 }
 
-func (p *PokemonImpl) ExperienceGain(expGain int, pokemon *data.Pokemon) bool {
+func (p *PokemonImpl) ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.Pokemon) {
+	expGain := calculateExperienceGained(faintedPokemon.Level, faintedPokemon.BaseExperience, pokemon)
+
 	slog.Info("Pokemon Gains Experience", "expGain", expGain, "Pokemon", pokemon.Name)
-	var canEvolve bool
+	// tb.BattleLog(fmt.Sprintf("%s gained %v experience points", utils.ToCapitalizeFirstLetterOfEachWord(inBattlePokemon.Pokemon.Name), expGain))
 
 	for {
 		if pokemon.ExperienceLeft > expGain {
@@ -128,12 +137,7 @@ func (p *PokemonImpl) ExperienceGain(expGain int, pokemon *data.Pokemon) bool {
 		}
 		expGain -= pokemon.ExperienceLeft
 		p.LevelUp(pokemon)
-
-		if canPokemonEvolve(pokemon) {
-			canEvolve = true
-		}
 	}
-	return canEvolve
 }
 
 func statUpgrades(pokemon *data.Pokemon) {
@@ -184,12 +188,14 @@ func getExperienceRequiredForNextLevel(pokemon *data.Pokemon) int {
 	}
 }
 
+// TODO: It is possible that pokemon has evolved by more than a level and surpassed the expected evolution level.
+// Also check lower levels to confirm if it can evolve.
 func canPokemonEvolve(pokemon *data.Pokemon) bool {
 	_, exists := pokemon.EvolutionChain[pokemon.Level]
 	return exists
 }
 
-func addPokemonEVToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYield int) bool {
+func addPokemonEvToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYield int) bool {
 	if evYield == 0 {
 		return false
 	}
@@ -200,7 +206,7 @@ func addPokemonEVToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYiel
 		*pointsToAdd -= evYield
 		pokemonStat.EV = evYield
 
-		return false
+		return true
 
 	} else {
 		slog.Info("Successfully added EV points", "points added", *pointsToAdd)
@@ -211,8 +217,9 @@ func addPokemonEVToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYiel
 	}
 }
 
-func getBasePokemonFromPath(path data.BasePokemonId) (*data.BasePokemon, error) {
-	pokemon, err := utils.ReadJsonFromFile[data.BasePokemon](string(path))
+func getBasePokemonByID(ID data.BasePokemonId) (*data.BasePokemon, error) {
+	path := fmt.Sprintf("/assets/pokemon/%04d.json", ID)
+	pokemon, err := utils.ReadJsonFromFile[data.BasePokemon](path)
 	if err != nil {
 		return nil, err
 	}

@@ -6,40 +6,42 @@ import (
 	"github.com/sanchitdeora/PokeSim/data"
 )
 
-func GetTurnOrder(userInput data.BattleInput, opponentInput data.BattleInput) []data.BattleInput {
+func GetTurnOrder(userAction data.BattleAction, opponentAction data.BattleAction) []data.BattleAction {
 	// we will give preference to user whenever equal priority
 
-	if userInput.Type == data.Run || opponentInput.Type == data.Run {
+	if userAction.Type == data.Run || opponentAction.Type == data.Run {
 		slog.Error("cannot run in a trainer battle. Need to implement logic here")
 		panic("implement logic here")
-	} else if userInput.Type == data.Switch || userInput.Type == data.Bag {
-		return []data.BattleInput{userInput, opponentInput}
-	} else if opponentInput.Type == data.Switch || opponentInput.Type == data.Bag {
-		return []data.BattleInput{opponentInput, userInput}
+	} else if userAction.Type == data.Switch || userAction.Type == data.Bag {
+		return []data.BattleAction{userAction, opponentAction}
+	} else if opponentAction.Type == data.Switch || opponentAction.Type == data.Bag {
+		return []data.BattleAction{opponentAction, userAction}
 	} else {
-		if userInput.Move.Priority != opponentInput.Move.Priority {
-			if userInput.Move.Priority > opponentInput.Move.Priority {
-				return []data.BattleInput{userInput, opponentInput}
+		if userAction.Move.Priority != opponentAction.Move.Priority {
+			if userAction.Move.Priority > opponentAction.Move.Priority {
+				return []data.BattleAction{userAction, opponentAction}
 			} else {
-				return []data.BattleInput{opponentInput, userInput}
+				return []data.BattleAction{opponentAction, userAction}
 			}
 		} else {
-			userSpeed := battleStatCalculator(userInput.Selected.Stats.Speed, userInput.Selected.Level)
-			targetSpeed := battleStatCalculator(opponentInput.Selected.Stats.Speed, opponentInput.Selected.Level)
-
-			if userSpeed >= targetSpeed {
-				return []data.BattleInput{userInput, opponentInput}
+			if userAction.Selected.Stats.Speed.Value >= opponentAction.Selected.Stats.Speed.Value {
+				return []data.BattleAction{userAction, opponentAction}
 			} else {
-				return []data.BattleInput{opponentInput, userInput}
+				return []data.BattleAction{opponentAction, userAction}
 			}
 		}
 	}
 }
 
-func battleStatCalculator(stat data.PokemonStat, level int) float64 {
-	return (((float64(2*stat.Value) + float64(stat.IV) + float64(stat.EV/4)) * float64(level)) / 100) + 5
-}
-
-func battleHPCalculator(HP data.PokemonStat, level int) float64 {
-	return (((float64(2*HP.Value) + float64(HP.IV) + float64(HP.EV/4)) * float64(level)) / 100) + 10
+func GetNextUnfaintedPokemonAndCount(party []*data.BattlePokemon) (index, count int) {
+	index = -1
+	for i, p := range party {
+		if p.BattleHP != 0 {
+			count ++
+			if index < 0 {
+				index = i
+			}
+		}
+	}
+	return index, count
 }

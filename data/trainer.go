@@ -66,7 +66,7 @@ var BasePayoutTable map[TrainerClass]int = map[TrainerClass]int{
 	GymLeaderPrefix:  160,
 	TournamentPrefix: 160,
 	RivalPrefix:      160,
-	// TODO: Add more as needed
+	// Add more as needed
 }
 
 var BlackOutPayoutTable map[int]int = map[int]int{0: 8, 1: 16, 2: 24, 3: 36, 4: 48, 5: 64, 6: 80, 7: 100, 8: 120}

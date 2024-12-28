@@ -11,7 +11,7 @@ import (
 func ReadJsonFromFile[T any](relativePath string) (T, error) {
 	var jsonObj T
 
-	filePath := filepath.Join(GetSourceDir(), relativePath)
+	filePath := GetFullPath(relativePath)
 
 	// Open the JSON file
 	file, err := os.Open(filePath)
@@ -30,18 +30,21 @@ func ReadJsonFromFile[T any](relativePath string) (T, error) {
 	return jsonObj, nil
 }
 
-func WriteJsonToFile[T any](filename string, data T) error {
+func WriteJsonToFile[T any](relativePath string, data T) error {
 	// Marshal the data into a JSON byte slice
+	
+	filePath := GetFullPath(relativePath)
+	
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
-		slog.Error("error while marshalling json", "filename", filename, "error", err)
+		slog.Error("error while marshalling json", "filename", filePath, "error", err)
 		return err
 	}
 
 	// Open the file for writing, overwriting any existing content
-	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		slog.Error("error while opening file", "filename", filename, "error", err)
+		slog.Error("error while opening file", "filename", filePath, "error", err)
 		return err
 	}
 	defer file.Close()
@@ -49,7 +52,7 @@ func WriteJsonToFile[T any](filename string, data T) error {
 	// Write the JSON data to the file
 	_, err = file.Write(jsonData)
 	if err != nil {
-		slog.Error("failed to write JSON to file", "filename", filename, "error", err)
+		slog.Error("failed to write JSON to file", "filename", filePath, "error", err)
 		return err
 	}
 
@@ -57,17 +60,17 @@ func WriteJsonToFile[T any](filename string, data T) error {
 }
 
 func CheckPathExists(path string) bool {
-	_, err := os.Stat(path)
+	_, err := os.Stat(GetFullPath(path))
 	return err == nil || !os.IsNotExist(err)
 }
 
-func GetSourceDir() string {
+func GetFullPath(relativePath string) string {
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {
 		slog.Error("Unable to retrieve caller information")
 		return ""
 	}
 	srcDir := filepath.Dir((filepath.Dir(filename)))
-	slog.Info("Detail", "srcDir", srcDir)
-	return srcDir
+	// slog.Info("Detail", "srcDir", srcDir)
+	return filepath.Join(srcDir, relativePath)
 }

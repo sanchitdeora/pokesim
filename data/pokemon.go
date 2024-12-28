@@ -10,6 +10,7 @@ type BasePokemonId int
 
 type PokemonSave struct {
 	BasePokemonId  BasePokemonId `json:"base_pokemon_id"`
+	PokemonUUID    string        `json:"pokemon_uuid"`
 	Stats          PokemonStats  `json:"stats"`
 	Level          int           `json:"level"`
 	ExperienceLeft int           `json:"experience_left"`
@@ -18,6 +19,7 @@ type PokemonSave struct {
 
 type Pokemon struct {
 	BasePokemon
+	PokemonUUID    string       `json:"pokemon_uuid"`
 	Stats          PokemonStats `json:"stats"`
 	Level          int          `json:"level"`
 	ExperienceLeft int          `json:"experience_left"`
@@ -106,6 +108,7 @@ func (s *PokemonSave) ToPokemon() Pokemon {
 	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonId)
 	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](path)
 	return Pokemon{
+		PokemonUUID:    s.PokemonUUID,
 		BasePokemon:    basePokemon,
 		Stats:          s.Stats,
 		Level:          s.Level,
@@ -116,6 +119,7 @@ func (s *PokemonSave) ToPokemon() Pokemon {
 
 func (p *Pokemon) ToPokemonSave() PokemonSave {
 	return PokemonSave{
+		PokemonUUID:    p.PokemonUUID,
 		BasePokemonId:  p.BasePokemon.ID,
 		Stats:          p.Stats,
 		Level:          p.Level,

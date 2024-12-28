@@ -1,10 +1,13 @@
 module github.com/sanchitdeora/PokeSim
 
-go 1.22.2
+go 1.23.4
 
 require (
 	fyne.io/fyne/v2 v2.5.2
+	github.com/golang/mock v1.5.0
+	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
+	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 )
 
 require (

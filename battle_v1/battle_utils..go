@@ -36,16 +36,16 @@ func randomGenerator(min float64, max float64) float64 {
 	return (min + randIndex*(max-min))
 }
 
-func waitForUserInput(channel <-chan *data.BattleInput) *data.BattleInput {
+func waitForUserInput(channel <-chan *data.BattleAction) *data.BattleAction {
 	input := <-channel  // Blocks until input is received
 	return input
 }
 
 // TODO: move to a different package later
-func waitForInput(pokemon *data.BattlePokemon, target *data.BattlePokemon, isUser bool) *data.BattleInput {
+func waitForInput(pokemon *data.BattlePokemon, target *data.BattlePokemon, isUser bool) *data.BattleAction {
 	time.Sleep(time.Second * 0)
 
-	return &data.BattleInput{
+	return &data.BattleAction{
 		Type:           data.Attack,
 		Move:           randomMove(&pokemon.Pokemon.Moveset),
 		Selected: pokemon,

@@ -1,0 +1,62 @@
+{
+  "id": 63,
+  "name": "abra",
+  "base_experience": 62,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 100,
+      "name": "teleport",
+      "accuracy": 0,
+      "priority": -6,
+      "power": 0,
+      "damage_class": "status",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "0": [
+      65
+    ],
+    "16": [
+      64
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0063.png",
+    "front_default": "./assets/pokemon/img/0063.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 15,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "psychic"
+}

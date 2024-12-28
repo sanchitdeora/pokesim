@@ -26,7 +26,7 @@ func (opts *GuiOpts) MainMenu() *fyne.MainMenu {
 				{
 					Label: "Test Trainer Battle",
 					Action: func() {
-						battleChan := make(chan *data.BattleInput, 1)
+						battleChan := make(chan *data.BattleAction, 1)
 						battleLogChan := make(chan string, 1)
 						opts.BattleLogChan = battleLogChan
 

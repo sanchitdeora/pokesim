@@ -3,58 +3,68 @@ package battletrainer_test
 import (
 	"testing"
 
+	"github.com/golang/mock/gomock"
 	"github.com/sanchitdeora/PokeSim/battlemechanics/battletrainer"
 	"github.com/sanchitdeora/PokeSim/data"
+	mock_pokemon_manager "github.com/sanchitdeora/PokeSim/pokemon/mocks"
+	mock_user_manager "github.com/sanchitdeora/PokeSim/usermanagement/mocks"
 	"github.com/sanchitdeora/PokeSim/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestBattleUser_TestNewBattleUser(t *testing.T) {
+	logChan := make(chan<- string)
+	actionChan := make(chan data.BattleAction)
 	// returns nil when empty user is passed
-	assert.Nil(t, battletrainer.NewBattleUser(&data.User{}, nil))
+	assert.Nil(t, battletrainer.NewBattleUser(battletrainer.BattleTrainerOpts{}, &data.User{}, nil, logChan))
 
-	// returns nil when nil input channel is passed
-	assert.Nil(t, battletrainer.NewBattleUser(getTestUser(), nil))
+	// returns nil when nil action channel is passed
+	assert.Nil(t, battletrainer.NewBattleUser(battletrainer.BattleTrainerOpts{}, getTestUser(), nil, logChan))
 
 	// returns a valid user
-	assert.NotNil(t, battletrainer.NewBattleUser(getTestUser(), make(chan data.BattleInput)))
+	assert.NotNil(t, battletrainer.NewBattleUser(battletrainer.BattleTrainerOpts{}, getTestUser(),actionChan, logChan))
+	
+	close(actionChan)
+	close(logChan)
 }
 
 func TestBattleUser_GetTrainer(t *testing.T) {
-	user := createBattleUser()
-	
+	ctrl := gomock.NewController(t)
+	user := createBattleUser(ctrl)
+
 	assert.NotNil(t, user.GetTrainer())
 	assert.Equal(t, "John Cena", user.GetTrainer().Name)
 	assert.Equal(t, 2, len(user.GetTrainer().Party))
 }
 
 func TestBattleUser_TestGetActivePokemon(t *testing.T) {
-	user := createBattleUser()
+	ctrl := gomock.NewController(t)
+	user := createBattleUser(ctrl)
 
 	assert.NotNil(t, user.GetActivePokemon())
 	assert.Equal(t, data.BasePokemonId(1), user.GetActivePokemon().Pokemon.ID)
 	assert.Equal(t, "bulbasaur", user.GetActivePokemon().Pokemon.Name)
 	assert.Equal(t, 75, user.GetActivePokemon().Pokemon.Level)
-	assert.False(t, user.GetActivePokemon().IsFainted)
 	assert.False(t, user.GetActivePokemon().CanEvolve)
-	assert.Equal(t, 144, user.GetActivePokemon().BattleHP)
+	assert.Equal(t, 152, user.GetActivePokemon().BattleHP)
 }
 
 func TestBattleUser_TestGetParty(t *testing.T) {
-	user := createBattleUser()
+	ctrl := gomock.NewController(t)
+	user := createBattleUser(ctrl)
 
 	assert.NotNil(t, user.GetParty())
 	assert.Equal(t, 1, len(user.GetParty()))
 	assert.Equal(t, data.BasePokemonId(4), user.GetParty()[0].Pokemon.ID)
 	assert.Equal(t, "charmander", user.GetParty()[0].Pokemon.Name)
 	assert.Equal(t, 75, user.GetParty()[0].Pokemon.Level)
-	assert.False(t, user.GetParty()[0].IsFainted)
 	assert.False(t, user.GetActivePokemon().CanEvolve)
-	assert.Equal(t, 144, user.GetActivePokemon().BattleHP)
+	assert.Equal(t, 152, user.GetActivePokemon().BattleHP)
 }
 
 func TestBattleUser_TestIsDefeated(t *testing.T) {
-	assert.Equal(t, false, createBattleUser().IsDefeated())
+	ctrl := gomock.NewController(t)
+	assert.Equal(t, false, createBattleUser(ctrl).IsDefeated())
 }
 
 func TestBattleUser_TestHandleAction(t *testing.T) {
@@ -68,8 +78,16 @@ func TestBattleUser_TestSendBattleLog(t *testing.T) {
 }
 
 // utils
-func createBattleUser() battletrainer.BattleTrainer {
-	return battletrainer.NewBattleUser(getTestUser(), make(chan data.BattleInput))
+func createBattleUser(ctrl *gomock.Controller) battletrainer.BattleTrainer {
+	return battletrainer.NewBattleUser(
+		battletrainer.BattleTrainerOpts{
+			PokemonManager: mock_pokemon_manager.NewMockPokemonManager(ctrl),
+			UserManager:    mock_user_manager.NewMockUserManager(ctrl),
+		},
+		getTestUser(),
+		make(chan data.BattleAction),
+		make(chan<- string),
+	)
 }
 
 func getTestUser() *data.User {

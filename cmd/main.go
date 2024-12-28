@@ -1,7 +1,6 @@
 package main
 
 import (
-
 	battle "github.com/sanchitdeora/PokeSim/battle_v1"
 	"github.com/sanchitdeora/PokeSim/gui"
 	"github.com/sanchitdeora/PokeSim/logger"

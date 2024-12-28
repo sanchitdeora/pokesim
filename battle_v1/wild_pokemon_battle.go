@@ -57,7 +57,7 @@ package battle
 // 	wb.Report()
 // }
 
-// func (wb *WildBattleImpl) GetPokemonAttackOrder() (inputs []*BattleInput) {
+// func (wb *WildBattleImpl) GetPokemonAttackOrder() (inputs []*BattleAction) {
 // 	userInput := waitForInput(wb.UserTrainerInfo.ActivePokemon, wb.EnemyTrainerInfo.ActivePokemon)
 // 	enemyInput := waitForInput(wb.EnemyTrainerInfo.ActivePokemon, wb.UserTrainerInfo.ActivePokemon)
 
@@ -78,7 +78,7 @@ package battle
 // 	}
 // }
 
-// func (wb *WildBattleImpl) Turn(userInput *BattleInput) {
+// func (wb *WildBattleImpl) Turn(userInput *BattleAction) {
 // 	switch userInput.Type {
 // 	case Switch:
 // 		slog.Info(fmt.Sprintf("%s is switching %s for %s", wb.getTrgeainerName(userInput.IsUser), userInput.CurrentPokemon.Pokemon.BasePokemon.Name, userInput.Target.Pokemon.BasePokemon.Name))
@@ -171,7 +171,7 @@ package battle
 // }
 
 // func (wb *WildBattleImpl) HealPokemon(targetPokemon *InBattlePokemon, item *data.Item) {
-// 	targetPokemon.BattleHP += targetPokemon.BattleHP + item.Attributes
+// 	targetPokemon.BattleHP += targetPokemon.BattleHP + item.attribute
 
 // 	if targetPokemon.BattleHP > targetPokemon.Pokemon.Stats.HP {
 // 		targetPokemon.BattleHP = targetPokemon.Pokemon.Stats.HP

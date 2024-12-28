@@ -3,8 +3,9 @@ package data
 type Item struct {
 	Count       int          `json:"count"`
 	Category    ItemCategory `json:"category"`
-	Cost        int          `json:"cost"`
-	Attributes  int          `json:"attributes"`
+	CostPrice   int          `json:"cost_price"`
+	SellPrice   int          `json:"sell_price"`
+	Attribute   int          `json:"attribute"`
 	Description string       `json:"description"`
 }
 

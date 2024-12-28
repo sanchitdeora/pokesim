@@ -18,11 +18,11 @@ import (
 type BattleArena struct {
 	*GuiOpts
 	Battle             battle.BattleSequence
-	BattleChan         chan<- *data.BattleInput
+	BattleChan         chan<- *data.BattleAction
 	BattleInputButtons *fyne.Container
 }
 
-func NewBattleArena(opts *GuiOpts, battleChan chan<- *data.BattleInput, battle battle.BattleSequence) *BattleArena {
+func NewBattleArena(opts *GuiOpts, battleChan chan<- *data.BattleAction, battle battle.BattleSequence) *BattleArena {
 	battleArena := &BattleArena{
 		GuiOpts:            opts,
 		Battle:             battle,
@@ -185,7 +185,7 @@ func (b *BattleArena) handleAttackSelection() fyne.CanvasObject {
 func (b *BattleArena) HandleAttack(move *data.Moves) {
 	// slog.Info("move chose", "move", move.Name)
 
-	input := &data.BattleInput{
+	input := &data.BattleAction{
 		Type:           data.Attack,
 		Selected: b.Battle.GetUserActive(true),
 		Target:         b.Battle.GetUserActive(false),
@@ -202,7 +202,7 @@ func (b *BattleArena) HandleAttack(move *data.Moves) {
 func (b *BattleArena) HandleRun() {
 	// slog.Info("move chose", "move", move.Name)
 
-	input := &data.BattleInput{
+	input := &data.BattleAction{
 		Type:   data.Run,
 		IsUser: true,
 	}

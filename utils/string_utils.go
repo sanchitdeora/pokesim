@@ -15,7 +15,7 @@ func ToCapitalizeFirstLetterOfEachWord(phrase string) string {
 		for _, word := range words {
 			updatedWords = append(updatedWords, toCapitalizeFirstLetter(word))
 		}
-		return strings.Join(updatedWords, "")
+		return strings.Join(updatedWords, " ")
 	}
 
 	words = strings.Split(phrase, "-")

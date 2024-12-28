@@ -8,7 +8,7 @@ import (
 	"github.com/sanchitdeora/PokeSim/data"
 )
 
-func getPokemonAttackOrder(userActivePokemon *data.BattlePokemon, trainerActivePokemon *data.BattlePokemon, userInputChan <-chan *data.BattleInput) (inputs []*data.BattleInput) {
+func getPokemonAttackOrder(userActivePokemon *data.BattlePokemon, trainerActivePokemon *data.BattlePokemon, userInputChan <-chan *data.BattleAction) (inputs []*data.BattleAction) {
 	// func (tb *TrainerBattleImpl) GetPokemonAttackOrder() (inputs []*data.BattleInput) {
 	userInput := waitForUserInput(userInputChan)
 	trainerInput := waitForInput(trainerActivePokemon, userActivePokemon, false)
@@ -50,7 +50,7 @@ func switchPokemonWithIndex(switchingPokemonIndex int, activePokemon *data.Battl
 }
 
 func healPokemon(targetPokemon *data.BattlePokemon, item *data.Item) {
-	targetPokemon.BattleHP += targetPokemon.BattleHP + item.Attributes
+	targetPokemon.BattleHP += targetPokemon.BattleHP + item.Attribute
 
 	if targetPokemon.BattleHP > int(BattleHPCalculator(&targetPokemon.Pokemon.Stats.HP, targetPokemon.Pokemon.Level)) {
 		targetPokemon.BattleHP = int(BattleHPCalculator(&targetPokemon.Pokemon.Stats.HP, targetPokemon.Pokemon.Level))

@@ -15,7 +15,7 @@ func calculateHPStatUpgrade(baseHP int, pokemonStatHP *data.PokemonStat, level i
 
 // all other stats calculation
 func calculateOtherStatUpgrade(baseStat int, pokemonStat *data.PokemonStat, level int) int {
-	return int(math.Floor(((((2 * float64(baseStat)) + float64(pokemonStat.IV) + (float64(pokemonStat.EV) / 4)) * float64(level)) / 100) + 5) * NatureCoeff)
+	return int(math.Floor(((((2*float64(baseStat))+float64(pokemonStat.IV)+(float64(pokemonStat.EV)/4))*float64(level))/100)+5) * NatureCoeff)
 }
 
 func nextLevelErraticExp(level int) int {
@@ -24,7 +24,7 @@ func nextLevelErraticExp(level int) int {
 	} else if level < 68 {
 		return int(math.Round(((math.Pow(float64(level), 3)) * (100 - float64(level))) / 50))
 	} else if level < 98 {
-		return int(math.Round(((math.Pow(float64(level), 3)) * math.Floor((1911 - (10 * float64(level))) / 3)) / 500))
+		return int(math.Round(((math.Pow(float64(level), 3)) * math.Floor((1911-(10*float64(level)))/3)) / 500))
 	} else {
 		return int(math.Round(((math.Pow(float64(level), 3)) * (100 - float64(level))) / 50))
 	}
@@ -39,7 +39,7 @@ func nextLevelMediumFastExp(level int) int {
 }
 
 func nextLevelMediumSlowExp(level int) int {
-	return int(math.Round((6 * math.Pow(float64(level), 3)) / 5) - (15 * math.Pow(float64(level), 2)) + (100 * float64(level)) - 140)
+	return int(math.Round((6*math.Pow(float64(level), 3))/5) - (15 * math.Pow(float64(level), 2)) + (100 * float64(level)) - 140)
 }
 
 func nextLevelSlowExp(level int) int {
@@ -48,10 +48,22 @@ func nextLevelSlowExp(level int) int {
 
 func nextLevelFluctuatingExp(level int) int {
 	if level < 15 {
-		return int(math.Round(math.Pow(float64(level), 3) * (((math.Floor((float64(level) + 1) / 3) + 24)) / 50)))
+		return int(math.Round(math.Pow(float64(level), 3) * ((math.Floor((float64(level)+1)/3) + 24) / 50)))
 	} else if level < 36 {
 		return int(math.Round((math.Pow(float64(level), 3) * (float64(level) + 14)) / 50))
 	} else {
-		return int(math.Round((math.Pow(float64(level), 3) * (math.Floor(float64(level) / 2) + 32)) / 50))
+		return int(math.Round((math.Pow(float64(level), 3) * (math.Floor(float64(level)/2) + 32)) / 50))
 	}
+}
+
+func calculateExperienceGained(level int, baseExp int, winningPokemon *data.Pokemon) int {
+	var totalExp float64
+	totalExp = float64(baseExp*level) / 5.0
+	totalExp *= math.Pow((float64((2*level)+10)/float64(level+winningPokemon.Level+10)), 2.5) + 1.0
+
+	if canPokemonEvolve(winningPokemon) {
+		totalExp *= 1.2
+	}
+
+	return int(math.Round(totalExp))
 }

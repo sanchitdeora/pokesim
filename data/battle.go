@@ -2,25 +2,35 @@ package data
 
 type BattlePokemon struct {
 	Pokemon
-	BattleHP int
+	BattleHP     int
+	PokemonFaced []string
 	// deprecated
-	IsFainted    bool
-	CanEvolve    bool
-	PokemonFaced []BattlePokemon
+	CanEvolve bool
+	IsFainted bool
 }
 
+type BattleResultStatus string
+
+const (
+	Won  BattleResultStatus = "win"
+	Lost BattleResultStatus = "loss"
+)
+
 type Result struct {
-	UserWin     bool
-	Money       int
-	BonusItems  ItemMap
-	BadgeEarned BadgeType
+	Status         BattleResultStatus
+	Money          int
+	BonusItems     ItemMap
+	BadgeEarned    BadgeType
+	// deprecated
+	UserWin bool
 }
 
 type BattleOpts struct {
 	Type string `json:"type"`
 }
 
-type BattleInput struct {
+type BattleAction struct {
+	ID       string
 	Type     BattleActionType
 	Selected *BattlePokemon
 	Target   *BattlePokemon
@@ -39,21 +49,10 @@ const (
 	Run    BattleActionType = "run"
 )
 
-type BattleAction struct {
-	Type   BattleActionType
-	Action interface{}
-}
-
-type ActionAttack struct {
-	Move   Moves
-	Target BattlePokemon
-}
-
-type ActionItem struct {
-	Item   Item
-	Target BattlePokemon
-}
-
-type ActionSwitch struct {
-	Target BattlePokemon
+func CreateBattlePokemon(pokemon Pokemon) *BattlePokemon {
+	return &BattlePokemon{
+		Pokemon:      pokemon,
+		BattleHP:     pokemon.Stats.HP.Value,
+		PokemonFaced: make([]string, 0),
+	}
 }

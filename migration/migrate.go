@@ -57,13 +57,13 @@ func (opts *migrationOpts) MigratePokemonToAsset(pokemonUrl string) {
 	// get pokemon
 	loadedPokemon, err := GetPokemon(pokemonUrl)
 	if err != nil {
-		slog.Error("error loading pokemon json", err)
+		slog.Error("error loading pokemon json", "error", err)
 	}
 
 	// get species
 	loadedSpecies, err := GetPokemonSpecies(loadedPokemon.Species.Url)
 	if err != nil {
-		slog.Error("error loading pokemon species json", err)
+		slog.Error("error loading pokemon species json", "error", err)
 	}
 
 	// download sprites and save. Get save url and store
@@ -158,7 +158,7 @@ func MovesLearnedMapper(moves []types.Moves) map[int]data.Moves {
 			// move, err := LoadMovesJson("../pokemonMoves.json")
 			move, err := GetPokemonMoves(move.Move.Url)
 			if err != nil {
-				slog.Error("error loading pokemon move json", err)
+				slog.Error("error loading pokemon move json", "error", err)
 			}
 			movesLearned[lastVG.LevelLearnedAt] = data.Moves{
 				ID:          move.ID,
@@ -179,7 +179,7 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 
 	loadedEvolution, err := GetEvolutionChain(EvolutionChainUrl)
 	if err != nil {
-		slog.Error("error loading pokemon evolution chain json", err)
+		slog.Error("error loading pokemon evolution chain json", "error", err)
 	}
 
 	evolutionChain := loadedEvolution.Chain
@@ -205,7 +205,7 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 		minLevel := evolvesToChain.EvolutionDetails[0].MinLevel
 		loadedSpecies, err := GetPokemonSpecies(evolvesToChain.Species.Url)
 		if err != nil {
-			slog.Error("error loading pokemon species json", err)
+			slog.Error("error loading pokemon species json", "error", err)
 		}
 
 		evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonId(loadedSpecies.PokedexNumbers[0].EntryNumber))

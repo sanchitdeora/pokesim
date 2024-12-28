@@ -43,142 +43,155 @@ func (t *TrainerBattle) Introduction() error {
 	t.handleBattleIntroduction()
 
 	// Battle Processer
-	result := t.BattleConductor()
+	t.BattleConductor()
 
-	// conclude battle
-	t.handleBattleConclusion(result)
+	// Conclude battle
+	t.user.HandleBattleEnd(t.user.CalculateResult(t.opponent))
+	t.opponent.HandleBattleEnd(t.opponent.CalculateResult(t.user))
+
 	return nil
 }
 
-func (t *TrainerBattle) BattleConductor() (result data.Result) {
+func (t *TrainerBattle) BattleConductor() {
 	// loop runs through the battle
 	for {
-		t.log(fmt.Sprintf("%s Health: %v", t.getUserActiveName(), t.user.GetActivePokemon().BattleHP))
-		t.log(fmt.Sprintf("%s Health: %v", t.getOpponentActiveName(), t.opponent.GetActivePokemon().BattleHP))
+		t.log(fmt.Sprintf("%s Health: %v", getActivePokemonName(t.user), t.user.GetActivePokemon().BattleHP))
+		t.log(fmt.Sprintf("Opponent %s Health: %v", getActivePokemonName(t.opponent), t.opponent.GetActivePokemon().BattleHP))
 
-		if res, concluded := t.Conclusion(); concluded {
-			return res
+		if t.Conclusion() {
+			break
 		}
 
 		t.handleTurns()
 	}
 }
 
-func (t *TrainerBattle) Conclusion() (result data.Result, concluded bool) {
+func (t *TrainerBattle) Conclusion() bool {
 	// check if battle concluded
-	if concluded = t.user.IsDefeated() || t.opponent.IsDefeated(); !concluded {
-		return data.Result{}, false
-	}
-
-	// check if user lost
-	if t.user.IsDefeated() {
-		result.UserWin = false
-		result.Money = data.GetMoneyLost(t.opts.UserManager.GetUser())
-
-		t.log(fmt.Sprintf("You lost the battle to %s!", t.getOpponenetName()))
-		t.log(fmt.Sprintf("You lost $%v!", result.Money))
-	} else {
-		result.UserWin = true
-		result.Money = data.GetPrizeMoney(t.opponent.GetTrainerType(), t.opponent.GetTrainer().Party)
-		result.BonusItems = t.opponent.GetRewards().Items
-
-		t.log(fmt.Sprintf("%s has won the battle!", t.getUserName()))
-		t.log(fmt.Sprintf("You got $%v!", result.Money))
-
-		// if gym battle; earn badge
-		if t.opponent.GetTrainerType() == data.GymLeaderPrefix {
-			result.BadgeEarned = t.opponent.GetRewards().Badge
-			t.log(fmt.Sprintf("You earned a $%v!", result.BadgeEarned.Name))
-		}
-	}
-	return result, true
+	return t.user.IsDefeated() || t.opponent.IsDefeated()
 }
 
 func (t *TrainerBattle) handleBattleIntroduction() {
-	t.log(fmt.Sprintf("%s chooses %s!", t.getOpponenetName(), t.getOpponentActiveName()))
-	t.log(fmt.Sprintf("%s, I choose you!\n", t.getUserActiveName()))
+	t.log(fmt.Sprintf("%s chooses %s!", t.getOpponenetName(), getActivePokemonName(t.opponent)))
+	t.log(fmt.Sprintf("%s, I choose you!", getActivePokemonName(t.user)))
 
 	t.updatePokemonFaced()
-
-	t.user.SetOpponentTarget(t.opponent.GetActivePokemon())
-	t.opponent.SetOpponentTarget(t.user.GetActivePokemon())
+	t.setOpponentTargets()
 }
 
 func (t *TrainerBattle) handleTurns() {
 	// get pokemon attack order
-	userInput := t.user.GetInput()
-	opponentInput := t.opponent.GetInput()
-	battleInputs := GetTurnOrder(userInput, opponentInput)
+	userAction := t.user.GetAction()
+	opponentAction := t.opponent.GetAction()
+	battleActions := GetTurnOrder(userAction, opponentAction)
 
-	for _, input := range battleInputs {
-		trainer := t.user.(*battletrainer.BattleTester)
-		if input == opponentInput {
-			trainer = t.opponent.(*battletrainer.BattleTester)
+	for _, action := range battleActions {
+		trainer := t.user
+		target := t.opponent
+		if action.ID == opponentAction.ID {
+			trainer = t.opponent
+			target = t.user
 		}
-		t.handleActions(input, trainer)
+		t.handleActions(action, trainer, target)
 	}
 }
 
-func (t *TrainerBattle) handleActions(input data.BattleInput, trainer battletrainer.BattleTrainer) {
-	switch input.Type {
+func (t *TrainerBattle) handleActions(action data.BattleAction, trainer battletrainer.BattleTrainer, target battletrainer.BattleTrainer) {
+	switch action.Type {
 	case data.Run:
 		t.log("Trainer cannot run")
 		return
-
 	case data.Switch:
-		t.log(fmt.Sprintf("%s is switching %s for %s", t.getUserName(),
-			utils.ToCapitalizeFirstLetterOfEachWord(input.Selected.Pokemon.Name),
-			utils.ToCapitalizeFirstLetterOfEachWord(input.Target.Pokemon.Name)),
-		)
-		trainer.HandleSwitch(input)
-		t.updatePokemonFaced()
-
+		t.handleSwitch(action, trainer)
 	case data.Bag:
 		t.log(fmt.Sprintf("%s is using %s on %s", t.getUserName(),
-			utils.ToCapitalizeFirstLetterOfEachWord(input.Item.Description),
-			utils.ToCapitalizeFirstLetterOfEachWord(input.Selected.Pokemon.Name)),
+			utils.ToCapitalizeFirstLetterOfEachWord(action.Item.Description),
+			utils.ToCapitalizeFirstLetterOfEachWord(action.Selected.Pokemon.Name)),
 		)
-		if input.Item != nil && input.Item.Category == data.MedicalItems {
-			trainer.HandleUseBag(input)
+		if action.Item != nil && action.Item.Category == data.MedicalItems {
+			err := trainer.HandleAction(action)
+			if err != nil {
+				//TODO: Add appropriate battle logs. Let user select again similar to Run
+				slog.Error(err.Error())
+			}
 		}
-		slog.Error("Item cannot be nil or category not medical item", "Item", input.Item)
+		slog.Error("Item cannot be nil or category not medical item", "Item", action.Item)
 
 	case data.Attack:
 		slog.Info("Attack action")
-		t.handleAttack(input.Selected.Pokemon)
+		t.handleAttack(action, trainer, target)
 	}
 }
 
-func (t *TrainerBattle) handleAttack(targetPokemon data.Pokemon) {
-	slog.Info("Attack action")
+func (t *TrainerBattle) handleSwitch(switchAction data.BattleAction, trainer battletrainer.BattleTrainer) {
+	t.log(fmt.Sprintf("%s is switching %s for %s", t.getUserName(),
+		utils.ToCapitalizeFirstLetterOfEachWord(switchAction.Selected.Pokemon.Name),
+		utils.ToCapitalizeFirstLetterOfEachWord(switchAction.Target.Pokemon.Name)),
+	)
+	err := trainer.HandleAction(switchAction)
+	if err != nil {
+		//TODO: Add appropriate battle logs. Let user select again similar to Run
+		slog.Error(err.Error())
+	}
+	t.updatePokemonFaced()
+	t.setOpponentTargets()
 }
 
-func (t *TrainerBattle) handleBattleConclusion(result data.Result) {
-	// update user stats and rewards
+func (t *TrainerBattle) handleAttack(attackAction data.BattleAction, trainer battletrainer.BattleTrainer, target battletrainer.BattleTrainer) {
+	if attackAction.Selected.BattleHP == 0 {
+		slog.Info(fmt.Sprintf("%s fainted and cannot attack", utils.ToCapitalizeFirstLetterOfEachWord(attackAction.Selected.Pokemon.Name)))
+		return
+	}
 
-	// pokemon evolution
+	t.log(fmt.Sprintf("%s used %s", getActivePokemonName(trainer), utils.ToCapitalizeFirstLetterOfEachWord(attackAction.Move.Name)))
 
-	// close all channels
+	damagePts := t.performAttack(attackAction, trainer, target)
+	t.log(fmt.Sprintf("%s did %v points of damage to %s", getActivePokemonName(trainer), damagePts, getActivePokemonName(target)))
+
+	if target.GetActivePokemon().BattleHP == 0 {
+		t.log(fmt.Sprintf("%s has fainted!", getActivePokemonName(target)))
+
+		trainer.HandleTargetPokemonFainted(target.GetActivePokemon())
+
+		nextUnfaintedPokemonIndex, count := GetNextUnfaintedPokemonAndCount(target.GetParty())
+		if count > 0 {
+			// switch active pokemon with next unfainted in party and push fainted pokemon at end
+			switchAction := data.BattleAction{
+				Type:     data.Switch,
+				Selected: target.GetActivePokemon(),
+				Target:   target.GetParty()[nextUnfaintedPokemonIndex],
+			}
+			t.handleSwitch(switchAction, target)
+		}
+	}
+}
+
+func (t *TrainerBattle) performAttack(attackAction data.BattleAction, trainer battletrainer.BattleTrainer, target battletrainer.BattleTrainer) int {
+	//TODO: ADD VALIDTION -- confirm action selected and target are trainer and target trainer's active pokemon
+	damagePoints := data.CalculateAttackDamage(trainer.GetActivePokemon(), target.GetActivePokemon(), attackAction.Move, 1.0)
+
+	target.GetActivePokemon().BattleHP = utils.Max(0, target.GetActivePokemon().BattleHP-damagePoints)
+	return damagePoints
 }
 
 func (t *TrainerBattle) updatePokemonFaced() {
-	t.user.GetActivePokemon().PokemonFaced = append(t.user.GetActivePokemon().PokemonFaced, *t.opponent.GetActivePokemon())
-	t.opponent.GetActivePokemon().PokemonFaced = append(t.user.GetActivePokemon().PokemonFaced, *t.user.GetActivePokemon())
+	t.user.GetActivePokemon().PokemonFaced = append(t.user.GetActivePokemon().PokemonFaced, t.opponent.GetActivePokemon().Pokemon.PokemonUUID)
+	t.opponent.GetActivePokemon().PokemonFaced = append(t.opponent.GetActivePokemon().PokemonFaced, t.user.GetActivePokemon().Pokemon.PokemonUUID)
+}
+
+func (t *TrainerBattle) setOpponentTargets() {
+	// set opponent targets
+	t.user.SetOpponentTarget(t.opponent.GetActivePokemon())
+	t.opponent.SetOpponentTarget(t.user.GetActivePokemon())
 }
 
 func (t *TrainerBattle) log(msg string) {
-	if err := t.user.SendBattleLog(msg); err != nil {
-		slog.Error("error sending battle log", "error", err)
-		panic(err)
-	}
-	if err := t.opponent.SendBattleLog(msg); err != nil {
-		slog.Error("error sending battle log", "error", err)
-		panic(err)
-	}
-	// log to console
-	slog.Info(msg)
+	t.user.SendBattleLog(msg)
+
+	// t.opponent.SendBattleLog(msg)
 }
 
+// log formatters
 func (t *TrainerBattle) getUserName() string {
 	return utils.ToCapitalizeFirstLetterOfEachWord(t.user.GetTrainer().Name)
 }
@@ -187,10 +200,6 @@ func (t *TrainerBattle) getOpponenetName() string {
 	return fmt.Sprintf("%s %s", t.opponent.GetTrainerType(), utils.ToCapitalizeFirstLetterOfEachWord(t.opponent.GetTrainer().Name))
 }
 
-func (t *TrainerBattle) getUserActiveName() string {
-	return utils.ToCapitalizeFirstLetterOfEachWord(t.user.GetActivePokemon().Name)
-}
-
-func (t *TrainerBattle) getOpponentActiveName() string {
-	return utils.ToCapitalizeFirstLetterOfEachWord(t.opponent.GetActivePokemon().Name)
+func getActivePokemonName(t battletrainer.BattleTrainer) string {
+	return utils.ToCapitalizeFirstLetterOfEachWord(t.GetActivePokemon().Name)
 }
