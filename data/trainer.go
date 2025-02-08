@@ -4,20 +4,22 @@ type ItemMap map[ItemName]Item
 
 // save models
 type BaseTrainerSave struct {
-	Name  string        `json:"name"`
-	Party []PokemonSave `json:"party"`
-	Bag   ItemMap       `json:"bag"`
+	Name  string         `json:"name"`
+	Party []*PokemonSave `json:"party"`
+	Bag   ItemMap        `json:"bag"`
 }
 
 type UserSave struct {
 	BaseTrainerSave
 	Stats *TrainerStats `json:"stats"`
+	Money int
 }
 
 type TrainerSave struct {
 	BaseTrainerSave
-	Type    TrainerClass
-	Rewards *Rewards
+	TrainerID string
+	Type      TrainerClass
+	Rewards   *Rewards
 }
 
 type User struct {
@@ -27,9 +29,9 @@ type User struct {
 }
 
 type BaseTrainer struct {
-	Name  string    `json:"name"`
-	Party []Pokemon `json:"party"`
-	Bag   ItemMap   `json:"bag"`
+	Name  string     `json:"name"`
+	Party []*Pokemon `json:"party"`
+	Bag   ItemMap    `json:"bag"`
 }
 
 type Trainer struct {
@@ -54,7 +56,7 @@ const (
 
 type TrainerStats struct {
 	Badges  []BadgeType `json:"badges,omitempty"`
-	Battles int         `json:"fights"`
+	Battles int         `json:"battles"`
 	Wins    int         `json:"wins"`
 	Losses  int         `json:"losses"`
 	Catches int         `json:"catches"`
@@ -71,7 +73,7 @@ var BasePayoutTable map[TrainerClass]int = map[TrainerClass]int{
 
 var BlackOutPayoutTable map[int]int = map[int]int{0: 8, 1: 16, 2: 24, 3: 36, 4: 48, 5: 64, 6: 80, 7: 100, 8: 120}
 
-func GetPrizeMoney(class TrainerClass, party []Pokemon) int {
+func GetPrizeMoney(class TrainerClass, party []*Pokemon) int {
 	highestLevel := 0
 	for _, pokemon := range party {
 		if pokemon.Level > highestLevel {
@@ -97,7 +99,7 @@ func GetMoneyLost(user *User) int {
 }
 
 func (t *TrainerSave) ToTrainer() *Trainer {
-	var party []Pokemon
+	var party []*Pokemon
 	for _, pokemon := range t.Party {
 		party = append(party, pokemon.ToPokemon())
 	}
@@ -114,7 +116,7 @@ func (t *TrainerSave) ToTrainer() *Trainer {
 }
 
 func (u *UserSave) ToUser() *User {
-	var party []Pokemon
+	var party []*Pokemon
 	for _, pokemon := range u.Party {
 		party = append(party, pokemon.ToPokemon())
 	}
@@ -126,21 +128,32 @@ func (u *UserSave) ToUser() *User {
 			Bag:   u.Bag,
 		},
 		Stats: u.Stats,
+		Money: u.Money,
 	}
 }
 
-func (u *User) ToUserSave() UserSave {
-	var party []PokemonSave
+func (u *User) ToUserSave() *UserSave {
+	var party []*PokemonSave
 	for _, pokemon := range u.Party {
 		party = append(party, pokemon.ToPokemonSave())
 	}
 
-	return UserSave{
+	return &UserSave{
 		BaseTrainerSave: BaseTrainerSave{
 			Name:  u.Name,
 			Party: party,
 			Bag:   u.Bag,
 		},
 		Stats: u.Stats,
+		Money: u.Money,
 	}
+}
+
+
+func (u *User) GetBagItemCount() int {
+	count := 0
+	for _, b := range u.Bag {
+		count += b.Count
+	}
+	return count
 }

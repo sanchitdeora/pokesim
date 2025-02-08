@@ -6,10 +6,10 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
-type BasePokemonId int
+type BasePokemonID int
 
 type PokemonSave struct {
-	BasePokemonId  BasePokemonId `json:"base_pokemon_id"`
+	BasePokemonID  BasePokemonID `json:"base_pokemon_id"`
 	PokemonUUID    string        `json:"pokemon_uuid"`
 	Stats          PokemonStats  `json:"stats"`
 	Level          int           `json:"level"`
@@ -27,12 +27,12 @@ type Pokemon struct {
 }
 
 type BasePokemon struct {
-	ID             BasePokemonId           `json:"id"`
+	ID             BasePokemonID           `json:"id"`
 	Name           string                  `json:"name"`
 	BaseExperience int                     `json:"base_experience"`
 	GrowthRate     GrowthRateTypes         `json:"growth_rate"`
 	MovesLearned   map[int]Moves           `json:"moves_learned_by_level"`
-	EvolutionChain map[int][]BasePokemonId `json:"evolution_chain"`
+	EvolutionChain map[int][]BasePokemonID `json:"evolution_chain"`
 	SpritesURL     Sprites                 `json:"sprites"`
 	BaseStats      PokemonStats            `json:"base_stats"`
 	Type1          PokemonTypeName         `json:"type1"`
@@ -104,10 +104,10 @@ const (
 	Special  MoveDamageClass = "special"
 )
 
-func (s *PokemonSave) ToPokemon() Pokemon {
-	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonId)
+func (s *PokemonSave) ToPokemon() *Pokemon {
+	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonID)
 	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](path)
-	return Pokemon{
+	return &Pokemon{
 		PokemonUUID:    s.PokemonUUID,
 		BasePokemon:    basePokemon,
 		Stats:          s.Stats,
@@ -117,10 +117,17 @@ func (s *PokemonSave) ToPokemon() Pokemon {
 	}
 }
 
-func (p *Pokemon) ToPokemonSave() PokemonSave {
-	return PokemonSave{
+type PokemonChangeOrder bool
+
+const (
+	ChangeOrderMoveDown PokemonChangeOrder = false
+	ChangeOrderMoveUp   PokemonChangeOrder = true
+)
+
+func (p *Pokemon) ToPokemonSave() *PokemonSave {
+	return &PokemonSave{
 		PokemonUUID:    p.PokemonUUID,
-		BasePokemonId:  p.BasePokemon.ID,
+		BasePokemonID:  p.BasePokemon.ID,
 		Stats:          p.Stats,
 		Level:          p.Level,
 		ExperienceLeft: p.ExperienceLeft,

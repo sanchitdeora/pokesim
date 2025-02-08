@@ -1,7 +1,7 @@
 package data
 
 type BattlePokemon struct {
-	Pokemon
+	*Pokemon
 	BattleHP     int
 	PokemonFaced []string
 	// deprecated
@@ -49,7 +49,7 @@ const (
 	Run    BattleActionType = "run"
 )
 
-func CreateBattlePokemon(pokemon Pokemon) *BattlePokemon {
+func CreateBattlePokemon(pokemon *Pokemon) *BattlePokemon {
 	return &BattlePokemon{
 		Pokemon:      pokemon,
 		BattleHP:     pokemon.Stats.HP.Value,

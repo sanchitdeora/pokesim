@@ -1,3 +1,5 @@
+//go:build exclude
+
 package battle
 
 import (
@@ -13,7 +15,7 @@ import (
 
 type TrainerBattleOpts struct {
 	UserService    usermanagement.UserManager
-	PokemonService pokemon.PokemonManager
+	PokemonService pokemon.PokemonService
 	BattleUser     BattleUser
 	BattleOpponent BattleUser
 
@@ -41,9 +43,9 @@ type TrainerBattleImpl struct {
 	*TrainerBattle
 }
 
-func CreateNewInBattlePokemon(pokemon *data.Pokemon) *data.BattlePokemon {
+func CreateNewInBattlePokemon(pokemon data.Pokemon) *data.BattlePokemon {
 	return &data.BattlePokemon{
-		Pokemon:   pokemon,
+		Pokemon:   &pokemon,
 		BattleHP:  int(BattleHPCalculator(&pokemon.Stats.HP, pokemon.Level)),
 		IsFainted: false,
 	}
@@ -65,10 +67,10 @@ func NewTrainerBattle(opts *TrainerBattleOpts, trainer *data.Trainer) BattleSequ
 
 	trainerPokemonFacedExp := make(map[*data.Pokemon][]*data.BattlePokemon, 0)
 	for partyIndex, pokemon := range trainer.Party {
-		if pokemon == nil {
+		if pokemon.PokemonUUID == "" {
 			continue
 		}
-		inBattlePokemon := CreateNewInBattlePokemon(pokemon)
+		inBattlePokemon := CreateNewInBattlePokemon(*pokemon)
 		if partyIndex == 0 {
 			trainerActivePokemon = inBattlePokemon
 		} else if len(trainerInBattlePokemonParty) < 5 {
@@ -78,17 +80,13 @@ func NewTrainerBattle(opts *TrainerBattleOpts, trainer *data.Trainer) BattleSequ
 	}
 
 	// Get User
-	user, err := opts.UserService.LoadUser()
-	if err != nil {
-		slog.Warn("did not get user", "user", user, "error", err)
-		user = &data.User{}
-	}
+	user := opts.UserService.GetUser()
 
 	for partyIndex, pokemon := range user.Party {
-		if pokemon == nil {
+		if pokemon.PokemonUUID == "" {
 			continue
 		}
-		inBattlePokemon := CreateNewInBattlePokemon(pokemon)
+		inBattlePokemon := CreateNewInBattlePokemon(*pokemon)
 		if partyIndex == 0 {
 			userActivePokemon = inBattlePokemon
 		} else if len(userInBattlePokemonParty) <= 6 {
@@ -152,7 +150,7 @@ func (tb *TrainerBattleImpl) Initiate() (*data.Result, error) {
 	}
 
 	// Update User and save after battle completed
-	tb.UserService.PostBattleUpdate(tb.UserTrainer, report)
+	tb.UserService.StatUpdate(*report)
 
 	// Pokemon Evolutions
 	tb.evolvePokemon()
@@ -273,18 +271,17 @@ func (tb *TrainerBattleImpl) SwitchPokemon(switchingPokemon *data.Pokemon, isUse
 	}
 
 	for i, pokemon := range inBattleParty {
-		if pokemon.Pokemon == switchingPokemon && !pokemon.IsFainted {
+		if pokemon.Pokemon.PokemonUUID == switchingPokemon.PokemonUUID && !pokemon.IsFainted {
 			currentPokemon := activePokemon
-			nextPokemon := (*inBattleParty)[switchingPokemonIndex]
+			nextPokemon := inBattleParty[i]
 			// tb.UserActivePokemon = nil
 
 			// only get active pokemon if unfainted pokemon available; else add to the list
 			if !nextPokemon.IsFainted {
-				(inBattleParty) = append((*inBattleParty)[:switchingPokemonIndex], (*inBattleParty)[switchingPokemonIndex+1:]...)
+				(inBattleParty) = append(inBattleParty[:i], inBattleParty[i+1:]...)
 			}
-			(*inBattleParty) = append((*inBattleParty), currentPokemon)
+			inBattleParty = append(inBattleParty, currentPokemon)
 
-			return nextPokemon
 			break
 		}
 	}
@@ -349,7 +346,7 @@ func (tb *TrainerBattleImpl) Report() (*data.Result, error) {
 
 		// if gym battle; earn badge
 		if tb.OpponentTrainer.Type == data.GymLeaderPrefix {
-			report.BadgeEarned = &tb.OpponentTrainer.Rewards.Badge
+			report.BadgeEarned = tb.OpponentTrainer.Rewards.Badge
 			tb.BattleLog(fmt.Sprintf("You earned a $%v!", tb.OpponentTrainer.Rewards.Badge.Name))
 		}
 	}
@@ -363,7 +360,7 @@ func (tb *TrainerBattleImpl) UpdateInvolvedUserPokemon(faintedPokemon *data.Poke
 			expGain := calculateExperienceGained(faintedPokemon.Level, faintedPokemon.BasePokemon.BaseExperience, inBattlePokemon.Pokemon.Level)
 			tb.BattleLog(fmt.Sprintf("%s gained %v experience points", utils.ToCapitalizeFirstLetterOfEachWord(inBattlePokemon.Pokemon.Name), expGain))
 
-			inBattlePokemon.CanEvolve = tb.PokemonService.ExperienceGain(expGain, inBattlePokemon.Pokemon)
+			tb.PokemonService.ExperienceGain(inBattlePokemon.Pokemon, *inBattlePokemon.Pokemon)
 		}
 	}
 }

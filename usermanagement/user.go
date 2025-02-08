@@ -4,21 +4,20 @@ import (
 	"log/slog"
 
 	"github.com/sanchitdeora/PokeSim/data"
-	"github.com/sanchitdeora/PokeSim/errors"
-	"github.com/sanchitdeora/PokeSim/utils"
+	"github.com/sanchitdeora/PokeSim/gamestate"
 )
 
 //go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_user_manager.go -package=mock_user_manager github.com/sanchitdeora/PokeSim/usermanagement UserManager
 type UserManager interface {
 	SaveUser() error
 	GetUser() *data.User
-	PostBattleUpdate(user *data.User, report *data.Result) error
-	PostWildUpdate(user *data.User, win bool, caught *data.Pokemon) error
 	StatUpdate(res data.Result)
+	ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder)
+	UseItem(item *data.Item)
 }
 
 type UserOpts struct {
-	SavedUserPath string
+	GameState     gamestate.GameStateManager
 }
 
 type UserImpl struct {
@@ -26,33 +25,21 @@ type UserImpl struct {
 	user *data.User
 }
 
-func NewUserService(opts UserOpts) UserManager {
-	user, err := LoadUser(opts.SavedUserPath)
+func NewUserManager(opts UserOpts) UserManager {
+	if (opts.GameState == nil) {
+		slog.Error("invalid opts")
+		return nil
+	}
+
+	gameState, err := opts.GameState.Load()
 	if err != nil {
 		slog.Error("could not load user", "error", err)
 		return nil
 	}
 	return &UserImpl{
 		opts: opts,
-		user: user,
+		user: gameState.User,
 	}
-}
-
-func LoadUser(filepath string) (*data.User, error) {
-	var savedUser data.UserSave
-	var err error
-
-	if utils.CheckPathExists(filepath) {
-		savedUser, err = utils.ReadJsonFromFile[data.UserSave](filepath)
-		if err != nil {
-			slog.Error("could not read from saved file", "error", err)
-			return nil, errors.ErrCouldNotReadFromFile
-		}
-	} else {
-		slog.Error("file does not exist...")
-		return nil, errors.ErrFileDoesNotExist
-	}
-	return savedUser.ToUser(), nil
 }
 
 func (u *UserImpl) StatUpdate(result data.Result) {
@@ -80,19 +67,54 @@ func (u *UserImpl) StatUpdate(result data.Result) {
 		}
 	}
 
-	if err := u.SaveUser(); err != nil {
-		slog.Error("error updating user after trainer battle", "error", err)
-	}
+	slog.Debug("saving user", "user", u.user, "money won/lost", result.Money)
+
+	// Save User
+	u.SaveUser()
 }
 
 func (u *UserImpl) SaveUser() error {
-	err := utils.WriteJsonToFile(u.opts.SavedUserPath, u.user.ToUserSave())
-	if err != nil {
-		slog.Error("could not write to saved file", "error", err)
-		return errors.ErrCouldNotReadFromFile
+	return u.opts.GameState.Save()
+}
+
+func (u *UserImpl) ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder) {
+	currentIdx := GetPokemonIndexInParty(u.user.Party, pokemon)
+	switchIdx := currentIdx
+	if currentIdx < 0 {
+		slog.Debug("do nothing!")
+		return
 	}
 
-	return nil
+	if order == data.ChangeOrderMoveUp && currentIdx > 0 {
+		switchIdx = currentIdx - 1
+	}
+	if order == data.ChangeOrderMoveDown && currentIdx < len(u.user.Party)-1 {
+		switchIdx = currentIdx + 1
+	}
+
+	u.user.Party[currentIdx], u.user.Party[switchIdx] = u.user.Party[switchIdx], u.user.Party[currentIdx]
+
+	// Save User
+	u.SaveUser()
+}
+
+func (u *UserImpl) UseItem(item *data.Item) {
+	itemName := data.GetItemNameFromItem(*item)
+	itemInBag, exists := u.user.Bag[itemName]
+	if !exists {
+		slog.Debug("item not found in bag")
+		return
+	}
+	if itemInBag.Count == 0 {
+		slog.Debug("item count not enough")
+		return
+	}
+	itemInBag.Count -= 1
+
+	u.user.Bag[itemName] = itemInBag
+
+	// Save User
+	u.SaveUser()
 }
 
 func (u *UserImpl) GetUser() *data.User {
@@ -106,60 +128,4 @@ func (u *UserImpl) addItemToBag(bag data.ItemMap, itemName data.ItemName, item d
 		itemFound.Count += item.Count
 		bag[itemName] = itemFound
 	}
-}
-
-// v1 code
-func (u *UserImpl) PostBattleUpdate(user *data.User, result *data.Result) error {
-	user.Stats.Battles++
-
-	if result.UserWin {
-		user.Stats.Wins++
-		if result.BadgeEarned.Name != "" {
-			user.Stats.Badges = append(user.Stats.Badges, result.BadgeEarned)
-		}
-
-		if len(result.BonusItems) > 0 {
-			for itemName, item := range result.BonusItems {
-				u.addItemToBag(u.user.Bag, itemName, item)
-			}
-		}
-
-		user.Money += result.Money
-
-	} else {
-		user.Stats.Losses++
-
-		if (user.Money - result.Money) < 0 {
-			user.Money = 0
-		} else {
-			user.Money -= result.Money
-		}
-	}
-
-	if err := u.SaveUser(); err != nil {
-		slog.Error("error updating user after trainer battle", "error", err)
-		return err
-	}
-
-	return nil
-}
-
-func (u *UserImpl) PostWildUpdate(user *data.User, win bool, caught *data.Pokemon) error {
-	user.Stats.Battles++
-	if win {
-		user.Stats.Wins++
-		if caught != nil {
-			user.Stats.Catches++
-			//TODO: update pokedex with caught.
-		}
-	} else {
-		user.Stats.Losses++
-	}
-
-	if err := u.SaveUser(); err != nil {
-		slog.Error("error updating user after wild pokemon battle", "error", err)
-		return err
-	}
-
-	return nil
 }

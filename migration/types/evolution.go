@@ -1,7 +1,7 @@
 package types
 
 type Evolution struct {
-	Id    int   `json:"id"`
+	ID    int   `json:"id"`
 	Chain Chain `json:"chain"`
 }
 

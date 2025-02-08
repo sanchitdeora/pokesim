@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createPokemonManager() pokemon.PokemonManager {
-	return pokemon.NewPokemonManager(pokemon.PokemonOpts{})
+func createPokemonManager() pokemon.PokemonService {
+	return pokemon.NewPokemonService(pokemon.PokemonOpts{})
 }
 
 func TestExperienceGain(t *testing.T) {

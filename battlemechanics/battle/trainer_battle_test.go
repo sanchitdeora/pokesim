@@ -7,6 +7,7 @@ import (
 	"github.com/sanchitdeora/PokeSim/battlemechanics/battle"
 	"github.com/sanchitdeora/PokeSim/battlemechanics/battletrainer"
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/gamestate"
 	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 	"github.com/sanchitdeora/PokeSim/usermanagement"
@@ -15,10 +16,14 @@ import (
 )
 
 const (
-	TestUserPath      = "/testfiles/user/test_user.json"
-	TestUser2Path     = "/testfiles/user/test_user_2.json"
-	TestUserCopyPath  = "/testfiles/user/test_user copy.json"
-	TestUserCopy2Path = "/testfiles/user/test_user_2 copy.json"
+	TestUserPath      = "/testfiles/saved/test_user.json"
+	TestUser2Path     = "/testfiles/saved/test_user_2.json"
+	TestUserCopyPath  = "/testfiles/saved/test_user copy.json"
+	TestUserCopy2Path = "/testfiles/saved/test_user_2 copy.json"
+
+	TestUserSavedPath = "/testfiles/saved"
+	TestUserFileName  = "test_user"
+	TestUser2FileName = "test_user_2"
 )
 
 func TestMain(m *testing.M) {
@@ -41,11 +46,19 @@ func TestTrainerBattle_TrainerBattleManager(t *testing.T) {
 }
 
 func TestBattle(t *testing.T) {
-	battle := createTrainerBattleManager()
+	gsm := gamestate.NewGameStateManager(getTestUser(), TestUserSavedPath, TestUserFileName)
+	gsm2 := gamestate.NewGameStateManager(getTestUser2(), TestUserSavedPath, TestUser2FileName)
+
+	battle := createTrainerBattleManager(gsm, gsm2)
 	assert.Nil(t, battle.Introduction())
 
-	user := getTestUser()
-	user2 := getTestUser2()
+	game, err := gsm.Load()
+	assert.NoError(t, err)
+	user := game.User
+
+	game2, err := gsm2.Load()
+	assert.NoError(t, err)
+	user2 := game2.User
 
 	assert.Equal(t, 1, user.Stats.Battles)
 	assert.Equal(t, 1, user.Stats.Wins+user.Stats.Losses)
@@ -53,38 +66,38 @@ func TestBattle(t *testing.T) {
 	assert.Equal(t, 1, user2.Stats.Battles)
 	assert.Equal(t, 1, user2.Stats.Wins+user2.Stats.Losses)
 
-	restoreDefaultTestUser()
+	restoreDefaultGameTestUser()
 }
 
 func getTestUser() *data.User {
-	user, _ := utils.ReadJsonFromFile[data.UserSave](TestUserPath)
-	return user.ToUser()
+	gameSave, _ := utils.ReadJsonFromFile[gamestate.GameStateSave](TestUserPath)
+	return gameSave.User.ToUser()
 }
 
 func getTestUser2() *data.User {
-	user, _ := utils.ReadJsonFromFile[data.UserSave](TestUser2Path)
-	return user.ToUser()
+	gameSave, _ := utils.ReadJsonFromFile[gamestate.GameStateSave](TestUser2Path)
+	return gameSave.User.ToUser()
 }
 
-func createTrainerBattleManager() battle.PokemonBattle {
-	usermanager := usermanagement.NewUserService(usermanagement.UserOpts{SavedUserPath: TestUserPath})
+func createTrainerBattleManager(gsm, gsm2 gamestate.GameStateManager) battle.PokemonBattle {
+	usermanager := usermanagement.NewUserManager(usermanagement.UserOpts{GameState: gsm})
 
 	return battle.TrainerBattleManager(
 		battle.TrainerBattleOpts{UserManager: usermanager}, //add mocks here
 		battletrainer.NewBattleTester(battletrainer.BattleTrainerOpts{
 			UserManager:    usermanager,
-			PokemonManager: pokemon.NewPokemonManager(pokemon.PokemonOpts{}),
-		}, getTestUser()),
+			PokemonService: pokemon.NewPokemonService(pokemon.PokemonOpts{}),
+		}, gsm.Get().User),
 		battletrainer.NewBattleTester(battletrainer.BattleTrainerOpts{
-			UserManager:    usermanagement.NewUserService(usermanagement.UserOpts{SavedUserPath: TestUser2Path}),
-			PokemonManager: pokemon.NewPokemonManager(pokemon.PokemonOpts{}),
-		}, getTestUser2()))
+			UserManager:    usermanagement.NewUserManager(usermanagement.UserOpts{GameState: gsm2}),
+			PokemonService: pokemon.NewPokemonService(pokemon.PokemonOpts{}),
+		}, gsm.Get().User))
 }
 
-func restoreDefaultTestUser() {
-	userSave, _ := utils.ReadJsonFromFile[data.UserSave](TestUserCopyPath)
-	utils.WriteJsonToFile(TestUserPath, userSave)
+func restoreDefaultGameTestUser() {
+	gameSave, _ := utils.ReadJsonFromFile[gamestate.GameStateSave](TestUserCopyPath)
+	utils.WriteJsonToFile(TestUserPath, gameSave)
 
-	userSave, _ = utils.ReadJsonFromFile[data.UserSave](TestUserCopy2Path)
-	utils.WriteJsonToFile(TestUser2Path, userSave)
+	gameSave, _ = utils.ReadJsonFromFile[gamestate.GameStateSave](TestUserCopy2Path)
+	utils.WriteJsonToFile(TestUser2Path, gameSave)
 }

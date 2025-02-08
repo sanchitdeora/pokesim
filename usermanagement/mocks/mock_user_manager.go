@@ -34,6 +34,18 @@ func (m *MockUserManager) EXPECT() *MockUserManagerMockRecorder {
 	return m.recorder
 }
 
+// ChangePokemonOrder mocks base method.
+func (m *MockUserManager) ChangePokemonOrder(arg0 *data.Pokemon, arg1 data.PokemonChangeOrder) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "ChangePokemonOrder", arg0, arg1)
+}
+
+// ChangePokemonOrder indicates an expected call of ChangePokemonOrder.
+func (mr *MockUserManagerMockRecorder) ChangePokemonOrder(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangePokemonOrder", reflect.TypeOf((*MockUserManager)(nil).ChangePokemonOrder), arg0, arg1)
+}
+
 // GetUser mocks base method.
 func (m *MockUserManager) GetUser() *data.User {
 	m.ctrl.T.Helper()
@@ -46,34 +58,6 @@ func (m *MockUserManager) GetUser() *data.User {
 func (mr *MockUserManagerMockRecorder) GetUser() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUser", reflect.TypeOf((*MockUserManager)(nil).GetUser))
-}
-
-// PostBattleUpdate mocks base method.
-func (m *MockUserManager) PostBattleUpdate(arg0 *data.User, arg1 *data.Result) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PostBattleUpdate", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// PostBattleUpdate indicates an expected call of PostBattleUpdate.
-func (mr *MockUserManagerMockRecorder) PostBattleUpdate(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostBattleUpdate", reflect.TypeOf((*MockUserManager)(nil).PostBattleUpdate), arg0, arg1)
-}
-
-// PostWildUpdate mocks base method.
-func (m *MockUserManager) PostWildUpdate(arg0 *data.User, arg1 bool, arg2 *data.Pokemon) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PostWildUpdate", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// PostWildUpdate indicates an expected call of PostWildUpdate.
-func (mr *MockUserManagerMockRecorder) PostWildUpdate(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PostWildUpdate", reflect.TypeOf((*MockUserManager)(nil).PostWildUpdate), arg0, arg1, arg2)
 }
 
 // SaveUser mocks base method.
@@ -100,4 +84,16 @@ func (m *MockUserManager) StatUpdate(arg0 data.Result) {
 func (mr *MockUserManagerMockRecorder) StatUpdate(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatUpdate", reflect.TypeOf((*MockUserManager)(nil).StatUpdate), arg0)
+}
+
+// UseItem mocks base method.
+func (m *MockUserManager) UseItem(arg0 *data.Item) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "UseItem", arg0)
+}
+
+// UseItem indicates an expected call of UseItem.
+func (mr *MockUserManagerMockRecorder) UseItem(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UseItem", reflect.TypeOf((*MockUserManager)(nil).UseItem), arg0)
 }

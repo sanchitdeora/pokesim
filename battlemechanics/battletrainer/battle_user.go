@@ -32,7 +32,7 @@ func NewBattleUser(opts BattleTrainerOpts, user *data.User, actionChan <-chan da
 	return &BattleUser{
 		BattleTrainerImpl: BattleTrainerImpl{
 			BattleTrainerOpts: opts,
-			Trainer:           user,
+			Trainer:           &user.BaseTrainer,
 			ActivePokemon:     data.CreateBattlePokemon(user.Party[0]),
 			BattleParty:       party,
 			Rewards:           data.Rewards{},
@@ -47,5 +47,8 @@ func (b *BattleUser) HandleBattleEnd(result data.Result) {
 }
 
 func (b *BattleUser) GetAction() data.BattleAction {
-	return <-b.actionChan
+	action := <-b.actionChan
+
+	slog.Info("action received by user", "action", action.Type)
+	return action
 }

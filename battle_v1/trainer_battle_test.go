@@ -18,10 +18,10 @@ func createTrainerBattle() battle.BattleSequence {
 	)
 	
 	return battle.NewTrainerBattle(&battle.TrainerBattleOpts{
-		UserService: usermanagement.NewUserService(usermanagement.UserOpts{
+		UserService: usermanagement.NewUserManager(usermanagement.UserOpts{
 			SavedUserPath: "C:\\Projects\\Go-projects\\src\\PokéSim\\saved\\user.json",
 		}),
-		PokemonService: pokemon.NewPokemonManager(pokemon.PokemonOpts{}),
+		PokemonService: pokemon.NewPokemonService(pokemon.PokemonOpts{}),
 	}, trainer.GetTrainer())
 }
 

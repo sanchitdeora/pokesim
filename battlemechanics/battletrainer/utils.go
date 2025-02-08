@@ -1,6 +1,7 @@
 package battletrainer
 
 import (
+	"log/slog"
 	"math/rand"
 
 	"github.com/sanchitdeora/PokeSim/data"
@@ -30,16 +31,14 @@ func switchPokemon(active *data.BattlePokemon, target *data.BattlePokemon, party
 // Otherwise, it increases the BattleHP by the item's attribute value.
 // If the resulting BattleHP exceeds the maximum allowed HP calculated by BattleHPCalculator,
 // it is capped at that maximum value.
-func healPokemon(targetPokemon *data.BattlePokemon, item *data.Item) {
+func healPokemon(targetPokemon *data.BattlePokemon, item *data.Item) (itemUsed bool) {
 	if targetPokemon.BattleHP == targetPokemon.Pokemon.Stats.HP.Value {
-		return
+		return false
 	}
+	targetPokemon.BattleHP = min(targetPokemon.BattleHP+item.Attribute, targetPokemon.Pokemon.Stats.HP.Value)
 
-	targetPokemon.BattleHP += item.Attribute
-
-	if targetPokemon.BattleHP > targetPokemon.Pokemon.Stats.HP.Value {
-		targetPokemon.BattleHP = targetPokemon.Pokemon.Stats.HP.Value
-	}
+	slog.Info("healing pokemon", "pokemon", targetPokemon.Pokemon.Name, "Health:", targetPokemon.BattleHP, "item", item.Description)
+	return true
 }
 
 func randomMove(moveset *data.Moveset) *data.Moves {

@@ -5,7 +5,7 @@ import (
 	"gioui.org/widget/material"
 )
 
-func (g *Gui) renderBoxWindow(gtx layout.Context) layout.Dimensions {
+func (g *Gui) renderBagWindow(gtx layout.Context) layout.Dimensions {
 	// Create a theme for styling
 	th := material.NewTheme()
 
@@ -13,7 +13,7 @@ func (g *Gui) renderBoxWindow(gtx layout.Context) layout.Dimensions {
 	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 		// Title
 		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-			title := material.H5(th, "Box Screen")
+			title := material.H5(th, "Bag Screen")
 			return title.Layout(gtx)
 		}),
 	)

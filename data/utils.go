@@ -7,7 +7,7 @@ import (
 	"math/rand"
 )
 
-func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePokemon, attackMove *Moves, battleTypeAttackCoeff float64) int {
+func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePokemon, attackMove *Moves, battleTypeAttackCoeff float64) (damage int, moveEffect TypeEffective, isCritHit bool) {
 	var totalDamage float64
 
 	var attackStat float64 = 0
@@ -28,7 +28,7 @@ func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePo
 	if targetPokemon.Pokemon.BasePokemon.Type2 != "" {
 		pokemonTypes = append(pokemonTypes, targetPokemon.Pokemon.BasePokemon.Type2)
 	}
-	moveEffect := GetMoveEffect(attackMove.Type, pokemonTypes...)
+	moveEffect = GetMoveEffect(attackMove.Type, pokemonTypes...)
 
 	slog.Debug(fmt.Sprintf("Calculating damage: ( ( (((2 * {%v})/5) + 2) * {%v} * ({%v} / {%v}) ) / 50 ) + 2", attackPokemon.Pokemon.Level, attackMove.Power, attackStat, defenseStat))
 
@@ -38,7 +38,9 @@ func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePo
 	slog.Debug(fmt.Sprintf("Battle Attack Coeff: {%f} * {%f}", totalDamage, battleTypeAttackCoeff))
 	totalDamage *= battleTypeAttackCoeff
 
-	if isCritHit() {
+	isCritHit = calculateCritHit()
+
+	if isCritHit {
 		slog.Info("Critical Hit!")
 		slog.Debug(fmt.Sprintf("Critical hit: {%f} * 1.5", totalDamage))
 		totalDamage *= 1.5
@@ -53,22 +55,14 @@ func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePo
 		totalDamage *= 1.5
 	}
 
-	if moveEffect != NOR {
-		if moveEffect == MNE || moveEffect == NVR {
-			slog.Info("Not very effective!", "effect", moveEffect)
-		} else if moveEffect == SUP || moveEffect == HYP {
-			slog.Info("Super effective!", "effect", moveEffect)
-		} else {
-			slog.Info("This move has No effect to the target!", "effect", moveEffect)
-		}
-	}
-
 	slog.Debug(fmt.Sprintf("Move Effect Coeff: {%f} * {%f} == {%f}", totalDamage, moveEffect, (totalDamage * float64(moveEffect))))
-	return int(math.Round(totalDamage * float64(moveEffect)))
+	damage = int(math.Round(totalDamage * float64(moveEffect)))
+
+	return
 }
 
 
-func isCritHit() bool {
+func calculateCritHit() bool {
 	return randomGenerator(0, 1) < (1.0 / 24.0)
 }
 

@@ -26,13 +26,13 @@ type migrationOpts struct {
 
 func main() {
 	if len(os.Args) < 3 {
-		slog.Error("Usage: migration.go [pokemonId begin] [pokemonId end]")
+		slog.Error("Usage: migration.go [pokemonID begin] [pokemonID end]")
 		return
 	}
 	
-	beginId, _ := strconv.Atoi(os.Args[1])
-	endId, _ := strconv.Atoi(os.Args[2])
-	slog.Info("Migrating pokemon", "beginId", beginId, "endId", endId)
+	beginID, _ := strconv.Atoi(os.Args[1])
+	endID, _ := strconv.Atoi(os.Args[2])
+	slog.Info("Migrating pokemon", "beginID", beginID, "endID", endID)
 
 	file, err := os.OpenFile(manualAdjustmentFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -43,7 +43,7 @@ func main() {
 	defer opts.CsvFile.Close()
 	defer opts.CsvWriter.Flush()
 
-	for i := beginId; i <= endId; i++ {
+	for i := beginID; i <= endID; i++ {
 		// get base pokemon
 		fmt.Println("==============================================================================")
 		slog.Info("Migrating pokemon", "id", i)
@@ -79,7 +79,7 @@ func (opts *migrationOpts) MigratePokemonToAsset(pokemonUrl string) {
 
 	// build base pokemon struct
 	basePokemon := data.BasePokemon{
-		ID:             data.BasePokemonId(loadedSpecies.PokedexNumbers[0].EntryNumber),
+		ID:             data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber),
 		Name:           loadedPokemon.Name,
 		BaseExperience: loadedPokemon.BaseExperience,
 		GrowthRate:     data.GrowthRateTypes(loadedSpecies.GrowthRate.Name),
@@ -174,8 +174,8 @@ func MovesLearnedMapper(moves []types.Moves) map[int]data.Moves {
 	return movesLearned
 }
 
-func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[int][]data.BasePokemonId {
-	evolutionMap := make(map[int][]data.BasePokemonId)
+func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[int][]data.BasePokemonID {
+	evolutionMap := make(map[int][]data.BasePokemonID)
 
 	loadedEvolution, err := GetEvolutionChain(EvolutionChainUrl)
 	if err != nil {
@@ -208,7 +208,7 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 			slog.Error("error loading pokemon species json", "error", err)
 		}
 
-		evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonId(loadedSpecies.PokedexNumbers[0].EntryNumber))
+		evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber))
 
 		evolutionChain = evolvesToChain
 	}

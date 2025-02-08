@@ -13,7 +13,7 @@ import (
 )
 
 type BattleTrainer interface {
-	GetTrainer() data.BaseTrainer
+	GetTrainer() *data.BaseTrainer
 	GetTrainerType() data.TrainerClass
 	GetActivePokemon() *data.BattlePokemon
 	GetParty() []*data.BattlePokemon
@@ -33,13 +33,13 @@ type BattleTrainer interface {
 }
 
 type BattleTrainerOpts struct {
-	PokemonManager pokemon.PokemonManager
+	PokemonService pokemon.PokemonService
 	UserManager    usermanagement.UserManager
 }
 
 type BattleTrainerImpl struct {
 	BattleTrainerOpts
-	Trainer       *data.User
+	Trainer       *data.BaseTrainer
 	ActivePokemon *data.BattlePokemon
 	BattleParty   []*data.BattlePokemon
 	Rewards       data.Rewards
@@ -49,8 +49,8 @@ type BattleTrainerImpl struct {
 	Opponent *data.BattlePokemon
 }
 
-func (b *BattleTrainerImpl) GetTrainer() data.BaseTrainer {
-	return b.Trainer.BaseTrainer
+func (b *BattleTrainerImpl) GetTrainer() *data.BaseTrainer {
+	return b.Trainer
 }
 
 func (b *BattleTrainerImpl) GetTrainerType() data.TrainerClass {
@@ -81,8 +81,8 @@ func (b *BattleTrainerImpl) IsDefeated() bool {
 func (b *BattleTrainerImpl) HandleTargetPokemonFainted(faintedPokemon *data.BattlePokemon) {
 	for _, p := range append([]*data.BattlePokemon{b.ActivePokemon}, b.BattleParty...) {
 		if utils.Contains(p.PokemonFaced, faintedPokemon.Pokemon.PokemonUUID) && p.BattleHP > 0 {
-			b.PokemonManager.ExperienceGain(&p.Pokemon, faintedPokemon.Pokemon)
-			b.PokemonManager.EvGain(&p.Pokemon, faintedPokemon.BaseStats)
+			b.PokemonService.ExperienceGain(p.Pokemon, *faintedPokemon.Pokemon)
+			b.PokemonService.EvGain(p.Pokemon, faintedPokemon.BaseStats)
 		}
 	}
 }
@@ -134,6 +134,7 @@ func (b *BattleTrainerImpl) HandleSwitch(action data.BattleAction) error {
 }
 
 func (b *BattleTrainerImpl) HandleUseBag(action data.BattleAction) error {
+	slog.Info("Healing pokemon", "pokemon", action.Target.PokemonUUID)
 	var target *data.BattlePokemon
 	if action.Target.PokemonUUID == b.ActivePokemon.PokemonUUID {
 		target = b.ActivePokemon
@@ -145,24 +146,25 @@ func (b *BattleTrainerImpl) HandleUseBag(action data.BattleAction) error {
 			}
 		}
 	}
-	healPokemon(target, action.Item)
+	if healPokemon(target, action.Item) {
+		b.UserManager.UseItem(action.Item)
+	}
 	return nil
 }
 
-
 func (b *BattleTrainerImpl) CalculateResult(opponent BattleTrainer) data.Result {
-    result := data.Result{}
-    if b.IsDefeated() {
+	result := data.Result{}
+	if b.IsDefeated() {
 		result.Status = data.Lost
 		result.Money = data.GetMoneyLost(b.UserManager.GetUser())
 
 		b.SendBattleLog("You lost the battle!")
 		b.SendBattleLog(fmt.Sprintf("You lost $%v!", result.Money))
 
-    } else {
-        result.Status = data.Won
-        result.Money = data.GetPrizeMoney(opponent.GetTrainerType(), opponent.GetTrainer().Party)
-        result.BonusItems = opponent.GetRewards().Items
+	} else {
+		result.Status = data.Won
+		result.Money = data.GetPrizeMoney(opponent.GetTrainerType(), opponent.GetTrainer().Party)
+		result.BonusItems = opponent.GetRewards().Items
 
 		b.SendBattleLog(fmt.Sprintf("%s has won the battle!", utils.ToCapitalizeFirstLetterOfEachWord(b.GetTrainer().Name)))
 		b.SendBattleLog(fmt.Sprintf("You got $%v!", result.Money))
@@ -172,8 +174,8 @@ func (b *BattleTrainerImpl) CalculateResult(opponent BattleTrainer) data.Result 
 			result.BadgeEarned = opponent.GetRewards().Badge
 			b.SendBattleLog(fmt.Sprintf("You earned a $%v!", result.BadgeEarned.Name))
 		}
-    }
-    return result
+	}
+	return result
 }
 
 func (b *BattleTrainerImpl) HandleBattleEnd(result data.Result) {
@@ -187,7 +189,7 @@ func (b *BattleTrainerImpl) handleBattleEnd(result data.Result) {
 	// evolve all pokemons
 	for _, p := range append([]*data.BattlePokemon{b.ActivePokemon}, b.BattleParty...) {
 		if p.CanEvolve {
-			b.PokemonManager.Evolve(&p.Pokemon)
+			b.PokemonService.Evolve(p.Pokemon)
 		}
 	}
 }

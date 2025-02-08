@@ -1,7 +1,7 @@
 package types
 
 type Pokemon struct {
-	Id             int        `json:"id"`
+	ID             int        `json:"id"`
 	BaseExperience int        `json:"base_experience"`
 	Moves          []Moves    `json:"moves"`
 	Name           string     `json:"name"`

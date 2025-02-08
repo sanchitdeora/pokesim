@@ -26,7 +26,7 @@ func NewBattleTester(opts BattleTrainerOpts, user *data.User) BattleTrainer {
 	return &BattleTester{
 		BattleTrainerImpl: BattleTrainerImpl{
 			BattleTrainerOpts: opts,
-			Trainer:           user,
+			Trainer:           &user.BaseTrainer,
 			ActivePokemon:     data.CreateBattlePokemon(user.Party[0]),
 			BattleParty:       party,
 			Rewards:           data.Rewards{},

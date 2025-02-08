@@ -16,7 +16,7 @@ const (
 	SuperPotion ItemName = "super-potion"
 	HyperPotion ItemName = "hyper-potion"
 	PokeBall    ItemName = "poke-ball"
-	SuperBall   ItemName = "super-ball"
+	GreatBall   ItemName = "super-ball"
 	UltraBall   ItemName = "ultra-ball"
 	MasterBall  ItemName = "master-ball"
 )
@@ -33,11 +33,73 @@ type BadgeType struct {
 	Region string `json:"region"`
 }
 
-func AddItemToBag(bag ItemMap, itemNameToAdd ItemName, itemToAdd Item) {
-	if item, exists := bag[itemNameToAdd]; !exists {
-		bag[itemNameToAdd] = itemToAdd
-	} else {
-		item.Count += itemToAdd.Count
-		bag[itemNameToAdd] = item
+var AllItems = []ItemName{
+	Potion,
+	SuperPotion,
+	HyperPotion,
+	PokeBall,
+	GreatBall,
+	UltraBall,
+	MasterBall,
+}
+
+var ItemStore = map[ItemName]Item{
+	Potion: {
+		Category:    MedicalItems,
+		CostPrice:   200,
+		SellPrice:   50,
+		Attribute:   20,
+		Description: "Heals 20 HP",
+	},
+	SuperPotion: {
+		Category:    MedicalItems,
+		CostPrice:   400,
+		SellPrice:   200,
+		Attribute:   20,
+		Description: "Heals 20 HP",
+	},
+	HyperPotion: {
+		Category:    MedicalItems,
+		CostPrice:   1000,
+		SellPrice:   500,
+		Attribute:   20,
+		Description: "Heals 20 HP",
+	},
+	PokeBall: {
+		Category:    PokeBalls,
+		CostPrice:   10,
+		SellPrice:   5,
+		Attribute:   20,
+		Description: "Catch Pokemon",
+	},
+	GreatBall: {
+		Category:    PokeBalls,
+		CostPrice:   10,
+		SellPrice:   5,
+		Attribute:   40,
+		Description: "Great Chance of Catching a Pokemon",
+	},
+	UltraBall: {
+		Category:    PokeBalls,
+		CostPrice:   10,
+		SellPrice:   5,
+		Attribute:   60,
+		Description: "Higher chance of catching a Pokemon",
+	},
+	MasterBall: {
+		Category:    PokeBalls,
+		CostPrice:   10,
+		SellPrice:   5,
+		Attribute:   100,
+		Description: "Guarantees catching a Pokemon",
+	},
+}
+
+func GetItemNameFromItem(item Item) ItemName {
+	for name, i := range ItemStore {
+		if i.Description == item.Description && i.Attribute == item.Attribute {
+			return name
+		}
 	}
+	return ""
 }

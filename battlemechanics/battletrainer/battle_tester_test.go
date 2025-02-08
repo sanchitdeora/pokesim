@@ -32,7 +32,7 @@ func TestBattleTester_TestNewBattleTester(t *testing.T) {
 
 func TestBattleTester_GetTrainer(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	assert.NotNil(t, tester.GetTrainer())
 	assert.Equal(t, "John Cena", tester.GetTrainer().Name)
@@ -41,10 +41,10 @@ func TestBattleTester_GetTrainer(t *testing.T) {
 
 func TestBattleTester_GetActivePokemon(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	assert.NotNil(t, tester.GetActivePokemon())
-	assert.Equal(t, data.BasePokemonId(1), tester.GetActivePokemon().Pokemon.ID)
+	assert.Equal(t, data.BasePokemonID(1), tester.GetActivePokemon().Pokemon.ID)
 	assert.Equal(t, "bulbasaur", tester.GetActivePokemon().Pokemon.Name)
 	assert.Equal(t, 75, tester.GetActivePokemon().Pokemon.Level)
 	assert.False(t, tester.GetActivePokemon().IsFainted)
@@ -54,11 +54,11 @@ func TestBattleTester_GetActivePokemon(t *testing.T) {
 
 func TestBattleTester_TestGetParty(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	assert.NotNil(t, tester.GetParty())
 	assert.Equal(t, 1, len(tester.GetParty()))
-	assert.Equal(t, data.BasePokemonId(4), tester.GetParty()[0].Pokemon.ID)
+	assert.Equal(t, data.BasePokemonID(4), tester.GetParty()[0].Pokemon.ID)
 	assert.Equal(t, "charmander", tester.GetParty()[0].Pokemon.Name)
 	assert.Equal(t, 75, tester.GetParty()[0].Pokemon.Level)
 	assert.False(t, tester.GetParty()[0].IsFainted)
@@ -68,7 +68,7 @@ func TestBattleTester_TestGetParty(t *testing.T) {
 
 func TestBattleTester_TestIsDefeated(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	assert.False(t, tester.IsDefeated())
 
@@ -83,7 +83,7 @@ func TestBattleTester_TestIsDefeated(t *testing.T) {
 
 func TestBattleTester_TestHandleSwitch(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	action := data.BattleAction{
 		Type:     data.Switch,
@@ -99,7 +99,7 @@ func TestBattleTester_TestHandleSwitch(t *testing.T) {
 
 func TestBattleTester_TestHandleSwitch_NoUnfaintedPokemonInParty(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	tester.GetParty()[0].BattleHP = 0
 
@@ -117,7 +117,7 @@ func TestBattleTester_TestHandleSwitch_NoUnfaintedPokemonInParty(t *testing.T) {
 
 func TestBattleTester_TestHandleUseBag_AlreadyFull(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, _ := createBattleTester(ctrl)
 
 	item := getTestUser().Bag[data.Potion]
 
@@ -137,7 +137,7 @@ func TestBattleTester_TestHandleUseBag_AlreadyFull(t *testing.T) {
 
 func TestBattleTester_TestHandleUseBag_LessThan10(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, mocks := createBattleTester(ctrl)
 
 	item := getTestUser().Bag[data.Potion]
 
@@ -150,6 +150,8 @@ func TestBattleTester_TestHandleUseBag_LessThan10(t *testing.T) {
 		Target:   tester.GetActivePokemon(),
 		Item:     &item,
 	}
+
+	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 
@@ -158,7 +160,7 @@ func TestBattleTester_TestHandleUseBag_LessThan10(t *testing.T) {
 
 func TestBattleTester_TestHandleUseBag_LessThan50(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, mocks := createBattleTester(ctrl)
 
 	item := getTestUser().Bag[data.Potion]
 
@@ -171,6 +173,8 @@ func TestBattleTester_TestHandleUseBag_LessThan50(t *testing.T) {
 		Target:   tester.GetActivePokemon(),
 		Item:     &item,
 	}
+
+	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 
@@ -179,7 +183,7 @@ func TestBattleTester_TestHandleUseBag_LessThan50(t *testing.T) {
 
 func TestBattleTester_TestHandleUseBag_LessThan50_InParty(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	tester := createBattleTester(ctrl)
+	tester, mocks := createBattleTester(ctrl)
 
 	item := getTestUser().Bag[data.Potion]
 
@@ -192,6 +196,8 @@ func TestBattleTester_TestHandleUseBag_LessThan50_InParty(t *testing.T) {
 		Target:   tester.GetParty()[0],
 		Item:     &item,
 	}
+
+	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 
@@ -199,9 +205,22 @@ func TestBattleTester_TestHandleUseBag_LessThan50_InParty(t *testing.T) {
 }
 
 // utils
-func createBattleTester(ctrl *gomock.Controller) battletrainer.BattleTrainer {
+func createBattleTester(ctrl *gomock.Controller) (battletrainer.BattleTrainer, MocksImpl) {
+	ps := mock_pokemon_manager.NewMockPokemonService(ctrl)
+	um := mock_user_manager.NewMockUserManager(ctrl)
+
+	mocks := MocksImpl{
+		PokemonService: *ps,
+		UserManager:    *um,
+	}
+
 	return battletrainer.NewBattleTester(battletrainer.BattleTrainerOpts{
-		PokemonManager: mock_pokemon_manager.NewMockPokemonManager(ctrl),
-		UserManager:    mock_user_manager.NewMockUserManager(ctrl),
-	}, getTestUser())
+		PokemonService: ps,
+		UserManager:    um,
+	}, getTestUser()), mocks
+}
+
+type MocksImpl struct {
+	PokemonService mock_pokemon_manager.MockPokemonService
+	UserManager    mock_user_manager.MockUserManager
 }

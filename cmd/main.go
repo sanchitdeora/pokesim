@@ -2,8 +2,10 @@ package main
 
 import (
 	battle "github.com/sanchitdeora/PokeSim/battle_v1"
+	"github.com/sanchitdeora/PokeSim/gamestate"
 	"github.com/sanchitdeora/PokeSim/gui"
-	"github.com/sanchitdeora/PokeSim/logger"
+
+	// "github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 
 	"github.com/sanchitdeora/PokeSim/usermanagement"
@@ -11,30 +13,32 @@ import (
 
 type Services struct {
 	UserService    usermanagement.UserManager
-	PokemonService pokemon.PokemonManager
+	PokemonService pokemon.PokemonService
 	BattleService  battle.BattleSequence
 }
 
 const (
-	SAVED_USER_PATH = "C:\\Projects\\Go-projects\\src\\PokéSim\\saved\\user.json"
+	SAVED_USER_PATH = "\\saved\\user.json"
 )
 
 func main() {
-	logger.InitLogger()
+	// logger.InitLogger()
 
-	userService, pokemonService := initializeService()
+	gameManager, userManager, pokemonManager := initializeService()
 
 	// initialize GUI
-	gui.InitializeGUI(gui.GuiOpts{UserService: userService, PokemonService: pokemonService})
+	gui.InitializeGUI(gui.GuiOpts{GameManager: gameManager, UserManager: userManager, PokemonService: pokemonManager})
 
 }
 
-func initializeService() (usermanagement.UserManager, pokemon.PokemonManager) {
-	userService := usermanagement.NewUserService(usermanagement.UserOpts{
-		SavedUserPath: SAVED_USER_PATH,
+func initializeService() (gamestate.GameStateManager, usermanagement.UserManager, pokemon.PokemonService) {
+	gameManager := gamestate.GameStateManager(gamestate.NewGameStateManager(nil, "saved", "user"))
+
+	userService := usermanagement.NewUserManager(usermanagement.UserOpts{
+		GameState: gameManager,
 	})
 
-	pokemonService := pokemon.NewPokemonManager(pokemon.PokemonOpts{})
+	pokemonService := pokemon.NewPokemonService(pokemon.PokemonOpts{})
 
-	return userService, pokemonService
+	return gameManager, userService, pokemonService
 }

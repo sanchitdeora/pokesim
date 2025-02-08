@@ -42,7 +42,7 @@ func TestBattleUser_TestGetActivePokemon(t *testing.T) {
 	user := createBattleUser(ctrl)
 
 	assert.NotNil(t, user.GetActivePokemon())
-	assert.Equal(t, data.BasePokemonId(1), user.GetActivePokemon().Pokemon.ID)
+	assert.Equal(t, data.BasePokemonID(1), user.GetActivePokemon().Pokemon.ID)
 	assert.Equal(t, "bulbasaur", user.GetActivePokemon().Pokemon.Name)
 	assert.Equal(t, 75, user.GetActivePokemon().Pokemon.Level)
 	assert.False(t, user.GetActivePokemon().CanEvolve)
@@ -55,7 +55,7 @@ func TestBattleUser_TestGetParty(t *testing.T) {
 
 	assert.NotNil(t, user.GetParty())
 	assert.Equal(t, 1, len(user.GetParty()))
-	assert.Equal(t, data.BasePokemonId(4), user.GetParty()[0].Pokemon.ID)
+	assert.Equal(t, data.BasePokemonID(4), user.GetParty()[0].Pokemon.ID)
 	assert.Equal(t, "charmander", user.GetParty()[0].Pokemon.Name)
 	assert.Equal(t, 75, user.GetParty()[0].Pokemon.Level)
 	assert.False(t, user.GetActivePokemon().CanEvolve)
@@ -81,7 +81,7 @@ func TestBattleUser_TestSendBattleLog(t *testing.T) {
 func createBattleUser(ctrl *gomock.Controller) battletrainer.BattleTrainer {
 	return battletrainer.NewBattleUser(
 		battletrainer.BattleTrainerOpts{
-			PokemonManager: mock_pokemon_manager.NewMockPokemonManager(ctrl),
+			PokemonService: mock_pokemon_manager.NewMockPokemonService(ctrl),
 			UserManager:    mock_user_manager.NewMockUserManager(ctrl),
 		},
 		getTestUser(),
