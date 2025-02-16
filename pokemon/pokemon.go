@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 
+	"github.com/google/uuid"
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/utils"
@@ -17,6 +18,8 @@ type PokemonService interface {
 	ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.Pokemon)
 	EvGain(pokemon *data.Pokemon, evYieldToAdd data.PokemonStats)
 	GetExperienceRequiredForNextLevel(pokemon *data.Pokemon) int
+
+	GenerateStarterPokemon(basePokemon data.BasePokemon) *data.Pokemon
 }
 
 type PokemonOpts struct {
@@ -137,15 +140,15 @@ func (p *PokemonImpl) ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.
 }
 
 func (p *PokemonImpl) statUpgrades(pokemon *data.Pokemon) {
-	hp := calculateHPStatUpgrade(pokemon.BaseStats.HP.Value, &pokemon.Stats.HP, pokemon.Level)
+	hp := calculateHPStatUpgrade(pokemon.BaseStats.HP.Value, pokemon.Stats.HP.IV, pokemon.Stats.HP.EV, pokemon.Level)
 
-	attack := calculateOtherStatUpgrade(pokemon.BaseStats.Attack.Value, &pokemon.Stats.Attack, pokemon.Level)
-	defense := calculateOtherStatUpgrade(pokemon.BaseStats.Defense.Value, &pokemon.Stats.Defense, pokemon.Level)
+	attack := calculateOtherStatUpgrade(pokemon.BaseStats.Attack.Value, pokemon.Stats.Attack.IV, pokemon.Stats.Attack.EV, pokemon.Level)
+	defense := calculateOtherStatUpgrade(pokemon.BaseStats.Defense.Value, pokemon.Stats.Defense.IV, pokemon.Stats.Defense.EV, pokemon.Level)
 
-	spAttack := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialAttack.Value, &pokemon.Stats.SpecialAttack, pokemon.Level)
-	spDefense := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialDefense.Value, &pokemon.Stats.SpecialDefense, pokemon.Level)
+	spAttack := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialAttack.Value, pokemon.Stats.SpecialAttack.IV, pokemon.Stats.SpecialAttack.EV, pokemon.Level)
+	spDefense := calculateOtherStatUpgrade(pokemon.BaseStats.SpecialDefense.Value, pokemon.Stats.SpecialDefense.IV, pokemon.Stats.SpecialDefense.EV, pokemon.Level)
 
-	speed := calculateOtherStatUpgrade(pokemon.BaseStats.Speed.Value, &pokemon.Stats.Speed, pokemon.Level)
+	speed := calculateOtherStatUpgrade(pokemon.BaseStats.Speed.Value, pokemon.Stats.Speed.IV, pokemon.Stats.Speed.EV, pokemon.Level)
 
 	slog.Info("Stat upgrade for pokemon:")
 	p.opts.Logger.Log(fmt.Sprintf("\nHP: +%v", hp-pokemon.Stats.HP.Value))
@@ -182,6 +185,30 @@ func (p *PokemonImpl) GetExperienceRequiredForNextLevel(pokemon *data.Pokemon) i
 		slog.Error("invalid growth rate type found, defaulting to MediumFast", "growth rate type", pokemon.GrowthRate)
 		return nextLevelMediumFastExp(pokemon.Level)
 	}
+}
+
+func (p *PokemonImpl) GenerateStarterPokemon(basePokemon data.BasePokemon) *data.Pokemon {
+	level := 5
+
+	po := &data.Pokemon{
+		BasePokemon:    basePokemon,
+		PokemonUUID:    uuid.NewString(),
+		Level:          level,
+		ExperienceLeft: 0,
+		Stats: data.PokemonStats{
+			HP:             generatePokemonHPStat(basePokemon.BaseStats.HP.Value, level),
+			Attack:         generatePokemonOtherStat(basePokemon.BaseStats.Attack.Value, level),
+			Defense:        generatePokemonOtherStat(basePokemon.BaseStats.Defense.Value, level),
+			SpecialAttack:  generatePokemonOtherStat(basePokemon.BaseStats.SpecialAttack.Value, level),
+			SpecialDefense: generatePokemonOtherStat(basePokemon.BaseStats.SpecialDefense.Value, level),
+			Speed:          generatePokemonOtherStat(basePokemon.BaseStats.Speed.Value, level),
+		},
+		Moveset: setupMoveset(basePokemon, level),
+	}
+
+	slog.Info("Generated starter pokemon", "pokemon", po)
+
+	return po
 }
 
 // TODO: It is possible that pokemon has evolved by more than a level and surpassed the expected evolution level.

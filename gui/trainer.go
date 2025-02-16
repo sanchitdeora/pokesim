@@ -69,7 +69,8 @@ func (g *Gui) renderTrainerRow(gtx layout.Context, trainers []TrainerUI, index i
 				if idx >= len(trainers) {
 					// Add placeholder for missing trainers
 					children = append(children, layout.Flexed(0.25, func(gtx layout.Context) layout.Dimensions {
-						return g.renderPlaceholderCard(gtx)
+						return layout.Dimensions{}
+						// return g.renderPlaceholderCard(gtx)
 					}))
 					continue
 				}

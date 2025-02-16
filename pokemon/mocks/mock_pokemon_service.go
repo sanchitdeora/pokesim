@@ -70,6 +70,20 @@ func (mr *MockPokemonServiceMockRecorder) ExperienceGain(arg0, arg1 interface{})
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExperienceGain", reflect.TypeOf((*MockPokemonService)(nil).ExperienceGain), arg0, arg1)
 }
 
+// GenerateStarterPokemon mocks base method.
+func (m *MockPokemonService) GenerateStarterPokemon(arg0 data.BasePokemon) *data.Pokemon {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GenerateStarterPokemon", arg0)
+	ret0, _ := ret[0].(*data.Pokemon)
+	return ret0
+}
+
+// GenerateStarterPokemon indicates an expected call of GenerateStarterPokemon.
+func (mr *MockPokemonServiceMockRecorder) GenerateStarterPokemon(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateStarterPokemon", reflect.TypeOf((*MockPokemonService)(nil).GenerateStarterPokemon), arg0)
+}
+
 // GetExperienceRequiredForNextLevel mocks base method.
 func (m *MockPokemonService) GetExperienceRequiredForNextLevel(arg0 *data.Pokemon) int {
 	m.ctrl.T.Helper()

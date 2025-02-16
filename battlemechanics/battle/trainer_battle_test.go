@@ -52,11 +52,11 @@ func TestBattle(t *testing.T) {
 	battle := createTrainerBattleManager(gsm, gsm2)
 	assert.Nil(t, battle.Introduction())
 
-	game, err := gsm.Load()
+	game, err := gamestate.LoadGame(TestUserPath)
 	assert.NoError(t, err)
 	user := game.User
 
-	game2, err := gsm2.Load()
+	game2, err := gamestate.LoadGame(TestUser2Path)
 	assert.NoError(t, err)
 	user2 := game2.User
 

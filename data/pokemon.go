@@ -20,9 +20,9 @@ type PokemonSave struct {
 type Pokemon struct {
 	BasePokemon
 	PokemonUUID    string       `json:"pokemon_uuid"`
-	Stats          PokemonStats `json:"stats"`
 	Level          int          `json:"level"`
 	ExperienceLeft int          `json:"experience_left"`
+	Stats          PokemonStats `json:"stats"`
 	Moveset        Moveset      `json:"moveset"`
 }
 
@@ -103,6 +103,10 @@ const (
 	Status   MoveDamageClass = "status"
 	Special  MoveDamageClass = "special"
 )
+
+var StartPokemonIds = []BasePokemonID{
+	1, 4, 7,
+}
 
 func (s *PokemonSave) ToPokemon() *Pokemon {
 	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonID)

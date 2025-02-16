@@ -1,7 +1,9 @@
 package pokemon
 
 import (
+	"fmt"
 	"math"
+	"math/rand"
 
 	"github.com/sanchitdeora/PokeSim/data"
 )
@@ -9,13 +11,13 @@ import (
 const NatureCoeff = 1.0
 
 // hp calculation is different from the other stats
-func calculateHPStatUpgrade(baseHP int, pokemonStatHP *data.PokemonStat, level int) int {
-	return int(math.Floor(((((2 * float64(baseHP)) + float64(pokemonStatHP.IV) + (float64(pokemonStatHP.EV) / 4)) * float64(level)) / 100) + float64(level) + 10))
+func calculateHPStatUpgrade(baseHP int, iv int, ev int, level int) int {
+	return int(math.Floor(((((2 * float64(baseHP)) + float64(iv) + (float64(ev) / 4)) * float64(level)) / 100) + float64(level) + 10))
 }
 
 // all other stats calculation
-func calculateOtherStatUpgrade(baseStat int, pokemonStat *data.PokemonStat, level int) int {
-	return int(math.Floor(((((2*float64(baseStat))+float64(pokemonStat.IV)+(float64(pokemonStat.EV)/4))*float64(level))/100)+5) * NatureCoeff)
+func calculateOtherStatUpgrade(baseStat int, iv int, ev int, level int) int {
+	return int(math.Floor(((((2*float64(baseStat))+float64(iv)+(float64(ev)/4))*float64(level))/100)+5) * NatureCoeff)
 }
 
 func nextLevelErraticExp(level int) int {
@@ -66,4 +68,50 @@ func calculateExperienceGained(level int, baseExp int, winningPokemon *data.Poke
 	}
 
 	return int(math.Round(totalExp))
+}
+
+// generate starter pokemon
+
+func generatePokemonIVs() int {
+	randIndex := rand.Float64()
+	return int(math.Round(randIndex * (31)))
+}
+
+
+func generatePokemonHPStat(value, level int) data.PokemonStat {
+	iv := generatePokemonIVs()
+	return data.PokemonStat{
+		Value: calculateHPStatUpgrade(value, iv, 0, level),
+		IV:    iv,
+		EV:    0,
+	}
+}
+
+func generatePokemonOtherStat(value, level int) data.PokemonStat {
+	iv := generatePokemonIVs()
+	return data.PokemonStat{
+		Value: calculateOtherStatUpgrade(value, iv, 0, level),
+		IV:    iv,
+		EV:    0,
+	}
+}
+
+func setupMoveset(basePokemon data.BasePokemon, level int) data.Moveset {
+	var moveset data.Moveset
+
+	for i := range level {
+		fmt.Printf("levelIndex:%v, move:%v\n", i, basePokemon.MovesLearned[i])
+		move := basePokemon.MovesLearned[i]
+		switch i % 4 {
+		case 0:
+			moveset.Move1 = &move
+		case 1:
+			moveset.Move2 = &move
+		case 2:
+			moveset.Move3 = &move
+		case 3:
+			moveset.Move4 = &move
+		}
+	}
+	return moveset
 }

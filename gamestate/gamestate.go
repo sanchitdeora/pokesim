@@ -13,7 +13,7 @@ import (
 //go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_game_state_manager.go -package=mock_game_state_manager github.com/sanchitdeora/PokeSim/gamestate GameStateManager
 type GameStateManager interface {
 	Save() error
-	Load() (*GameState, error)
+	// Load() (*GameState, error)
 	Get() *GameState
 	AddTrainerProgress(trainerID string)
 }
@@ -35,10 +35,16 @@ type GameStateSave struct {
 	// Pokedex         *data.Pokedex
 }
 
-func NewGameStateManager(user *data.User, prefixPath string, filename string) GameStateManager {
-	if user == nil {
-		user = &data.User{}
+func GetGameStates(prefix string) []string {
+	if prefix == "" {
+		prefix = "/saved"
 	}
+
+	return utils.GetListOfFilesInDirectory(prefix)
+}
+
+func NewGameStateManager(user *data.User, prefixPath string, filename string) GameStateManager {
+	slog.Info("Creating game state manager...", "user", user, "filename", filename, "prefixPath", prefixPath)
 
 	if filename == "" {
 		filename = fmt.Sprintf("pokesim_%v", time.Now().Unix())
@@ -51,20 +57,13 @@ func NewGameStateManager(user *data.User, prefixPath string, filename string) Ga
 		filepath = fmt.Sprintf("saved/%s.json", filename)
 	}
 
-	game := &GameStateImpl{
-		GameState: &GameState{
-			User:            user,
-			TrainerProgress: make([]string, 0),
-			// Pokedex:         pokedex,
-		},
-		Filepath: filepath,
-	}
-
+	// Load Game
 	if utils.CheckPathExists(filepath) {
 		slog.Info("Loading game state...", "filepath", filepath)
-		game, err := game.Load()
+		game, err := LoadGame(filepath)
 		if err != nil {
 			slog.Error("error while loading game state", "error", err)
+			panic(err)
 		}
 
 		return &GameStateImpl{
@@ -73,12 +72,22 @@ func NewGameStateManager(user *data.User, prefixPath string, filename string) Ga
 		}
 	}
 
-	err := game.Save()
+	// New Game
+	gameState := &GameStateImpl{
+		GameState: &GameState{
+			User:            user,
+			TrainerProgress: make([]string, 0),
+			// Pokedex:         pokedex,
+		},
+		Filepath: filepath,
+	}
+
+	err := gameState.Save()
 	if err != nil {
 		slog.Error("error while saving game state", "error", err)
 	}
 
-	return game
+	return gameState
 }
 
 func (g *GameStateImpl) AddTrainerProgress(trainerID string) {
@@ -91,12 +100,12 @@ func (g *GameStateImpl) Save() error {
 	return utils.WriteJsonToFile(g.Filepath, g.ToGameStateSave())
 }
 
-func (g *GameStateImpl) Load() (*GameState, error) {
+func LoadGame(filepath string) (*GameState, error) {
 	var gameState *GameStateSave
 	var err error
 
-	if utils.CheckPathExists(g.Filepath) {
-		gameState, err = utils.ReadJsonFromFile[*GameStateSave](g.Filepath)
+	if utils.CheckPathExists(filepath) {
+		gameState, err = utils.ReadJsonFromFile[*GameStateSave](filepath)
 		if err != nil {
 			slog.Error("could not read from saved file", "error", err)
 			return nil, errors.ErrCouldNotReadFromFile
@@ -106,8 +115,7 @@ func (g *GameStateImpl) Load() (*GameState, error) {
 		return nil, errors.ErrFileDoesNotExist
 	}
 
-	g.GameState = gameState.ToGameState()
-	return g.GameState, nil
+	return gameState.ToGameState(), nil
 }
 
 func (g *GameStateImpl) Get() *GameState {

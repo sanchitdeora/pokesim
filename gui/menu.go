@@ -67,7 +67,11 @@ func (g *Gui) renderMenuItems() layout.FlexChild {
 					btn := g.Buttons[item.screen]
 
 					if btn.Clicked(gtx) {
-						g.SetCurrentScreen(item.screen)
+						if g.isMenuActive() {
+							g.SetCurrentScreen(item.screen)
+						} else {
+							// do nothing
+						}
 					}
 
 					return btn.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
@@ -86,6 +90,10 @@ func (g *Gui) renderMenuItems() layout.FlexChild {
 func (g *Gui) RenderCurrentScreen(gtx layout.Context) layout.Dimensions {
 	// slog.Info("Rendering current window", "current window", a.CurrentPage)
 	switch g.CurrentWindow {
+	case NewGameScreen:
+		return g.RenderNewGameScreen(gtx)
+	case LoadGameScreen:
+		return g.RenderLoadGameScreen(gtx)
 	case HomeScreen:
 		return g.RenderHomeScreen(gtx)
 	case BattleScreen:
@@ -109,4 +117,8 @@ func (g *Gui) RenderCurrentScreen(gtx layout.Context) layout.Dimensions {
 
 func (g *Gui) SetCurrentScreen(newWindow Screen) {
 	g.CurrentWindow = newWindow
+}
+
+func (g *Gui) isMenuActive() bool {
+	return g.opts.GameManager.Get() != nil
 }

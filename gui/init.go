@@ -42,7 +42,9 @@ var (
 type Screen int
 
 const (
-	HomeScreen Screen = iota
+	LoadGameScreen Screen = iota
+	NewGameScreen
+	HomeScreen
 	BattleScreen
 	TrainerScreen
 	PartyScreen
@@ -69,11 +71,12 @@ type Gui struct {
 	TrainerBattle TrainerBattle
 
 	// Pokemon Party and Summary Props
+	NewGame        NewGameUI
 	Party          Party
 	SummaryPokemon *data.Pokemon
 }
 
-func InitializeGUI(opts GuiOpts) {
+func InitializeGUI() {
 	go func() {
 		// Set up the window
 		window := setWindowOptions()
@@ -83,6 +86,8 @@ func InitializeGUI(opts GuiOpts) {
 
 		// State management
 		buttons := map[Screen]*widget.Clickable{
+			LoadGameScreen:       new(widget.Clickable),
+			NewGameScreen:        new(widget.Clickable),
 			HomeScreen:           new(widget.Clickable),
 			TrainerScreen:        new(widget.Clickable),
 			BattleScreen:         new(widget.Clickable),
@@ -93,9 +98,13 @@ func InitializeGUI(opts GuiOpts) {
 			ToBeReplaced:         new(widget.Clickable),
 		}
 
+		opts := GuiOpts{
+			PokemonService: pokemon.NewPokemonService(pokemon.PokemonOpts{}),
+		}
+
 		gui := &Gui{
 			opts:          opts,
-			CurrentWindow: HomeScreen,
+			CurrentWindow: LoadGameScreen,
 			Theme:         theme,
 			Buttons:       buttons,
 
@@ -104,6 +113,7 @@ func InitializeGUI(opts GuiOpts) {
 			},
 
 			Party:          DefaultPartyProps(),
+			NewGame:        NewGameUI{},
 			SummaryPokemon: nil,
 		}
 

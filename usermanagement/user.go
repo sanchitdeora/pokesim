@@ -31,11 +31,7 @@ func NewUserManager(opts UserOpts) UserManager {
 		return nil
 	}
 
-	gameState, err := opts.GameState.Load()
-	if err != nil {
-		slog.Error("could not load user", "error", err)
-		return nil
-	}
+	gameState := opts.GameState.Get()
 	return &UserImpl{
 		opts: opts,
 		user: gameState.User,

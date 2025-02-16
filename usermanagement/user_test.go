@@ -26,7 +26,7 @@ func TestLoadUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 
@@ -42,7 +42,7 @@ func TestStatUpdate_BattleWon(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 
@@ -82,7 +82,7 @@ func TestStatUpdate_BattleLost_NoMoney(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 
@@ -113,7 +113,7 @@ func TestStatUpdate_BattleLost_LostMoney(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 
@@ -146,7 +146,7 @@ func TestChangePokemonOrder_MoveDown(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 	user := userManager.GetUser()
@@ -166,7 +166,7 @@ func TestChangePokemonOrder_MoveUp(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 	user := userManager.GetUser()
@@ -186,7 +186,7 @@ func TestChangePokemonOrder_MoveDownWthLastPokemon_NoChange(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 	user := userManager.GetUser()
@@ -206,7 +206,7 @@ func TestChangePokemonOrder_MoveUpWthFirstPokemon_NoChange(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	gsm := mock_game_state_manager.NewMockGameStateManager(ctrl)
 
-	gsm.EXPECT().Load().Return(getTestGameState(), nil)
+	gsm.EXPECT().Get().Return(getTestGameState())
 
 	userManager := createUserManager(gsm)
 	user := userManager.GetUser()

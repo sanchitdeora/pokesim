@@ -59,6 +59,24 @@ func WriteJsonToFile[T any](relativePath string, data T) error {
 	return nil
 }
 
+func GetListOfFilesInDirectory(relativePath string) []string {
+	var files []string
+
+	fileInfo, err := os.ReadDir(GetFullPath(relativePath))
+	if err != nil {
+		slog.Error("error while reading directory", "error", err)
+	}
+
+	for _, file := range fileInfo {
+		if !file.IsDir() {
+			slog.Debug("file found", "name", file.Name())
+			files = append(files, file.Name())
+		}
+	}
+
+	return files
+}
+
 func CheckPathExists(path string) bool {
 	_, err := os.Stat(GetFullPath(path))
 	return err == nil || !os.IsNotExist(err)

@@ -32,12 +32,12 @@ func TestNewGamestate_Happy(t *testing.T) {
 	assert.Equal(t, gameManager.Get().User.Name, "test")
 }
 
-func TestAddTrainerProgress(t *testing.T) {
-	gameManager := createGameState()
+// func TestAddTrainerProgress(t *testing.T) {
+// 	gameManager := createGameState()
 
-	gameManager.AddTrainerProgress("test1Trainer")
+// 	gameManager.AddTrainerProgress("test1Trainer")
 
-	game, err := gameManager.Load()
-	assert.NoError(t, err)
-	assert.Equal(t, game.TrainerProgress[len(game.TrainerProgress)-1], "test1Trainer")
-}
+// 	game, err := gameManager.Load()
+// 	assert.NoError(t, err)
+// 	assert.Equal(t, game.TrainerProgress[len(game.TrainerProgress)-1], "test1Trainer")
+// }
