@@ -3,6 +3,7 @@ package gui
 import (
 	"fmt"
 	"image"
+	"log/slog"
 
 	"strconv"
 
@@ -151,7 +152,7 @@ func (g *Gui) renderActionCard(gtx layout.Context) layout.Dimensions {
 		screen Screen       // Navigation target
 	}{
 		{"Trainers", nil, TrainerScreen},
-		{"Wild", nil, ToBeReplaced},
+		{"Wild", nil, WildScreen},
 		{"Tournaments", nil, ToBeReplaced},
 		{"PokéShop", nil, ToBeReplaced},
 		{"Save", nil, ToBeReplaced},
@@ -239,6 +240,10 @@ func (g *Gui) renderActionCard(gtx layout.Context) layout.Dimensions {
 														}),
 														// Clickable Overlay for unlocked trainers
 														layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+															if g.Buttons[action.screen].Clicked(gtx) {
+																slog.Info("Clicked", "page", action.screen)
+																g.SetCurrentScreen(action.screen)
+															}
 															return g.Buttons[action.screen].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 																return layout.Dimensions{Size: gtx.Constraints.Max}
 															})
@@ -352,6 +357,7 @@ func (g *Gui) renderQuickAccess(gtx layout.Context) layout.Dimensions {
 									rowChildren = append(rowChildren, layout.Flexed(0.15, func(gtx layout.Context) layout.Dimensions {
 										btnStyle := material.Button(g.Theme, g.Buttons[item.page], item.buttonTxt)
 										if g.Buttons[item.page].Clicked(gtx) {
+											slog.Info("Clicked", "page", item.page)
 											g.SetCurrentScreen(item.page)
 										}
 										btnStyle.Color = TextColor

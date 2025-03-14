@@ -5,12 +5,12 @@
   "growth_rate": "medium-slow",
   "moves_learned_by_level": {
     "1": {
-      "id": 45,
-      "name": "growl",
+      "id": 33,
+      "name": "tackle",
       "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
+      "power": 40,
+      "damage_class": "physical",
       "type": "normal"
     },
     "12": {
@@ -22,33 +22,6 @@
       "damage_class": "physical",
       "type": "grass"
     },
-    "15": {
-      "id": 79,
-      "name": "sleep-powder",
-      "accuracy": 75,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "grass"
-    },
-    "24": {
-      "id": 230,
-      "name": "sweet-scent",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
-    },
-    "27": {
-      "id": 235,
-      "name": "synthesis",
-      "accuracy": 0,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "grass"
-    },
     "3": {
       "id": 22,
       "name": "vine-whip",
@@ -58,15 +31,6 @@
       "damage_class": "physical",
       "type": "grass"
     },
-    "30": {
-      "id": 388,
-      "name": "worry-seed",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "grass"
-    },
     "33": {
       "id": 438,
       "name": "power-whip",
@@ -74,24 +38,6 @@
       "priority": 0,
       "power": 120,
       "damage_class": "physical",
-      "type": "grass"
-    },
-    "6": {
-      "id": 74,
-      "name": "growth",
-      "accuracy": 0,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
-    },
-    "9": {
-      "id": 73,
-      "name": "leech-seed",
-      "accuracy": 90,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
       "type": "grass"
     }
   },
@@ -140,5 +86,7 @@
     }
   },
   "type1": "grass",
-  "type2": "poison"
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
 }

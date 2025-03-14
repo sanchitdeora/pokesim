@@ -1,0 +1,73 @@
+{
+  "id": 10,
+  "name": "caterpie",
+  "base_experience": 39,
+  "growth_rate": "medium",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "9": {
+      "id": 450,
+      "name": "bug-bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "bug"
+    }
+  },
+  "evolution_chain": {
+    "10": [
+      12
+    ],
+    "7": [
+      11
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0010.png",
+    "front_default": "./assets/pokemon/img/0010.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 45,
+      "iv": 0,
+      "ev": 1
+    },
+    "attack": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "is_legendary": false,
+  "is_mythical": false
+}

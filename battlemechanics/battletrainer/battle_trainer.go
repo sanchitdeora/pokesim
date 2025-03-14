@@ -83,6 +83,8 @@ func (b *BattleTrainerImpl) HandleTargetPokemonFainted(faintedPokemon *data.Batt
 		if utils.Contains(p.PokemonFaced, faintedPokemon.Pokemon.PokemonUUID) && p.BattleHP > 0 {
 			b.PokemonService.ExperienceGain(p.Pokemon, *faintedPokemon.Pokemon)
 			b.PokemonService.EvGain(p.Pokemon, faintedPokemon.BaseStats)
+
+			// b.ActivePokemon.CanEvolve = b.PokemonService.CanEvolve(p.Pokemon)
 		}
 	}
 }
@@ -93,10 +95,6 @@ func (b *BattleTrainerImpl) SetOpponentTarget(target *data.BattlePokemon) {
 
 func (b *BattleTrainerImpl) SendBattleLog(message string) {
 	b.Logger.Log(message)
-}
-
-func (b *BattleTrainerImpl) GetAction() data.BattleAction {
-	return data.BattleAction{}
 }
 
 func (b *BattleTrainerImpl) HandleAction(action data.BattleAction) error {
@@ -188,8 +186,9 @@ func (b *BattleTrainerImpl) handleBattleEnd(result data.Result) {
 
 	// evolve all pokemons
 	for _, p := range append([]*data.BattlePokemon{b.ActivePokemon}, b.BattleParty...) {
-		if p.CanEvolve {
-			b.PokemonService.Evolve(p.Pokemon)
-		}
+		// if p.CanEvolve {
+		slog.Info("Evolving pokemon", "pokemon", p.Pokemon.PokemonUUID, "Name", p.Pokemon.Name)
+		b.PokemonService.Evolve(p.Pokemon)
+		// }
 	}
 }

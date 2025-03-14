@@ -124,7 +124,7 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 				if trainer.Unlocked {
 					if g.Buttons[BattleScreen].Clicked(gtx) {
 						slog.Info("Battle Screen clicked")
-						g.TrainerBattle = g.NewTrainerBattle(g.opts.UserManager.GetUser(), trainer.Trainer)
+						g.Battle = g.NewTrainerBattle(g.opts.UserManager.GetUser(), trainer.Trainer)
 						return g.LoadBattle(gtx)
 					}
 

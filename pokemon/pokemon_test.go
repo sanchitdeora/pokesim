@@ -5,12 +5,15 @@ import (
 	"testing"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/gamestate"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 	"github.com/stretchr/testify/assert"
 )
 
 func createPokemonManager() pokemon.PokemonService {
-	return pokemon.NewPokemonService(pokemon.PokemonOpts{})
+	return pokemon.NewPokemonService(pokemon.PokemonOpts{
+		GameStateManager: gamestate.NewGameStateManager(nil, "testfiles/gametest", "Ash"),
+	})
 }
 
 func TestExperienceGain(t *testing.T) {
@@ -77,4 +80,12 @@ func TestExperienceGain(t *testing.T) {
 
 	assert.Equal(t, 31, pokemon.Level)
 	assert.Equal(t, math.Pow(31, 3), float64(pokemon.ExperienceLeft))
+}
+
+func TestSearchWildPokemon(t *testing.T) {
+	pm := createPokemonManager()
+
+	wildPokemon := pm.SearchWildPokemon(data.Forest)
+
+	assert.NotNil(t, wildPokemon)
 }

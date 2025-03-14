@@ -1,0 +1,151 @@
+{
+  "id": 19,
+  "name": "rattata",
+  "base_experience": 51,
+  "growth_rate": "medium",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "13": {
+      "id": 228,
+      "name": "pursuit",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "16": {
+      "id": 36,
+      "name": "take-down",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "19": {
+      "id": 372,
+      "name": "assurance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "21": {
+      "id": 158,
+      "name": "hyper-fang",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "22": {
+      "id": 242,
+      "name": "crunch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "25": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "28": {
+      "id": 162,
+      "name": "super-fang",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "31": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "34": {
+      "id": 283,
+      "name": "endeavor",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "4": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      20
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0019.png",
+    "front_default": "./assets/pokemon/img/0019.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 56,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 72,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "normal",
+  "is_legendary": false,
+  "is_mythical": false
+}

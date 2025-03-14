@@ -4,6 +4,7 @@ type BattlePokemon struct {
 	*Pokemon
 	BattleHP     int
 	PokemonFaced []string
+
 	// deprecated
 	CanEvolve bool
 	IsFainted bool
@@ -17,10 +18,10 @@ const (
 )
 
 type Result struct {
-	Status         BattleResultStatus
-	Money          int
-	BonusItems     ItemMap
-	BadgeEarned    BadgeType
+	Status      BattleResultStatus
+	Money       int
+	BonusItems  ItemMap
+	BadgeEarned BadgeType
 	// deprecated
 	UserWin bool
 }

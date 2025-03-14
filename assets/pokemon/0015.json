@@ -1,0 +1,137 @@
+{
+  "id": 15,
+  "name": "beedrill",
+  "base_experience": 178,
+  "growth_rate": "medium",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 450,
+      "name": "bug-bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "11": {
+      "id": 210,
+      "name": "fury-cutter",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "13": {
+      "id": 99,
+      "name": "rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "17": {
+      "id": 228,
+      "name": "pursuit",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "23": {
+      "id": 474,
+      "name": "venoshock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "26": {
+      "id": 372,
+      "name": "assurance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "32": {
+      "id": 42,
+      "name": "pin-missile",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 25,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "41": {
+      "id": 283,
+      "name": "endeavor",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 0,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "44": {
+      "id": 565,
+      "name": "fell-stinger",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "bug"
+    }
+  },
+  "evolution_chain": {
+    "10": [
+      15
+    ],
+    "7": [
+      14
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0015.png",
+    "front_default": "./assets/pokemon/img/0015.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    },
+    "speed": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

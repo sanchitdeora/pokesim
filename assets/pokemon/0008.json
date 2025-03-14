@@ -5,12 +5,12 @@
   "growth_rate": "medium-slow",
   "moves_learned_by_level": {
     "1": {
-      "id": 110,
-      "name": "withdraw",
-      "accuracy": 0,
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
+      "power": 40,
+      "damage_class": "special",
       "type": "water"
     },
     "12": {
@@ -39,15 +39,6 @@
       "power": 65,
       "damage_class": "special",
       "type": "water"
-    },
-    "35": {
-      "id": 504,
-      "name": "shell-smash",
-      "accuracy": 0,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
     },
     "50": {
       "id": 834,
@@ -112,5 +103,7 @@
       "ev": 0
     }
   },
-  "type1": "water"
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
 }

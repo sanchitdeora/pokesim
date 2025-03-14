@@ -12,6 +12,10 @@ type Chain struct {
 }
 
 type EvolutionDetails struct {
-	MinLevel int        `json:"min_level"`
-	Trigger  BaseStruct `json:"trigger"`
+	MinLevel     int        `json:"min_level"`
+	Trigger      BaseStruct `json:"trigger"`
+	MinHappiness int        `json:"min_happiness"`
+	HeldItem     BaseStruct `json:"held_item"`
+	TimeOfDay    string     `json:"time_of_day"`
+	Location     string     `json:"location"`
 }

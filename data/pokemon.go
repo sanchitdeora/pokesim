@@ -9,21 +9,23 @@ import (
 type BasePokemonID int
 
 type PokemonSave struct {
-	BasePokemonID  BasePokemonID `json:"base_pokemon_id"`
-	PokemonUUID    string        `json:"pokemon_uuid"`
-	Stats          PokemonStats  `json:"stats"`
-	Level          int           `json:"level"`
-	ExperienceLeft int           `json:"experience_left"`
-	Moveset        Moveset       `json:"moveset"`
+	BasePokemonID     BasePokemonID `json:"base_pokemon_id"`
+	PokemonUUID       string        `json:"pokemon_uuid"`
+	Stats             PokemonStats  `json:"stats"`
+	Level             int           `json:"level"`
+	ExperienceLeft    int           `json:"experience_left"`
+	Moveset           Moveset       `json:"moveset"`
+	EvolutionRejected bool          `json:"evolution_rejected"`
 }
 
 type Pokemon struct {
 	BasePokemon
-	PokemonUUID    string       `json:"pokemon_uuid"`
-	Level          int          `json:"level"`
-	ExperienceLeft int          `json:"experience_left"`
-	Stats          PokemonStats `json:"stats"`
-	Moveset        Moveset      `json:"moveset"`
+	PokemonUUID       string       `json:"pokemon_uuid"`
+	Level             int          `json:"level"`
+	ExperienceLeft    int          `json:"experience_left"`
+	Stats             PokemonStats `json:"stats"`
+	Moveset           Moveset      `json:"moveset"`
+	EvolutionRejected bool         `json:"evolution_rejected"`
 }
 
 type BasePokemon struct {
@@ -37,6 +39,8 @@ type BasePokemon struct {
 	BaseStats      PokemonStats            `json:"base_stats"`
 	Type1          PokemonTypeName         `json:"type1"`
 	Type2          PokemonTypeName         `json:"type2,omitempty"`
+	IsLegendary    bool                    `json:"is_legendary"`
+	IsMythical     bool                    `json:"is_mythical"`
 }
 
 type Sprites struct {
@@ -100,9 +104,50 @@ type MoveDamageClass string
 
 const (
 	Physical MoveDamageClass = "physical"
-	Status   MoveDamageClass = "status"
 	Special  MoveDamageClass = "special"
+	Status   MoveDamageClass = "status"
 )
+
+type EvolutionStage int
+
+const (
+	PreEvolution EvolutionStage = iota
+	MidEvolution
+	FinalEvolution
+)
+
+type LevelUpEvent struct {
+	EventType LevelUpEventType `json:"event_type"`
+	Body      interface{}      `json:"body"`
+}
+
+type LevelUpEventType string
+
+const (
+	LevelUpEventLearnMove LevelUpEventType = "learn_move"
+	LevelUpEventEvolve    LevelUpEventType = "evolve"
+)
+
+type EventEvolveBody struct {
+	PokemonUUID        string      `json:"pokemon_uuid"`
+	CurrentBasePokemon BasePokemon `json:"current_base_pokemon"`
+	EvolvedBasePokemon BasePokemon `json:"evolved_base_pokemon"`
+}
+
+type ResponseEvolveBody struct {
+	AcceptEvolution bool `json:"accept_evolution"`
+}
+
+type EventLearnMoveBody struct {
+	Pokemon Pokemon `json:"pokemon"`
+	NewMove Moves   `json:"new_move"`
+}
+
+type ResponseLearnMoveBody struct {
+	UpdatedMoveset Moveset `json:"moveset"`
+	ReplacedMove   Moves   `json:"replaced_move"`
+	NewMove        Moves   `json:"new_move"`
+}
 
 var StartPokemonIds = []BasePokemonID{
 	1, 4, 7,
@@ -112,12 +157,13 @@ func (s *PokemonSave) ToPokemon() *Pokemon {
 	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonID)
 	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](path)
 	return &Pokemon{
-		PokemonUUID:    s.PokemonUUID,
-		BasePokemon:    basePokemon,
-		Stats:          s.Stats,
-		Level:          s.Level,
-		ExperienceLeft: s.ExperienceLeft,
-		Moveset:        s.Moveset,
+		PokemonUUID:       s.PokemonUUID,
+		BasePokemon:       basePokemon,
+		Stats:             s.Stats,
+		Level:             s.Level,
+		ExperienceLeft:    s.ExperienceLeft,
+		Moveset:           s.Moveset,
+		EvolutionRejected: s.EvolutionRejected,
 	}
 }
 
@@ -130,11 +176,12 @@ const (
 
 func (p *Pokemon) ToPokemonSave() *PokemonSave {
 	return &PokemonSave{
-		PokemonUUID:    p.PokemonUUID,
-		BasePokemonID:  p.BasePokemon.ID,
-		Stats:          p.Stats,
-		Level:          p.Level,
-		ExperienceLeft: p.ExperienceLeft,
-		Moveset:        p.Moveset,
+		PokemonUUID:       p.PokemonUUID,
+		BasePokemonID:     p.BasePokemon.ID,
+		Stats:             p.Stats,
+		Level:             p.Level,
+		ExperienceLeft:    p.ExperienceLeft,
+		Moveset:           p.Moveset,
+		EvolutionRejected: p.EvolutionRejected,
 	}
 }

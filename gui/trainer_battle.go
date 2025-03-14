@@ -2,7 +2,6 @@ package gui
 
 import (
 	"log/slog"
-	"time"
 
 	"gioui.org/layout"
 	"gioui.org/widget"
@@ -27,6 +26,8 @@ const (
 	MainBattle DialogActionAreaType = iota
 	SwitchDialog
 	BagDialog
+	EvolveDialog
+	LearnMoveDialog
 )
 
 const (
@@ -38,17 +39,25 @@ const (
 	Move2Btn        = "Move2"
 	Move3Btn        = "Move3"
 	Move4Btn        = "Move4"
+	NewMoveBtn      = "NewMove"
 	EndBattleBtn    = "End Battle"
 	SwitchDialogBtn = "Switch"
 	CancelSwitchBtn = "Cancel"
+	EvolveBtn       = "Evolve"
+	LearnMoveBtn    = "LearnMove"
 )
 
-type TrainerBattle struct {
+type Battle struct {
 	PokemonBattle battle.PokemonBattle
 	User          battletrainer.BattleTrainer
 	Opponent      battletrainer.BattleTrainer
 
 	ActionChan chan data.BattleAction
+
+	LevelUpEventsChan   chan data.LevelUpEvent
+	LevelUpResponseChan chan data.LevelUpEvent
+	LevelUpBody         interface{}
+
 	LogChan    chan string
 	LogList    *widget.List
 	LogContent []string
@@ -58,16 +67,23 @@ type TrainerBattle struct {
 	ActionButtons        map[string]*widget.Clickable
 	PokemonSwitchButtons []*widget.Clickable
 	UseItemButtons       map[data.ItemName]*widget.Clickable
+
+	// Learn New Move Props
+	LearnNewMove LearnNewMoveUI
 }
 
-func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) TrainerBattle {
+func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
 	battleAction := make(chan data.BattleAction, 1)
 	logChan := make(chan string, 5)
+	levelUpEventsChan := make(chan data.LevelUpEvent, 10)
+	levelUpResponseChan := make(chan data.LevelUpEvent, 10)
 
 	battleUser := battletrainer.NewBattleUser(battletrainer.BattleTrainerOpts{
 		UserManager: g.opts.UserManager,
 		PokemonService: pokemon.NewPokemonService(pokemon.PokemonOpts{
-			Logger: logger.NewChannelLogger(logChan),
+			Logger:           logger.NewChannelLogger(logChan),
+			GameStateManager: g.opts.GameManager,
+			LvlUpActions:     pokemon.NewLevelUpEvents(levelUpEventsChan, levelUpResponseChan),
 		}),
 	}, user, battleAction, logChan)
 
@@ -89,6 +105,8 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) TrainerB
 		Move4Btn:        new(widget.Clickable),
 		EndBattleBtn:    new(widget.Clickable),
 		CancelSwitchBtn: new(widget.Clickable),
+		EvolveBtn:       new(widget.Clickable),
+		LearnMoveBtn:    new(widget.Clickable),
 	}
 	pokemonSwitchBtns := make([]*widget.Clickable, len(battleUser.GetParty()))
 	for i := range pokemonSwitchBtns {
@@ -100,13 +118,22 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) TrainerB
 		useItemBtns[itemName] = new(widget.Clickable)
 	}
 
-	return TrainerBattle{
+	forgetMovesBtns := make([]*widget.Clickable, 5)
+	for i := range forgetMovesBtns {
+		forgetMovesBtns[i] = new(widget.Clickable)
+	}
+
+	return Battle{
 		PokemonBattle: pokemonBattle,
 		Opponent:      battleTrainer,
 		User:          battleUser,
 
 		ActionChan: battleAction,
-		LogChan:    logChan,
+
+		LevelUpEventsChan:   levelUpEventsChan,
+		LevelUpResponseChan: levelUpResponseChan,
+
+		LogChan: logChan,
 		LogList: &widget.List{
 			List: layout.List{Axis: layout.Vertical},
 		},
@@ -117,7 +144,17 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) TrainerB
 		ActionButtons:        buttons,
 		PokemonSwitchButtons: pokemonSwitchBtns,
 		UseItemButtons:       useItemBtns,
+
+		LearnNewMove: LearnNewMoveUI{
+			SelectedIndex:   -1,
+			ForgetMovesBtns: forgetMovesBtns,
+		},
 	}
+}
+
+type LearnNewMoveUI struct {
+	SelectedIndex   int
+	ForgetMovesBtns []*widget.Clickable
 }
 
 func (g *Gui) LoadBattle(gtx layout.Context) layout.Dimensions {
@@ -125,13 +162,13 @@ func (g *Gui) LoadBattle(gtx layout.Context) layout.Dimensions {
 	g.SetCurrentScreen(BattleScreen)
 
 	go g.InitiateBattle()
-	go g.LogBattle(gtx)
+	go g.ReceiveChannelActions(gtx)
 
 	return g.RenderBattleScreen(gtx)
 }
 
 func (g *Gui) InitiateBattle() {
-	err := g.TrainerBattle.PokemonBattle.Introduction()
+	err := g.Battle.PokemonBattle.Introduction()
 	if err != nil {
 		slog.Error("Error found within battle", "error", err)
 		panic(err)
@@ -140,24 +177,31 @@ func (g *Gui) InitiateBattle() {
 	g.SetActionBtns(EndBattle)
 }
 
-func (g *Gui) LogBattle(gtx layout.Context) {
-	timeOutFlag := false
+func (g *Gui) ReceiveChannelActions(gtx layout.Context) {
 	for {
 		select {
-		case data := <-g.TrainerBattle.LogChan:
-			slog.Info(data)
-			g.TrainerBattle.LogContent = append(g.TrainerBattle.LogContent, data)
-		case <-time.After(60 * time.Second):
-			slog.Info("Timeout waiting for channel")
-			timeOutFlag = true
-		}
+		case log := <-g.Battle.LogChan:
+			slog.Info(log)
+			g.Battle.LogContent = append(g.Battle.LogContent, log)
 
-		if timeOutFlag {
-			break
+		case events := <-g.Battle.LevelUpEventsChan:
+			slog.Info("receiving level up events", "data", events)
+			g.Battle.LevelUpBody = events.Body
+			if events.EventType == data.LevelUpEventEvolve {
+				g.Battle.DialogActionArea = EvolveDialog
+			} else if events.EventType == data.LevelUpEventLearnMove {
+				slog.Info("receiving level up events", "data", events, "body", events.Body.(data.EventLearnMoveBody))
+				g.Battle.DialogActionArea = LearnMoveDialog
+			}
 		}
 	}
 }
 
+func (g *Gui) SendLevelUpResponse(gtx layout.Context, response data.LevelUpEvent) {
+	slog.Info("sending level up response", "data", response)
+	g.Battle.LevelUpResponseChan <- response
+}
+
 func (g *Gui) SetActionBtns(actionArea ActionAreaType) {
-	g.TrainerBattle.ActionArea = actionArea
+	g.Battle.ActionArea = actionArea
 }

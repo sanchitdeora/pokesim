@@ -11,6 +11,7 @@ import (
 	"gioui.org/widget/material"
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/gamestate"
+	"github.com/sanchitdeora/PokeSim/pokemon"
 	"github.com/sanchitdeora/PokeSim/usermanagement"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
@@ -160,7 +161,7 @@ func (g *Gui) renderStarterPokemonCard(gtx layout.Context, starterPokemon data.B
 		}.Layout(gtx,
 			// Trainer Image
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
-				img := g.loadPokemonImage(starterPokemon.SpritesURL.FrontPath)
+				img := loadImage(starterPokemon.SpritesURL.FrontPath)
 				img.Fit = widget.Contain
 
 				// Scale down by applying an inset (adjust Dp as needed)
@@ -189,7 +190,6 @@ func (g *Gui) renderStarterPokemonCard(gtx layout.Context, starterPokemon data.B
 			}),
 		)
 	})
-
 }
 
 func (g *Gui) isStartGameButtonDisabled() bool {
@@ -210,6 +210,8 @@ func (g *Gui) renderStartGameBtn(gtx layout.Context) layout.Dimensions {
 			"", g.NewGame.NewTrainerEditor.Text(),
 		)
 		g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
+		g.opts.PokemonService = pokemon.NewPokemonService(pokemon.PokemonOpts{GameStateManager: g.opts.GameManager})
+
 		// slog.Info("Starting new game", "user", *g.opts.GameManager.Get())
 		g.NewGame = DefaultNewGameProps()
 		g.SetCurrentScreen(HomeScreen)

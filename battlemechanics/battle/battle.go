@@ -6,8 +6,3 @@ type PokemonBattle interface {
     Conclusion() bool
     // GetBattleReport() *BattleState
 }
-
-// type WildBattle struct{
-// 	user battletrainer.BattleTrainer
-// 	wild data.BattlePokemon
-// }

@@ -45,7 +45,7 @@ func TestTrainerBattle_TrainerBattleManager(t *testing.T) {
 	))
 }
 
-func TestBattle(t *testing.T) {
+func TestTrainerBattle(t *testing.T) {
 	gsm := gamestate.NewGameStateManager(getTestUser(), TestUserSavedPath, TestUserFileName)
 	gsm2 := gamestate.NewGameStateManager(getTestUser2(), TestUserSavedPath, TestUser2FileName)
 

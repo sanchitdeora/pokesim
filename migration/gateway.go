@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/sanchitdeora/PokeSim/migration/types"
+	"github.com/sanchitdeora/PokeSim/utils"
 )
 
 func GetPokemon(url string) (*types.Pokemon, error) {
@@ -37,7 +38,7 @@ func DownloadPNG(url string, filename string) error {
 		return fmt.Errorf("bad status code: %d", resp.StatusCode)
 	}
 
-	file, err := os.Create(filename)
+	file, err := os.Create(utils.GetFullPath(filename))
 	if err != nil {
 		return err
 	}

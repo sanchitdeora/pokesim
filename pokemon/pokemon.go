@@ -3,27 +3,34 @@ package pokemon
 import (
 	"fmt"
 	"log/slog"
+	"math"
+	"math/rand"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/gamestate"
 	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
-//go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_pokemon_service.go -package=mock_pokemon_service github.com/sanchitdeora/PokeSim/pokemon PokemonService
+//go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_pokemon.go -package=mock_pokemon github.com/sanchitdeora/PokeSim/pokemon PokemonService
 type PokemonService interface {
 	// LevelUp(pokemon *data.Pokemon)
 	Evolve(pokemon *data.Pokemon)
-	LearnNewMoves(move *data.Moves)
+	LearnNewMoves(pokemon *data.Pokemon)
 	ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.Pokemon)
 	EvGain(pokemon *data.Pokemon, evYieldToAdd data.PokemonStats)
 	GetExperienceRequiredForNextLevel(pokemon *data.Pokemon) int
 
 	GenerateStarterPokemon(basePokemon data.BasePokemon) *data.Pokemon
+	SearchWildPokemon(env data.Environment) *data.Pokemon
 }
 
 type PokemonOpts struct {
-	Logger logger.Logger
+	Logger           logger.Logger
+	GameStateManager gamestate.GameStateManager
+	LvlUpActions     LevelUp
 }
 
 type PokemonImpl struct {
@@ -47,15 +54,13 @@ func (p *PokemonImpl) LevelUp(pokemon *data.Pokemon) {
 	// calculate pokemon experience left
 	pokemon.ExperienceLeft = p.GetExperienceRequiredForNextLevel(pokemon)
 
-	// TODO: get user input if pokemon learns moves; if yes which moveset?
-	// if move, exists := pokemon.MovesLearned[pokemon.Level]; exists {
-	// 	p.LearnNewMoves(&move)
-	// }
+	// should pokemon learns moves; if yes which moveset.
+	p.LearnNewMoves(pokemon)
 }
 
 func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 	if !canPokemonEvolve(pokemon) {
-		slog.Debug("pokemon cannot evolve", "pokemon", pokemon.Name, "pokemonUUID", pokemon.PokemonUUID)
+		slog.Info("pokemon cannot evolve", "pokemon", pokemon.Name, "pokemonUUID", pokemon.PokemonUUID)
 		return
 	}
 
@@ -67,18 +72,80 @@ func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 	} else if len(evolvedBasePokemonPath) == 0 {
 		slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name)
 	} else {
+
 		evolvedBasePokemon, err := getBasePokemonByID(evolvedBasePokemonPath[0])
 		if err != nil {
 			slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name, "error", err)
 		}
-		pokemon.BasePokemon = *evolvedBasePokemon
+
+		responseEvolveBody := p.shouldPokemonEvolve(pokemon, evolvedBasePokemon)
+
+		if !responseEvolveBody.AcceptEvolution {
+			pokemon.EvolutionRejected = true
+			return
+		}
+
+		pokemon.BasePokemon = evolvedBasePokemon
+		slog.Info("user info", "user", p.opts.GameStateManager.Get().User.Party[0])
 	}
 
 	p.statUpgrades(pokemon)
+	p.opts.GameStateManager.Save()
 }
 
-func (p *PokemonImpl) LearnNewMoves(move *data.Moves) {
+func (p *PokemonImpl) LearnNewMoves(pokemon *data.Pokemon) {
 	// input which move should be replaced.
+	newMove, exists := pokemon.MovesLearned[pokemon.Level]
+	if !exists {
+		return
+	}
+
+	if pokemon.Moveset.Move1 == nil {
+		pokemon.Moveset.Move1 = &newMove
+		p.opts.Logger.Log(fmt.Sprintf("%s learned move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(newMove.Name)))
+		return
+	}
+	if pokemon.Moveset.Move2 == nil {
+		pokemon.Moveset.Move2 = &newMove
+		p.opts.Logger.Log(fmt.Sprintf("%s learned move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(newMove.Name)))
+		return
+	}
+	if pokemon.Moveset.Move3 == nil {
+		pokemon.Moveset.Move3 = &newMove
+		p.opts.Logger.Log(fmt.Sprintf("%s learned move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(newMove.Name)))
+		return
+	}
+	if pokemon.Moveset.Move4 == nil {
+		pokemon.Moveset.Move4 = &newMove
+		p.opts.Logger.Log(fmt.Sprintf("%s learned move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(newMove.Name)))
+		return
+	}
+
+	// replace move request
+	p.opts.LvlUpActions.SendEvent(data.LevelUpEvent{
+		EventType: data.LevelUpEventLearnMove,
+		Body: data.EventLearnMoveBody{
+			Pokemon: *pokemon,
+			NewMove: newMove,
+		},
+	})
+
+	// receive response from user.
+	var learnMoveBody data.ResponseLearnMoveBody
+	for {
+		action := p.opts.LvlUpActions.ReceiveResponse()
+		if action.EventType == data.LevelUpEventLearnMove {
+			learnMoveBody = action.Body.(data.ResponseLearnMoveBody)
+			break
+		}
+	}
+	if learnMoveBody.NewMove == learnMoveBody.ReplacedMove {
+		p.opts.Logger.Log(fmt.Sprintf("%s did not learn move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(learnMoveBody.NewMove.Name)))
+	} else {
+		pokemon.Moveset = learnMoveBody.UpdatedMoveset
+		p.opts.Logger.Log(fmt.Sprintf("%s learned move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(learnMoveBody.NewMove.Name)))
+		p.opts.Logger.Log(fmt.Sprintf("%s forgot move %s", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), utils.ToCapitalizeFirstLetterOfEachWord(learnMoveBody.ReplacedMove.Name)))
+	}
 }
 
 func (p *PokemonImpl) EvGain(pokemon *data.Pokemon, evYieldToAdd data.PokemonStats) {
@@ -188,34 +255,133 @@ func (p *PokemonImpl) GetExperienceRequiredForNextLevel(pokemon *data.Pokemon) i
 }
 
 func (p *PokemonImpl) GenerateStarterPokemon(basePokemon data.BasePokemon) *data.Pokemon {
-	level := 5
-
-	po := &data.Pokemon{
-		BasePokemon:    basePokemon,
-		PokemonUUID:    uuid.NewString(),
-		Level:          level,
-		ExperienceLeft: 0,
-		Stats: data.PokemonStats{
-			HP:             generatePokemonHPStat(basePokemon.BaseStats.HP.Value, level),
-			Attack:         generatePokemonOtherStat(basePokemon.BaseStats.Attack.Value, level),
-			Defense:        generatePokemonOtherStat(basePokemon.BaseStats.Defense.Value, level),
-			SpecialAttack:  generatePokemonOtherStat(basePokemon.BaseStats.SpecialAttack.Value, level),
-			SpecialDefense: generatePokemonOtherStat(basePokemon.BaseStats.SpecialDefense.Value, level),
-			Speed:          generatePokemonOtherStat(basePokemon.BaseStats.Speed.Value, level),
-		},
-		Moveset: setupMoveset(basePokemon, level),
-	}
-
-	slog.Info("Generated starter pokemon", "pokemon", po)
-
-	return po
+	return generatePokemon(basePokemon, 5)
 }
 
-// TODO: It is possible that pokemon has evolved by more than a level and surpassed the expected evolution level.
-// Also check lower levels to confirm if it can evolve.
+func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
+	minLvl, maxLvl := p.getWildPokemonLevelRange()
+
+	wildEncounters, _ := utils.ReadJsonFromFile[map[data.BasePokemonID]data.WildEncounter]("./testfiles/wild_encounters.json")
+
+	filterByLvlAndEnvs := make([]data.WildEncounter, 0)
+
+	// Step 1: filter pokemons by level and environment
+	for _, encounter := range wildEncounters {
+		if encounter.EvolvedAt > maxLvl {
+			continue
+		}
+
+		if utils.Contains(encounter.Environments, env) {
+			filterByLvlAndEnvs = append(filterByLvlAndEnvs, encounter)
+		}
+	}
+
+	// Step 2: Group by rarity and avoid duplicates
+	wildEncounterMap := make(map[data.Rarity]map[int]data.WildEncounter)
+
+	for _, encounter := range filterByLvlAndEnvs {
+		if _, exists := wildEncounterMap[encounter.BaseRarity]; !exists {
+			wildEncounterMap[encounter.BaseRarity] = make(map[int]data.WildEncounter)
+		}
+		wildEncounterMap[encounter.BaseRarity][int(encounter.BasePokemonID)] = encounter
+	}
+
+	// Step 3: Calculate weights
+	weightedEncounters := make([]data.WildEncounter, 0)
+	totalWeight := 0.0
+
+	for rarity, encounters := range wildEncounterMap {
+		for _, encounter := range encounters {
+			baseWeight := getBaseRarityWeight(rarity)
+
+			// Apply dynamic rarity adjustment
+			dynamicWeight := adjustRarityByProgress(encounter, minLvl, maxLvl)
+
+			// Apply environment weight adjustment
+			typeMatchWeight := getEnvironmentMatchWeight(env, encounter)
+
+			// Final weight calculation
+			finalWeight := baseWeight * dynamicWeight * typeMatchWeight
+
+			encounter.Weight = finalWeight
+			totalWeight += finalWeight
+			weightedEncounters = append(weightedEncounters, encounter)
+		}
+	}
+
+	// Step 4: Weighted random selection
+	if totalWeight == 0 {
+		return nil
+	}
+
+	randWeight := rand.Float64() * totalWeight
+	currentWeight := 0.0
+
+	for _, encounter := range weightedEncounters {
+		currentWeight += encounter.Weight
+		if randWeight <= currentWeight {
+
+			if minLvl < encounter.EvolvedAt {
+				minLvl = encounter.EvolvedAt
+			}
+			lvl := int(math.Round(utils.RandomGenerator(float64(minLvl), float64(maxLvl))))
+			basePokemon, err := getBasePokemonByID(encounter.BasePokemonID)
+			if err != nil {
+				slog.Error("failed to get base pokemon", "error", err)
+				return nil
+			}
+
+			slog.Info("min level: %d, max level: %d", "minLvl", minLvl, "maxLvl", maxLvl, "level", lvl)
+
+			return generatePokemon(basePokemon, lvl)
+		}
+	}
+	return nil
+}
+
 func canPokemonEvolve(pokemon *data.Pokemon) bool {
-	_, exists := pokemon.EvolutionChain[pokemon.Level]
-	return exists
+	if pokemon.EvolutionRejected {
+		return false
+	}
+
+	startLevel := 1
+	for level, evolutions := range pokemon.EvolutionChain {
+		if evolutions[0] == pokemon.BasePokemon.ID && pokemon.Level > level {
+			startLevel = level + 1
+			break
+		}
+	}
+	for i := startLevel; i <= pokemon.Level; i++ {
+		if _, exists := pokemon.EvolutionChain[i]; exists && pokemon.EvolutionChain[i][0] != pokemon.BasePokemon.ID {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (p *PokemonImpl) shouldPokemonEvolve(pokemon *data.Pokemon, evolvedBasePokemon data.BasePokemon) data.ResponseEvolveBody {
+	slog.Info("pokemon can evolve", "pokemon", pokemon.Name, "evolving to", evolvedBasePokemon.Name)
+
+	// ask user if evolve?
+	p.opts.LvlUpActions.SendEvent(data.LevelUpEvent{
+		EventType: data.LevelUpEventEvolve,
+		Body: data.EventEvolveBody{
+			PokemonUUID:        pokemon.PokemonUUID,
+			CurrentBasePokemon: pokemon.BasePokemon,
+			EvolvedBasePokemon: evolvedBasePokemon,
+		}})
+
+	// receive response from user. TODO: add UI to accept and send back response
+	var evolveBody data.ResponseEvolveBody
+	for {
+		action := p.opts.LvlUpActions.ReceiveResponse()
+		if action.EventType == data.LevelUpEventEvolve {
+			evolveBody = action.Body.(data.ResponseEvolveBody)
+			break
+		}
+	}
+	return evolveBody
 }
 
 func addPokemonEvToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYield int) bool {
@@ -239,11 +405,110 @@ func addPokemonEvToStats(pointsToAdd *int, pokemonStat *data.PokemonStat, evYiel
 	}
 }
 
-func getBasePokemonByID(ID data.BasePokemonID) (*data.BasePokemon, error) {
+func (p *PokemonImpl) getWildPokemonLevelRange() (int, int) {
+	gamestate := p.opts.GameStateManager.Get()
+
+	coreLevels := getCorePartyLvl(gamestate.User.Party)
+	averagePartyLevel := getAvgLevel(coreLevels)
+
+	// avgBoxLevel := getAvgLevel(box)
+	avgBoxLevel := 0
+
+	// Base level range
+	minLevel := int(float64(averagePartyLevel) * 0.8)
+	maxLevel := int(float64(averagePartyLevel) * 1.2)
+
+	// Consider box Pokémon for slight influence
+	if avgBoxLevel > 0 {
+		minLevel = (minLevel + avgBoxLevel) / 2
+		maxLevel = (maxLevel + avgBoxLevel) / 2
+	}
+
+	// Adjust based on progression
+	trainersDefeated, gymLeadersDefeated := 0, 0
+	for _, trainer := range gamestate.TrainerProgress {
+		if strings.Split(trainer, "-")[0] == "tr" {
+			trainersDefeated++
+		} else if strings.Split(trainer, "-")[0] == "gym" {
+			gymLeadersDefeated++
+		}
+	}
+	progressionBoost := (trainersDefeated / 10) + (gymLeadersDefeated * 2)
+
+	// Widen the range as player progresses
+	minLevel -= progressionBoost / 2
+	maxLevel += progressionBoost
+
+	// Handle early game
+	if averagePartyLevel <= 10 {
+		minLevel = max(1, averagePartyLevel-2)
+		maxLevel = averagePartyLevel + 2
+	}
+
+	// Clamp levels
+	if minLevel < 1 {
+		minLevel = 1
+	}
+	if maxLevel > 100 {
+		maxLevel = 100
+	}
+
+	return minLevel, maxLevel
+}
+
+func adjustRarityByProgress(encounter data.WildEncounter, minLvl, maxLvl int) float64 {
+	// Early evolutions become more common later
+	if encounter.EvolvedAt > 0 && encounter.EvolvedAt <= minLvl+5 {
+		return 1.5 // Becomes more common if the trainer is beyond evolution level
+	}
+
+	// Rare Pokémon may become slightly less rare later in the game
+	if encounter.BaseRarity == data.RareRarity && maxLvl > 30 {
+		return 1.0 + math.Min(0.2, float64(maxLvl-30)/100)
+	}
+
+	// Ultra-rare Pokémon may become slightly more common in late-game
+	if encounter.BaseRarity == data.UltraRarity && maxLvl > 50 {
+		return 0.8
+	}
+
+	return 1.0
+}
+
+func getBasePokemonByID(ID data.BasePokemonID) (data.BasePokemon, error) {
 	path := fmt.Sprintf("/assets/pokemon/%04d.json", ID)
 	pokemon, err := utils.ReadJsonFromFile[data.BasePokemon](path)
 	if err != nil {
-		return nil, err
+		return data.BasePokemon{}, err
 	}
-	return &pokemon, nil
+	return pokemon, nil
+}
+
+func generatePokemon(basePokemon data.BasePokemon, level int) *data.Pokemon {
+	if level < 1 {
+		slog.Info("level is less than 1", "level", level)
+		level = 1
+	}
+
+	slog.Info("Generating pokemon...", "basepokemon", basePokemon.Name, "level", level)
+
+	pokemon := &data.Pokemon{
+		BasePokemon:    basePokemon,
+		PokemonUUID:    uuid.NewString(),
+		Level:          level,
+		ExperienceLeft: 0,
+		Stats: data.PokemonStats{
+			HP:             generatePokemonHPStat(basePokemon.BaseStats.HP.Value, level),
+			Attack:         generatePokemonOtherStat(basePokemon.BaseStats.Attack.Value, level),
+			Defense:        generatePokemonOtherStat(basePokemon.BaseStats.Defense.Value, level),
+			SpecialAttack:  generatePokemonOtherStat(basePokemon.BaseStats.SpecialAttack.Value, level),
+			SpecialDefense: generatePokemonOtherStat(basePokemon.BaseStats.SpecialDefense.Value, level),
+			Speed:          generatePokemonOtherStat(basePokemon.BaseStats.Speed.Value, level),
+		},
+		Moveset: setupMoveset(basePokemon, level),
+	}
+
+	slog.Info("Generated pokemon", "pokemon", pokemon, "level", level)
+
+	return pokemon
 }

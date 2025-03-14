@@ -311,7 +311,7 @@ func (g *Gui) renderPartyRowDetail(gtx layout.Context, pokemon *data.Pokemon) la
 	return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
 		// Pokémon Image
 		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-			img := g.loadPokemonImage(pokemon.SpritesURL.FrontPath)
+			img := loadImage(pokemon.SpritesURL.FrontPath)
 			img.Fit = widget.Contain
 			imgSize := image.Point{X: gtx.Dp(unit.Dp(64)), Y: gtx.Dp(unit.Dp(64))} // Fixed size
 			return layout.Inset{Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {

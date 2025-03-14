@@ -5,13 +5,13 @@
   "growth_rate": "medium-slow",
   "moves_learned_by_level": {
     "1": {
-      "id": 108,
-      "name": "smokescreen",
+      "id": 52,
+      "name": "ember",
       "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
+      "power": 40,
+      "damage_class": "special",
+      "type": "fire"
     },
     "12": {
       "id": 225,
@@ -21,15 +21,6 @@
       "power": 60,
       "damage_class": "special",
       "type": "dragon"
-    },
-    "15": {
-      "id": 43,
-      "name": "leer",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
     },
     "20": {
       "id": 154,
@@ -48,15 +39,6 @@
       "power": 70,
       "damage_class": "physical",
       "type": "normal"
-    },
-    "26": {
-      "id": 82,
-      "name": "dragon-rage",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "special",
-      "type": "dragon"
     },
     "32": {
       "id": 481,
@@ -122,5 +104,7 @@
     }
   },
   "type1": "fire",
-  "type2": "flying"
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
 }

@@ -2,6 +2,7 @@ package gui
 
 import (
 	"image"
+	"log/slog"
 	"strings"
 
 	"gioui.org/font"
@@ -11,14 +12,9 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/sanchitdeora/PokeSim/gamestate"
+	"github.com/sanchitdeora/PokeSim/pokemon"
 	"github.com/sanchitdeora/PokeSim/usermanagement"
 )
-
-type LoadGameUI struct {
-	LoadGameButton *widget.Clickable
-	FileName       string
-	Image          widget.Image
-}
 
 func (g *Gui) RenderLoadGameScreen(gtx layout.Context) layout.Dimensions {
 	// Create a theme for styling
@@ -46,15 +42,14 @@ func (g *Gui) RenderLoadGameScreen(gtx layout.Context) layout.Dimensions {
 					Spacing: layout.SpaceBetween,
 				}.Layout(gtx,
 					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						loadGameList := g.createLoadGamesUI()
-						return g.renderLoadGameGallery(gtx, loadGameList)
+						return g.renderLoadGameGallery(gtx)
 					}))
 			}),
 		)
 	})
 }
 
-func (g *Gui) renderLoadGameGallery(gtx layout.Context, loadGameList []LoadGameUI) layout.Dimensions {
+func (g *Gui) renderLoadGameGallery(gtx layout.Context) layout.Dimensions {
 	// Wrap the trainer list in a flex layout for better control
 
 	gameList := &widget.List{
@@ -64,28 +59,28 @@ func (g *Gui) renderLoadGameGallery(gtx layout.Context, loadGameList []LoadGameU
 	return layout.Flex{}.Layout(gtx,
 		// Expanding the list container to fill available height
 		layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
-			return material.List(g.Theme, gameList).Layout(gtx, len(loadGameList), func(gtx layout.Context, index int) layout.Dimensions {
-				return g.renderLoadGameRow(gtx, loadGameList, index)
+			return material.List(g.Theme, gameList).Layout(gtx, len(g.LoadGames), func(gtx layout.Context, index int) layout.Dimensions {
+				return g.renderLoadGameRow(gtx, index)
 			})
 		}),
 	)
 }
 
-func (g *Gui) renderLoadGameRow(gtx layout.Context, loadGameList []LoadGameUI, index int) layout.Dimensions {
+func (g *Gui) renderLoadGameRow(gtx layout.Context, index int) layout.Dimensions {
 	// Create a row with up to 4 trainers
 	return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
 		func(gtx layout.Context) []layout.FlexChild {
 			var children []layout.FlexChild
 			for i := 0; i < 4; i++ {
 				idx := index*4 + i
-				if idx >= len(loadGameList) {
+				if idx >= len(g.LoadGames) {
 					// Add placeholder for missing trainers
 					children = append(children, layout.Flexed(0.25, func(gtx layout.Context) layout.Dimensions {
 						return layout.Dimensions{}
 					}))
 					continue
 				}
-				loadGame := loadGameList[idx]
+				loadGame := g.LoadGames[idx]
 				children = append(children, layout.Flexed(0.25, func(gtx layout.Context) layout.Dimensions {
 					return g.renderLoadGameCard(gtx, loadGame)
 				}))
@@ -99,7 +94,6 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 	return layout.Inset{Top: unit.Dp(8), Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 		cardDims := image.Pt(gtx.Constraints.Max.X, gtx.Dp(unit.Dp(250)))
 
-		// Paint the rounded border
 		drawRoundedBorder(gtx, cardDims, CardBorderColor, unit.Dp(1), unit.Dp(8))
 
 		return layout.Stack{
@@ -109,11 +103,9 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
 				img := loadGame.Image
 				img.Fit = widget.Contain
-			
-				// Scale down by applying an inset (adjust Dp as needed)
-				inset := layout.UniformInset(unit.Dp(20)) // Reduces size
-			
-				return inset.Layout(gtx, func(gtx layout.Context) layout.Dimensions {			
+
+				inset := layout.UniformInset(unit.Dp(20))
+				return inset.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 					return img.Layout(gtx)
 				})
 			}),
@@ -125,15 +117,21 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 					return name.Layout(gtx)
 				})
 			}),
-			// Clickable Overlay for unlocked trainers
+			// Clickable Overlay
 			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
 				if loadGame.FileName != "New Game" {
-					if g.Buttons[LoadGameScreen].Clicked(gtx) {
+					// Process click event
+					if loadGame.LoadGameButton.Clicked(gtx) {
+						slog.Info("btn", "btn click", loadGame.LoadGameButton.Clicked(gtx))
+
 						g.opts.GameManager = gamestate.NewGameStateManager(nil, "", displayFileName(loadGame.FileName))
 						g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
+						g.opts.PokemonService = pokemon.NewPokemonService(pokemon.PokemonOpts{GameStateManager: g.opts.GameManager})
+
 						g.SetCurrentScreen(HomeScreen)
 					}
-					return g.Buttons[LoadGameScreen].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+
+					return loadGame.LoadGameButton.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 						return layout.Dimensions{Size: cardDims}
 					})
 				} else {

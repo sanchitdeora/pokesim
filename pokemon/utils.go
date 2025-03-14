@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"slices"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/utils"
 )
 
 const NatureCoeff = 1.0
@@ -71,12 +73,10 @@ func calculateExperienceGained(level int, baseExp int, winningPokemon *data.Poke
 }
 
 // generate starter pokemon
-
 func generatePokemonIVs() int {
 	randIndex := rand.Float64()
 	return int(math.Round(randIndex * (31)))
 }
-
 
 func generatePokemonHPStat(value, level int) data.PokemonStat {
 	iv := generatePokemonIVs()
@@ -99,19 +99,83 @@ func generatePokemonOtherStat(value, level int) data.PokemonStat {
 func setupMoveset(basePokemon data.BasePokemon, level int) data.Moveset {
 	var moveset data.Moveset
 
-	for i := range level {
-		fmt.Printf("levelIndex:%v, move:%v\n", i, basePokemon.MovesLearned[i])
-		move := basePokemon.MovesLearned[i]
-		switch i % 4 {
-		case 0:
-			moveset.Move1 = &move
-		case 1:
-			moveset.Move2 = &move
-		case 2:
-			moveset.Move3 = &move
-		case 3:
-			moveset.Move4 = &move
+	moveIdx := 0
+	for lvl := range level {
+		fmt.Printf("levelIndex:%v, move:%v\n", lvl, basePokemon.MovesLearned[lvl])
+		move, ok := basePokemon.MovesLearned[lvl]
+		if ok {
+			switch moveIdx % 4 {
+			case 0:
+				moveset.Move1 = &move
+			case 1:
+				moveset.Move2 = &move
+			case 2:
+				moveset.Move3 = &move
+			case 3:
+				moveset.Move4 = &move
+			}
+			moveIdx++
 		}
 	}
+
 	return moveset
+}
+
+func getCorePartyLvl(party []*data.Pokemon) []int {
+	if len(party) == 0 {
+		return []int{}
+	}
+
+	levels := getSortedLevels(party)
+	cutoff := len(levels) / 10 // 10% trimming
+
+	if cutoff > 0 {
+		levels = levels[cutoff : len(levels)-cutoff]
+	}
+
+	return levels
+}
+
+func getAvgLevel(levels []int) int {
+	total := 0
+	for _, level := range levels {
+		total += level
+	}
+	return total / len(levels)
+}
+
+func getSortedLevels(party []*data.Pokemon) []int {
+	levels := make([]int, len(party))
+	for i, pokemon := range party {
+		levels[i] = pokemon.Level
+	}
+	slices.Sort(levels)
+	return levels
+}
+
+func getBaseRarityWeight(rarity data.Rarity) float64 {
+	switch rarity {
+	case data.CommonRarity:
+		return 1.0
+	case data.UncommonRarity:
+		return 0.6
+	case data.RareRarity:
+		return 0.3
+	case data.UltraRarity:
+		return 0.1
+	default:
+		return 0.5
+	}
+}
+
+func getEnvironmentMatchWeight(env data.Environment, encounter data.WildEncounter) float64 {
+	if utils.Contains(encounter.Environments, env) {
+		if encounter.PrimaryTypeMatchesEnv(env) {
+			return 1.0
+		}
+		if encounter.SecondaryTypeMatchesEnv(env) {
+			return 0.8
+		}
+	}
+	return 0.0
 }

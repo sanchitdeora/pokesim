@@ -3,23 +3,13 @@
   "name": "abra",
   "base_experience": 62,
   "growth_rate": "medium-slow",
-  "moves_learned_by_level": {
-    "1": {
-      "id": 100,
-      "name": "teleport",
-      "accuracy": 0,
-      "priority": -6,
-      "power": 0,
-      "damage_class": "status",
-      "type": "psychic"
-    }
-  },
+  "moves_learned_by_level": {},
   "evolution_chain": {
-    "0": [
-      65
-    ],
     "16": [
       64
+    ],
+    "40": [
+      65
     ]
   },
   "sprites": {
@@ -58,5 +48,7 @@
       "ev": 0
     }
   },
-  "type1": "psychic"
+  "type1": "psychic",
+  "is_legendary": false,
+  "is_mythical": false
 }

@@ -11,12 +11,39 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
+type LoadGameUI struct {
+	LoadGameButton *widget.Clickable
+	FileName       string
+	Image          widget.Image
+}
+
 type TrainerUI struct {
 	Image     widget.Image
 	Name      string
 	Unlocked  bool
 	Clickable *widget.Clickable
 	Trainer   *data.Trainer
+}
+
+func createLoadGamesUI() []LoadGameUI {
+	loadGamesUI := make([]LoadGameUI, 0)
+	loadGames := gamestate.GetGameStates("")
+
+	for _, loadGame := range loadGames {
+		loadGamesUI = append(loadGamesUI, LoadGameUI{
+			LoadGameButton: new(widget.Clickable),
+			FileName:       loadGame,
+			Image:          loadImage("assets/trainer/img/user_trainer_avatar.png"),
+		})
+	}
+
+	loadGamesUI = append(loadGamesUI, LoadGameUI{
+		LoadGameButton: new(widget.Clickable),
+		FileName:       "New Game",
+		Image:          loadImage("assets/trainer/img/new_game_img.png"),
+	})
+
+	return loadGamesUI
 }
 
 func (g *Gui) setupTrainersList() []TrainerUI {
@@ -42,30 +69,9 @@ func (g *Gui) setupTrainersList() []TrainerUI {
 func (g *Gui) createTrainerUI(trainer trainermanagement.TrainerManager) TrainerUI {
 	return TrainerUI{
 		Trainer:  trainer.GetTrainer(),
-		Image:    g.loadPokemonImage("assets/pokemon/img/0001.png"),
+		Image:    loadImage("assets/pokemon/img/0001.png"),
 		Unlocked: true,
 	}
-}
-
-func (g *Gui) createLoadGamesUI() []LoadGameUI {
-	loadGamesUI := make([]LoadGameUI, 0)
-	loadGames := gamestate.GetGameStates("")
-
-	if len(loadGames) > 0 {
-		for _, loadGame := range loadGames {
-			loadGamesUI = append(loadGamesUI, LoadGameUI{
-				LoadGameButton: &widget.Clickable{},
-				FileName:       loadGame,
-				Image:          g.loadPokemonImage("assets/trainer/img/user_trainer_avatar.png"),
-			})
-		}
-	}
-	loadGamesUI = append(loadGamesUI, LoadGameUI{
-		LoadGameButton: &widget.Clickable{},
-		FileName:       "New Game",
-		Image:          g.loadPokemonImage("assets/trainer/img/new_game_img.png"),
-	})
-	return loadGamesUI
 }
 
 func (g *Gui) fetchStarterPokemonList() []data.BasePokemon {

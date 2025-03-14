@@ -120,7 +120,7 @@ func fillRoundedShape(gtx layout.Context, size image.Rectangle, bgColor color.NR
 		NE: cornerRadius, NW: cornerRadius, SE: cornerRadius, SW: cornerRadius}.Op(gtx.Ops))
 }
 
-func (g *Gui) loadPokemonImage(relativePath string) widget.Image {
+func loadImage(relativePath string) widget.Image {
 	f, err := os.Open(utils.GetFullPath(relativePath)) // Adjust the path as needed
 	if err != nil {
 		slog.Info("Failed to load image", "error", err)

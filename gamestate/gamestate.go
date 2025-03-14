@@ -96,7 +96,7 @@ func (g *GameStateImpl) AddTrainerProgress(trainerID string) {
 }
 
 func (g *GameStateImpl) Save() error {
-	slog.Debug("Saving game state...", "filepath", g.Filepath, "game", g.GameState)
+	slog.Info("Saving game state...", "filepath", g.Filepath, "game", g.GameState)
 	return utils.WriteJsonToFile(g.Filepath, g.ToGameStateSave())
 }
 

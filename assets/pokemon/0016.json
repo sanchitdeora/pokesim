@@ -1,0 +1,119 @@
+{
+  "id": 16,
+  "name": "pidgey",
+  "base_experience": 50,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "13": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "21": {
+      "id": 239,
+      "name": "twister",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "29": {
+      "id": 13,
+      "name": "razor-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "normal"
+    },
+    "33": {
+      "id": 17,
+      "name": "wing-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "53": {
+      "id": 542,
+      "name": "hurricane",
+      "accuracy": 70,
+      "priority": 0,
+      "power": 110,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "9": {
+      "id": 16,
+      "name": "gust",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "flying"
+    }
+  },
+  "evolution_chain": {
+    "18": [
+      17
+    ],
+    "36": [
+      18
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0016.png",
+    "front_default": "./assets/pokemon/img/0016.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 56,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "normal",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

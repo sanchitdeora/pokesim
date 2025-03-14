@@ -14,7 +14,7 @@ type BattleAI struct {
 
 func NewBattleAI(opts BattleTrainerOpts, trainer *data.Trainer) BattleTrainer {
 	if len(trainer.Party) == 0 {
-		slog.Error("user party is nil")
+		slog.Error("trainer party is nil")
 		return nil
 	}
 

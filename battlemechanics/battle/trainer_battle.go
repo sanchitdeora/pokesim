@@ -204,7 +204,6 @@ func (t *TrainerBattle) setOpponentTargets() {
 
 func (t *TrainerBattle) log(msg string) {
 	t.user.SendBattleLog(msg)
-
 	// t.opponent.SendBattleLog(msg)
 }
 

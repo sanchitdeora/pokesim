@@ -1,0 +1,101 @@
+{
+  "id": 12,
+  "name": "butterfree",
+  "base_experience": 198,
+  "growth_rate": "medium",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 450,
+      "name": "bug-bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "16": {
+      "id": 60,
+      "name": "psybeam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "19": {
+      "id": 318,
+      "name": "silver-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "bug"
+    },
+    "24": {
+      "id": 403,
+      "name": "air-slash",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "8": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "10": [
+      12
+    ],
+    "7": [
+      11
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0012.png",
+    "front_default": "./assets/pokemon/img/0012.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

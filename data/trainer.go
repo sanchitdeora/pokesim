@@ -52,6 +52,7 @@ const (
 	GymLeaderPrefix  TrainerClass = "Gym Leader"
 	TournamentPrefix TrainerClass = "Tournament Trainer"
 	RivalPrefix      TrainerClass = "Rival"
+	WildPrefix      TrainerClass = "Wild"
 )
 
 type TrainerStats struct {

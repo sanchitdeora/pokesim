@@ -100,6 +100,8 @@ func (g *Gui) RenderCurrentScreen(gtx layout.Context) layout.Dimensions {
 		return g.RenderBattleScreen(gtx)
 	case TrainerScreen:
 		return g.RenderTrainerScreen(gtx)
+	case WildScreen:
+		return g.RenderWildScreen(gtx)
 	case PartyScreen:
 		return g.RenderPartyScreen(gtx)
 	case PokemonSummaryScreen:

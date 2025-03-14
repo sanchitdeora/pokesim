@@ -1,0 +1,54 @@
+{
+  "id": 11,
+  "name": "metapod",
+  "base_experience": 72,
+  "growth_rate": "medium",
+  "moves_learned_by_level": {},
+  "evolution_chain": {
+    "10": [
+      12
+    ],
+    "7": [
+      11
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0011.png",
+    "front_default": "./assets/pokemon/img/0011.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_attack": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "is_legendary": false,
+  "is_mythical": false
+}

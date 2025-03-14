@@ -37,6 +37,8 @@ var (
 	SecondaryTextColor = color.NRGBA{R: 80, G: 79, B: 150, A: 255}
 
 	CardBorderColor = color.NRGBA{R: 209, G: 208, B: 230, A: 255}
+
+	RedBtnColor = color.NRGBA{R: 200, G: 0, B: 0, A: 255}
 )
 
 type Screen int
@@ -47,6 +49,7 @@ const (
 	HomeScreen
 	BattleScreen
 	TrainerScreen
+	WildScreen
 	PartyScreen
 	PokemonSummaryScreen
 	Box
@@ -67,13 +70,15 @@ type Gui struct {
 	Buttons       map[Screen]*widget.Clickable
 
 	// Trainer and Battle Props
-	TrainerList   *widget.List
-	TrainerBattle TrainerBattle
+	TrainerList *widget.List
+	Battle      Battle
 
 	// Pokemon Party and Summary Props
-	NewGame        NewGameUI
 	Party          Party
 	SummaryPokemon *data.Pokemon
+
+	NewGame   NewGameUI
+	LoadGames []LoadGameUI
 }
 
 func InitializeGUI() {
@@ -90,6 +95,7 @@ func InitializeGUI() {
 			NewGameScreen:        new(widget.Clickable),
 			HomeScreen:           new(widget.Clickable),
 			TrainerScreen:        new(widget.Clickable),
+			WildScreen:           new(widget.Clickable),
 			BattleScreen:         new(widget.Clickable),
 			PartyScreen:          new(widget.Clickable),
 			PokemonSummaryScreen: new(widget.Clickable),
@@ -113,8 +119,10 @@ func InitializeGUI() {
 			},
 
 			Party:          DefaultPartyProps(),
-			NewGame:        NewGameUI{},
 			SummaryPokemon: nil,
+
+			NewGame:   NewGameUI{},
+			LoadGames: createLoadGamesUI(),
 		}
 
 		if err := run(window, gui); err != nil {

@@ -1,0 +1,257 @@
+{
+  "1": {
+    "base_pokemon_id": 1,
+    "name": "bulbasaur",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 0
+  },
+  "10": {
+    "base_pokemon_id": 10,
+    "name": "caterpie",
+    "type1": "bug",
+    "evolved_at": 1,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 0
+  },
+  "11": {
+    "base_pokemon_id": 11,
+    "name": "metapod",
+    "type1": "bug",
+    "evolved_at": 7,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "12": {
+    "base_pokemon_id": 12,
+    "name": "butterfree",
+    "type1": "bug",
+    "type2": "flying",
+    "evolved_at": 10,
+    "environments": [
+      "forest",
+      "swamp",
+      "beach",
+      "sky",
+      "mountain"
+    ],
+    "base_rarity": 2
+  },
+  "13": {
+    "base_pokemon_id": 13,
+    "name": "weedle",
+    "type1": "bug",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 0
+  },
+  "14": {
+    "base_pokemon_id": 14,
+    "name": "kakuna",
+    "type1": "bug",
+    "type2": "poison",
+    "evolved_at": 7,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "15": {
+    "base_pokemon_id": 15,
+    "name": "beedrill",
+    "type1": "bug",
+    "type2": "poison",
+    "evolved_at": 10,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 2
+  },
+  "16": {
+    "base_pokemon_id": 16,
+    "name": "pidgey",
+    "type1": "normal",
+    "type2": "flying",
+    "evolved_at": 1,
+    "environments": [
+      "plains",
+      "forest",
+      "mountain",
+      "sky",
+      "beach"
+    ],
+    "base_rarity": 0
+  },
+  "17": {
+    "base_pokemon_id": 17,
+    "name": "pidgeotto",
+    "type1": "normal",
+    "type2": "flying",
+    "evolved_at": 18,
+    "environments": [
+      "plains",
+      "forest",
+      "beach",
+      "sky",
+      "mountain"
+    ],
+    "base_rarity": 1
+  },
+  "18": {
+    "base_pokemon_id": 18,
+    "name": "pidgeot",
+    "type1": "normal",
+    "type2": "flying",
+    "evolved_at": 36,
+    "environments": [
+      "forest",
+      "plains",
+      "beach",
+      "mountain",
+      "sky"
+    ],
+    "base_rarity": 2
+  },
+  "19": {
+    "base_pokemon_id": 19,
+    "name": "rattata",
+    "type1": "normal",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "plains"
+    ],
+    "base_rarity": 0
+  },
+  "2": {
+    "base_pokemon_id": 2,
+    "name": "ivysaur",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 16,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "20": {
+    "base_pokemon_id": 20,
+    "name": "raticate",
+    "type1": "normal",
+    "evolved_at": 20,
+    "environments": [
+      "forest",
+      "plains"
+    ],
+    "base_rarity": 2
+  },
+  "3": {
+    "base_pokemon_id": 3,
+    "name": "venusaur",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 32,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 2
+  },
+  "4": {
+    "base_pokemon_id": 4,
+    "name": "charmander",
+    "type1": "fire",
+    "evolved_at": 1,
+    "environments": [
+      "mountain",
+      "desert",
+      "volcano"
+    ],
+    "base_rarity": 0
+  },
+  "5": {
+    "base_pokemon_id": 5,
+    "name": "charmeleon",
+    "type1": "fire",
+    "evolved_at": 16,
+    "environments": [
+      "desert",
+      "volcano",
+      "mountain"
+    ],
+    "base_rarity": 1
+  },
+  "6": {
+    "base_pokemon_id": 6,
+    "name": "charizard",
+    "type1": "fire",
+    "type2": "flying",
+    "evolved_at": 36,
+    "environments": [
+      "mountain",
+      "desert",
+      "volcano",
+      "forest",
+      "sky",
+      "beach"
+    ],
+    "base_rarity": 2
+  },
+  "7": {
+    "base_pokemon_id": 7,
+    "name": "squirtle",
+    "type1": "water",
+    "evolved_at": 1,
+    "environments": [
+      "beach",
+      "swamp",
+      "lake",
+      "tundra"
+    ],
+    "base_rarity": 0
+  },
+  "8": {
+    "base_pokemon_id": 8,
+    "name": "wartortle",
+    "type1": "water",
+    "evolved_at": 16,
+    "environments": [
+      "lake",
+      "beach",
+      "swamp",
+      "tundra"
+    ],
+    "base_rarity": 1
+  },
+  "9": {
+    "base_pokemon_id": 9,
+    "name": "blastoise",
+    "type1": "water",
+    "evolved_at": 36,
+    "environments": [
+      "tundra",
+      "lake",
+      "beach",
+      "swamp"
+    ],
+    "base_rarity": 2
+  }
+}

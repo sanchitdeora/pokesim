@@ -2,7 +2,7 @@
 /saved
 
 # test coverage
-build.ps1
+*.ps1
 coverage.html
 coverage.out
 

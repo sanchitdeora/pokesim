@@ -17,11 +17,14 @@ const (
 	PokemonResource = "pokemon"
 
 	manualAdjustmentFile = "./manual_adjustment.csv"
+	wildEncountersPath   = "./assets/wild_encounters.json"
 )
 
 type migrationOpts struct {
 	CsvWriter *csv.Writer
 	CsvFile   *os.File
+
+	WildEncounters map[data.BasePokemonID]data.WildEncounter
 }
 
 func main() {
@@ -29,7 +32,7 @@ func main() {
 		slog.Error("Usage: migration.go [pokemonID begin] [pokemonID end]")
 		return
 	}
-	
+
 	beginID, _ := strconv.Atoi(os.Args[1])
 	endID, _ := strconv.Atoi(os.Args[2])
 	slog.Info("Migrating pokemon", "beginID", beginID, "endID", endID)
@@ -39,7 +42,19 @@ func main() {
 		panic(err)
 	}
 
-	opts := migrationOpts{csv.NewWriter(file), file}
+	wildEncounters, err := utils.ReadJsonFromFile[map[data.BasePokemonID]data.WildEncounter](wildEncountersPath)
+	if err != nil {
+		slog.Info("Error reading wild encounters json", "error", err)
+		wildEncounters = map[data.BasePokemonID]data.WildEncounter{}
+	}
+
+	opts := migrationOpts{
+		CsvWriter: csv.NewWriter(file),
+		CsvFile:   file,
+
+		WildEncounters: wildEncounters,
+	}
+
 	defer opts.CsvFile.Close()
 	defer opts.CsvWriter.Flush()
 
@@ -49,6 +64,12 @@ func main() {
 		slog.Info("Migrating pokemon", "id", i)
 		opts.MigratePokemonToAsset(fmt.Sprintf("%s/%s/%d/", PokeApiBaseUrl, PokemonResource, i))
 		fmt.Println("==============================================================================")
+	}
+
+	// save wild encounters
+	err = utils.WriteJsonToFile(wildEncountersPath, opts.WildEncounters)
+	if err != nil {
+		panic(err)
 	}
 }
 
@@ -115,8 +136,10 @@ func (opts *migrationOpts) MigratePokemonToAsset(pokemonUrl string) {
 				EV:    loadedPokemon.Stats[5].Effort,
 			},
 		},
-		Type1: pType1,
-		Type2: pType2,
+		Type1:       pType1,
+		Type2:       pType2,
+		IsLegendary: loadedSpecies.IsLegendary,
+		IsMythical:  loadedSpecies.IsMythical,
 	}
 
 	// save pokemon to file
@@ -125,6 +148,9 @@ func (opts *migrationOpts) MigratePokemonToAsset(pokemonUrl string) {
 	if err != nil {
 		slog.Error("could not write to saved file", "error", err)
 	}
+
+	// add wild encounter entries
+	opts.CreateWildEncounters(basePokemon)
 }
 
 func DownloadAndSaveSprite(downloadURL string, id int, isBack bool) string {
@@ -160,14 +186,17 @@ func MovesLearnedMapper(moves []types.Moves) map[int]data.Moves {
 			if err != nil {
 				slog.Error("error loading pokemon move json", "error", err)
 			}
-			movesLearned[lastVG.LevelLearnedAt] = data.Moves{
-				ID:          move.ID,
-				Name:        move.Name,
-				Accuracy:    move.Accuracy,
-				Priority:    move.Priority,
-				Power:       move.Power,
-				DamageClass: data.MoveDamageClass(move.DamageClass.Name),
-				Type:        data.PokemonTypeName(move.Type.Name),
+
+			if data.MoveDamageClass(move.DamageClass.Name) != data.Status && move.Power > 0 {
+				movesLearned[lastVG.LevelLearnedAt] = data.Moves{
+					ID:          move.ID,
+					Name:        move.Name,
+					Accuracy:    move.Accuracy,
+					Priority:    move.Priority,
+					Power:       move.Power,
+					DamageClass: data.MoveDamageClass(move.DamageClass.Name),
+					Type:        data.PokemonTypeName(move.Type.Name),
+				}
 			}
 		}
 	}
@@ -182,6 +211,8 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 		slog.Error("error loading pokemon evolution chain json", "error", err)
 	}
 
+	stage := data.PreEvolution
+
 	evolutionChain := loadedEvolution.Chain
 	for {
 		evolvesTo := evolutionChain.EvolvesTo
@@ -190,11 +221,21 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 		}
 
 		if len(evolvesTo) > 1 {
+			speciesListStr := ""
+			for _, chain := range evolvesTo {
+				speciesListStr += chain.Species.Name + ", "
+			}
+			opts.reportManualAdjustmentReq(
+				evolutionChain.Species.Name,
+				"evolvesTo is more than one pokemon species: "+speciesListStr,
+				"plan how to split",
+			)
 			panic("evolves to more than one pokemon")
 		}
 
 		evolvesToChain := evolvesTo[0]
-		if evolvesToChain.EvolutionDetails[0].Trigger.Name != "level-up" {
+
+		if evolvesToChain.EvolutionDetails[0].Trigger.Name != "level-up" || evolvesToChain.EvolutionDetails[0].MinLevel == 0 {
 			opts.reportManualAdjustmentReq(
 				evolutionChain.Species.Name,
 				"missing min level with trigger: "+evolvesToChain.EvolutionDetails[0].Trigger.Name,
@@ -202,7 +243,7 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 			)
 		}
 
-		minLevel := evolvesToChain.EvolutionDetails[0].MinLevel
+		minLevel := GetAdjustedEvolutionLevel(evolvesToChain.EvolutionDetails[0], stage)
 		loadedSpecies, err := GetPokemonSpecies(evolvesToChain.Species.Url)
 		if err != nil {
 			slog.Error("error loading pokemon species json", "error", err)
@@ -211,9 +252,69 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 		evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber))
 
 		evolutionChain = evolvesToChain
+		stage++
 	}
 
 	return evolutionMap
+}
+
+func (opts *migrationOpts) CreateWildEncounters(basePokemon data.BasePokemon) {
+	evolvesAt := 1
+	for evolutionLvl, basePokemonId := range basePokemon.EvolutionChain {
+		if utils.Contains(basePokemonId, basePokemon.ID) {
+			evolvesAt = evolutionLvl
+			break
+		}
+	}
+
+	baseRarity := opts.GetBaseRarity(basePokemon)
+
+	wildEncounter := data.WildEncounter{
+		BasePokemonID: basePokemon.ID,
+		Name:          basePokemon.Name,
+		Type1:         basePokemon.Type1,
+		Type2:         basePokemon.Type2,
+		EvolvedAt:     evolvesAt,
+		Environments:  data.GetEnvironmentListFromType(basePokemon.Type1, basePokemon.Type2),
+		BaseRarity:    baseRarity,
+	}
+
+	opts.WildEncounters[basePokemon.ID] = wildEncounter
+}
+
+func (opts *migrationOpts) GetBaseRarity(basePokemon data.BasePokemon) data.Rarity {
+
+	// override rarity
+	for rarity, ids := range data.RaritySpeciesOverrides {
+		if utils.Contains(ids, basePokemon.ID) {
+			return rarity
+		}
+	}
+
+	switch {
+	// legendary pokemons
+	case basePokemon.IsLegendary:
+		return data.LegendaryRarity
+
+	// mythical and pseudo legendary pokemons
+	case basePokemon.IsMythical || basePokemon.IsPokemonPseudoLegendary():
+		return data.MythicalRarity
+
+	// BST 550 - 600 or Late Evolutions or Unique Species
+	case basePokemon.BaseStatTotal() > 550 || basePokemon.FinalEvolutionLevel() >= 40 || basePokemon.IsUniqueSpecies():
+		return data.UltraRarity
+
+	// BST 500 - 550 or Final Forms
+	case basePokemon.BaseStatTotal() > 450 || basePokemon.GetEvolutionStage() == data.FinalEvolution:
+		return data.RareRarity
+
+	// BST 500 - 550 or Mid Forms
+	case basePokemon.BaseStatTotal() > 350 || basePokemon.GetEvolutionStage() == data.MidEvolution || (basePokemon.GetEvolutionStage() == data.FinalEvolution && basePokemon.BaseStatTotal() <= 450):
+		return data.UncommonRarity
+
+	default:
+		return data.CommonRarity
+	}
 }
 
 func (opts *migrationOpts) reportManualAdjustmentReq(pokemonName string, reason string, solution string) {
@@ -230,35 +331,53 @@ func (opts *migrationOpts) reportManualAdjustmentReq(pokemonName string, reason 
 	opts.CsvWriter.Write([]string{pokemonName, reason, solution})
 }
 
-// unused
-// func LoadPokemonJson(filename string) (*types.Pokemon, error) {
-// 	pokemon, err := utils.ReadJsonFromFile[types.Pokemon](filename)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("error loading pokemon json: %w", err)
-// 	}
-// 	return &pokemon, nil
-// }
+func GetAdjustedEvolutionLevel(details types.EvolutionDetails, stage data.EvolutionStage) int {
 
-// func LoadPokemonSpeciesJson(filename string) (*types.PokemonSpecies, error) {
-// 	species, err := utils.ReadJsonFromFile[types.PokemonSpecies](filename)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("error loading pokemon json: %w", err)
-// 	}
-// 	return &species, nil
-// }
+	if details.Trigger.Name == "level-up" {
+		// Handle level-based evolutions
+		if details.MinLevel > 0 {
+			return details.MinLevel
+		}
 
-// func LoadMovesJson(filename string) (*types.PokemonMoves, error) {
-// 	moves, err := utils.ReadJsonFromFile[types.PokemonMoves](filename)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("error loading pokemon json: %w", err)
-// 	}
-// 	return &moves, nil
-// }
+		// Handle friendship-based evolutions (e.g., Riolu → Lucario)
+		if details.MinHappiness > 0 {
+			if stage == data.PreEvolution {
+				return 20 // Riolu → Lucario
+			}
+			return 30 // Chansey → Blissey (or similar)
+		}
 
-// func LoadEvolutionChainJson(filename string) (*types.Evolution, error) {
-// 	evolutionChain, err := utils.ReadJsonFromFile[types.Evolution](filename)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("error loading pokemon json: %w", err)
-// 	}
-// 	return &evolutionChain, nil
-// }
+		// Handle time of day evolutions (e.g., Eevee → Espeon)
+		if details.TimeOfDay != "" {
+			if stage == data.PreEvolution {
+				return 20 // Happiny → Chansey
+			}
+			return 30 // Other evolutions (e.g., Espeon, Umbreon)
+		}
+
+		// Handle held item evolutions (e.g., Sneasel with Razor Claw)
+		if details.HeldItem.Name != "" {
+			if stage == data.PreEvolution {
+				return 20 // Happiny → Chansey
+			}
+			return 35 // Other evolutions (e.g., Sneasel → Weavile)
+		}
+
+		// Handle location-based evolutions (e.g., Magneton → Magnezone)
+		if details.Location != "" {
+			return 35
+		}
+	}
+
+	// Handle trade-based evolutions (e.g., Scyther → Scizor)
+	if details.Trigger.Name == "trade" {
+		return 40
+	}
+
+	// Handle use-item evolutions (e.g., Poliwhirl → Politoed with King's Rock)
+	if details.Trigger.Name == "use-item" {
+		return 25
+	}
+
+	return details.MinLevel
+}

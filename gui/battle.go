@@ -52,7 +52,7 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 		)
 	})
 
-	switch g.TrainerBattle.DialogActionArea {
+	switch g.Battle.DialogActionArea {
 	case SwitchDialog:
 		return layout.Stack{}.Layout(gtx,
 			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
@@ -73,7 +73,7 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				})
 			}),
 		)
-	case BagDialog:
+	case EvolveDialog:
 		return layout.Stack{}.Layout(gtx,
 			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
 				return mainScreen
@@ -87,7 +87,27 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderBagDialog(gtx)
+							return g.renderEvolveDialog(gtx)
+						}),
+					)
+				})
+			}),
+		)
+	case LearnMoveDialog:
+		return layout.Stack{}.Layout(gtx,
+			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+				return mainScreen
+			}),
+			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+				return layout.Inset(layout.Inset{
+					Top:    unit.Dp(yInset),
+					Left:   unit.Dp(xInset),
+					Right:  unit.Dp(xInset),
+					Bottom: unit.Dp(yInset),
+				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							return g.renderLearnMoveDialog(gtx)
 						}),
 					)
 				})
@@ -129,13 +149,13 @@ func (g *Gui) renderOpponentInfo(gtx layout.Context) layout.Dimensions {
 					Axis: layout.Horizontal,
 				}.Layout(gtx,
 					layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-						label := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(g.TrainerBattle.Opponent.GetActivePokemon().Name))
+						label := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(g.Battle.Opponent.GetActivePokemon().Name))
 						label.Alignment = text.Middle
 						label.Font.Weight = font.Bold
 						return label.Layout(gtx)
 					}),
 					layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-						label := material.Body1(g.Theme, fmt.Sprintf("Lv. %v", g.TrainerBattle.Opponent.GetActivePokemon().Level))
+						label := material.Body1(g.Theme, fmt.Sprintf("Lv. %v", g.Battle.Opponent.GetActivePokemon().Level))
 						label.Alignment = text.Middle
 						label.Font.Weight = font.Bold
 						return label.Layout(gtx)
@@ -145,7 +165,7 @@ func (g *Gui) renderOpponentInfo(gtx layout.Context) layout.Dimensions {
 			// HP Bar
 			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 				return layout.Inset{Top: unit.Dp(10), Left: unit.Dp(75), Right: unit.Dp(75)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return g.renderHPBar(gtx, g.GetRemainingHPFraction(g.TrainerBattle.Opponent.GetActivePokemon())) // Example: 50% HP remaining
+					return g.renderHPBar(gtx, g.GetRemainingHPFraction(g.Battle.Opponent.GetActivePokemon())) // Example: 50% HP remaining
 				})
 			}),
 		)
@@ -154,7 +174,7 @@ func (g *Gui) renderOpponentInfo(gtx layout.Context) layout.Dimensions {
 
 // Opponent Image
 func (g *Gui) renderOpponentImage(gtx layout.Context) layout.Dimensions {
-	img := g.loadPokemonImage(g.TrainerBattle.Opponent.GetActivePokemon().SpritesURL.FrontPath) // Replace with your image loading logic
+	img := loadImage(g.Battle.Opponent.GetActivePokemon().SpritesURL.FrontPath) // Replace with your image loading logic
 	img.Fit = widget.Contain
 	img.Position = layout.Center
 	return img.Layout(gtx)
@@ -189,13 +209,13 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 					Axis: layout.Horizontal,
 				}.Layout(gtx,
 					layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-						label := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(g.TrainerBattle.User.GetActivePokemon().Name))
+						label := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(g.Battle.User.GetActivePokemon().Name))
 						label.Alignment = text.Middle
 						label.Font.Weight = font.Bold
 						return label.Layout(gtx)
 					}),
 					layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-						label := material.Body1(g.Theme, fmt.Sprintf("Lv. %v", g.TrainerBattle.User.GetActivePokemon().Level))
+						label := material.Body1(g.Theme, fmt.Sprintf("Lv. %v", g.Battle.User.GetActivePokemon().Level))
 						label.Alignment = text.Middle
 						label.Font.Weight = font.Bold
 						return label.Layout(gtx)
@@ -205,7 +225,7 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 			// HP Bar
 			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 				return layout.Inset{Top: unit.Dp(10), Left: unit.Dp(75), Right: unit.Dp(75)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return g.renderHPBar(gtx, g.GetRemainingHPFraction(g.TrainerBattle.User.GetActivePokemon())) // Example: 50% HP remaining
+					return g.renderHPBar(gtx, g.GetRemainingHPFraction(g.Battle.User.GetActivePokemon())) // Example: 50% HP remaining
 				})
 			}),
 			// Remaining HP
@@ -221,7 +241,7 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 
 					}),
 					layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-						label := material.Body2(g.Theme, fmt.Sprintf("%d/%d HP", g.TrainerBattle.User.GetActivePokemon().BattleHP, g.TrainerBattle.User.GetActivePokemon().Stats.HP.Value))
+						label := material.Body2(g.Theme, fmt.Sprintf("%d/%d HP", g.Battle.User.GetActivePokemon().BattleHP, g.Battle.User.GetActivePokemon().Stats.HP.Value))
 						label.Alignment = text.Middle
 						label.Font.Weight = font.Bold
 						return label.Layout(gtx)
@@ -231,7 +251,7 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 			// Experience Bar
 			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 				return layout.Inset{Top: unit.Dp(10), Left: unit.Dp(75), Right: unit.Dp(75)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return g.renderEXPBar(gtx, g.GetRemainingEXPFraction(g.TrainerBattle.User.GetActivePokemon()))
+					return g.renderEXPBar(gtx, g.GetRemainingEXPFraction(g.Battle.User.GetActivePokemon()))
 				})
 			}),
 		)
@@ -240,7 +260,7 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 
 // User Image
 func (g *Gui) renderUserImage(gtx layout.Context) layout.Dimensions {
-	img := g.loadPokemonImage(g.TrainerBattle.User.GetActivePokemon().SpritesURL.BackPath) // Replace with your image loading logic
+	img := loadImage(g.Battle.User.GetActivePokemon().SpritesURL.BackPath) // Replace with your image loading logic
 	img.Fit = widget.Contain
 	img.Position = layout.Center
 	return img.Layout(gtx)
@@ -270,22 +290,22 @@ func (g *Gui) renderBattleOptions(gtx layout.Context) layout.Dimensions {
 
 func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 	return layout.Flex{
-		Axis: layout.Horizontal,
+		Axis: layout.Vertical,
 	}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 		var children []layout.FlexChild
 
 		children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 			return layout.Flex{
-				Axis: layout.Vertical,
+				Axis: layout.Horizontal,
 			}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 				var children []layout.FlexChild
 
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[AttackBtn].Clicked(gtx) {
+						if g.Battle.ActionButtons[AttackBtn].Clicked(gtx) {
 							g.SetActionBtns(Attack)
 						}
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[AttackBtn], "Attack")
+						btnStyle := material.Button(g.Theme, g.Battle.ActionButtons[AttackBtn], "Attack")
 						btnStyle.Background = SecondaryBackgroundColor
 						btnStyle.Color = TextColor
 
@@ -294,11 +314,11 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 				}))
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[SwitchBtn].Clicked(gtx) {
-							g.TrainerBattle.DialogActionArea = SwitchDialog
+						if g.Battle.ActionButtons[SwitchBtn].Clicked(gtx) {
+							g.Battle.DialogActionArea = SwitchDialog
 						}
 
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[SwitchBtn], "Switch")
+						btnStyle := material.Button(g.Theme, g.Battle.ActionButtons[SwitchBtn], "Switch")
 						btnStyle.Background = SecondaryBackgroundColor
 						btnStyle.Color = TextColor
 
@@ -312,17 +332,17 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 		}))
 		children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 			return layout.Flex{
-				Axis: layout.Vertical,
+				Axis: layout.Horizontal,
 			}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 				var children []layout.FlexChild
 
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[BagBtn].Clicked(gtx) {
-							g.TrainerBattle.DialogActionArea = BagDialog
+						if g.Battle.ActionButtons[BagBtn].Clicked(gtx) {
+							g.Battle.DialogActionArea = BagDialog
 						}
 
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[BagBtn], "Bag")
+						btnStyle := material.Button(g.Theme, g.Battle.ActionButtons[BagBtn], "Bag")
 						btnStyle.Background = SecondaryBackgroundColor
 						btnStyle.Color = TextColor
 
@@ -331,12 +351,12 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 				}))
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[RunBtn].Clicked(gtx) {
-							g.TrainerBattle.LogChan <- "No! There's no running from a Trainer Battle!"
+						if g.Battle.ActionButtons[RunBtn].Clicked(gtx) {
+							g.Battle.LogChan <- "No! There's no running from a Trainer Battle!"
 							g.SetActionBtns(Actions)
 						}
 
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[RunBtn], "Run")
+						btnStyle := material.Button(g.Theme, g.Battle.ActionButtons[RunBtn], "Run")
 						btnStyle.Background = SecondaryBackgroundColor
 						btnStyle.Color = TextColor
 
@@ -356,81 +376,37 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 
 // when clicking attack, should display this. Will add this later
 func (g *Gui) renderBattleAttack(gtx layout.Context) layout.Dimensions {
+	activePokemon := g.Battle.User.GetActivePokemon()
+
 	return layout.Flex{
-		Axis: layout.Horizontal,
+		Axis: layout.Vertical,
 	}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 		var children []layout.FlexChild
 
 		children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 			return layout.Flex{
-				Axis: layout.Vertical,
+				Axis: layout.Horizontal,
 			}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 				var children []layout.FlexChild
 
-				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[Move1Btn].Clicked(gtx) {
-							g.performAttack(g.TrainerBattle.User.GetActivePokemon().Moveset.Move1)
-						}
-
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[Move1Btn], "Fire Punch")
-						btnStyle.Background = SecondaryBackgroundColor
-						btnStyle.Color = TextColor
-
-						return btnStyle.Layout(gtx)
-					})
-				}))
-				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[Move2Btn].Clicked(gtx) {
-							g.performAttack(g.TrainerBattle.User.GetActivePokemon().Moveset.Move2)
-						}
-
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[Move2Btn], "Ice Punch")
-						btnStyle.Background = SecondaryBackgroundColor
-						btnStyle.Color = TextColor
-
-						return btnStyle.Layout(gtx)
-					})
-				}))
-
+				children = append(children,
+					g.renderMoveBtn(gtx, activePokemon.Moveset.Move1, g.Battle.ActionButtons[Move1Btn]),
+					g.renderMoveBtn(gtx, activePokemon.Moveset.Move2, g.Battle.ActionButtons[Move2Btn]),
+				)
 				return children
 			}(gtx)...,
 			)
 		}))
 		children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 			return layout.Flex{
-				Axis: layout.Vertical,
+				Axis: layout.Horizontal,
 			}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
 				var children []layout.FlexChild
 
-				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[Move3Btn].Clicked(gtx) {
-							g.performAttack(g.TrainerBattle.User.GetActivePokemon().Moveset.Move3)
-						}
-
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[Move3Btn], "Thunder Punch")
-						btnStyle.Background = SecondaryBackgroundColor
-						btnStyle.Color = TextColor
-
-						return btnStyle.Layout(gtx)
-					})
-				}))
-				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-						if g.TrainerBattle.ActionButtons[Move4Btn].Clicked(gtx) {
-							g.performAttack(g.TrainerBattle.User.GetActivePokemon().Moveset.Move4)
-						}
-
-						btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[Move4Btn], "Mach Punch")
-						btnStyle.Background = SecondaryBackgroundColor
-						btnStyle.Color = TextColor
-
-						return btnStyle.Layout(gtx)
-					})
-				}))
-
+				children = append(children,
+					g.renderMoveBtn(gtx, activePokemon.Moveset.Move3, g.Battle.ActionButtons[Move3Btn]),
+					g.renderMoveBtn(gtx, activePokemon.Moveset.Move4, g.Battle.ActionButtons[Move4Btn]),
+				)
 				return children
 			}(gtx)...,
 			)
@@ -476,13 +452,13 @@ func (g *Gui) renderSwitchDialog(gtx layout.Context) layout.Dimensions {
 
 								return material.List(g.Theme, &widget.List{
 									List: layout.List{Axis: layout.Vertical},
-								}).Layout(gtx, len(g.TrainerBattle.User.GetParty()), func(gtx layout.Context, i int) layout.Dimensions {
-									pokemon := g.TrainerBattle.User.GetParty()[i]
+								}).Layout(gtx, len(g.Battle.User.GetParty()), func(gtx layout.Context, i int) layout.Dimensions {
+									pokemon := g.Battle.User.GetParty()[i]
 
 									return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
 										// Pokémon Image
 										layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-											img := g.loadPokemonImage(pokemon.SpritesURL.FrontPath)
+											img := loadImage(pokemon.SpritesURL.FrontPath)
 											img.Fit = widget.Contain
 											imgSize := image.Point{X: gtx.Dp(unit.Dp(64)), Y: gtx.Dp(unit.Dp(64))} // Fixed size
 											return layout.Inset{Left: unit.Dp(8), Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
@@ -513,12 +489,12 @@ func (g *Gui) renderSwitchDialog(gtx layout.Context) layout.Dimensions {
 										}),
 										layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 											return layout.Inset(layout.Inset{Top: unit.Dp(8), Left: unit.Dp(8)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-												btnStyle := material.Button(g.Theme, g.TrainerBattle.PokemonSwitchButtons[i], "Switch")
-												if g.TrainerBattle.PokemonSwitchButtons[i].Clicked(gtx) {
+												btnStyle := material.Button(g.Theme, g.Battle.PokemonSwitchButtons[i], "Switch")
+												if g.Battle.PokemonSwitchButtons[i].Clicked(gtx) {
 													slog.Info("Switching to Pokémon", "pokemon", pokemon.Name)
-													if g.TrainerBattle.User.GetParty()[i].BattleHP > 0 {
+													if g.Battle.User.GetParty()[i].BattleHP > 0 {
 														g.performSwitch(i)
-														g.TrainerBattle.DialogActionArea = MainBattle
+														g.Battle.DialogActionArea = MainBattle
 													} else {
 														slog.Info("Can't switch to fainted Pokémon")
 													}
@@ -539,10 +515,10 @@ func (g *Gui) renderSwitchDialog(gtx layout.Context) layout.Dimensions {
 
 							// Cancel button
 							layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
-								btn := material.Button(g.Theme, g.TrainerBattle.ActionButtons[CancelSwitchBtn], "Cancel")
-								btn.Background = color.NRGBA{R: 200, G: 0, B: 0, A: 255} // Red for cancel
-								if g.TrainerBattle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
-									g.TrainerBattle.DialogActionArea = MainBattle
+								btn := material.Button(g.Theme, g.Battle.ActionButtons[CancelSwitchBtn], "Cancel")
+								btn.Background = RedBtnColor
+								if g.Battle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
+									g.Battle.DialogActionArea = MainBattle
 								}
 								return layout.Center.Layout(gtx, btn.Layout)
 							}),
@@ -583,7 +559,7 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 									List: layout.List{Axis: layout.Vertical},
 								}).Layout(gtx, len(data.AllItems), func(gtx layout.Context, i int) layout.Dimensions {
 									itemName := data.AllItems[i]
-									item, exists := g.TrainerBattle.User.GetTrainer().Bag[itemName]
+									item, exists := g.Battle.User.GetTrainer().Bag[itemName]
 									if !exists {
 										return layout.Dimensions{}
 									}
@@ -638,12 +614,12 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 											slog.Info("Item inside 3", "name", itemName, "count", item.Count, "gtx", gtx.Constraints.Max)
 
 											return layout.Inset(layout.Inset{Top: unit.Dp(8), Left: unit.Dp(8)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-												btnStyle := material.Button(g.Theme, g.TrainerBattle.UseItemButtons[itemName], "Use")
-												if g.TrainerBattle.UseItemButtons[itemName].Clicked(gtx) {
+												btnStyle := material.Button(g.Theme, g.Battle.UseItemButtons[itemName], "Use")
+												if g.Battle.UseItemButtons[itemName].Clicked(gtx) {
 													slog.Info("Using item", "item", itemName)
-													if g.TrainerBattle.User.GetTrainer().Bag[itemName].Category == data.MedicalItems && (g.TrainerBattle.User.GetActivePokemon().BattleHP < g.TrainerBattle.User.GetActivePokemon().Pokemon.Stats.HP.Value) {
+													if g.Battle.User.GetTrainer().Bag[itemName].Category == data.MedicalItems && (g.Battle.User.GetActivePokemon().BattleHP < g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value) {
 														g.performUseItem(&item)
-														g.TrainerBattle.DialogActionArea = MainBattle
+														g.Battle.DialogActionArea = MainBattle
 													}
 												}
 
@@ -662,10 +638,10 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 
 							// Cancel button
 							layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
-								btn := material.Button(g.Theme, g.TrainerBattle.ActionButtons[CancelSwitchBtn], "Cancel")
-								btn.Background = color.NRGBA{R: 200, G: 0, B: 0, A: 255} // Red for cancel
-								if g.TrainerBattle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
-									g.TrainerBattle.DialogActionArea = MainBattle
+								btn := material.Button(g.Theme, g.Battle.ActionButtons[CancelSwitchBtn], "Cancel")
+								btn.Background = RedBtnColor
+								if g.Battle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
+									g.Battle.DialogActionArea = MainBattle
 								}
 								return layout.Center.Layout(gtx, btn.Layout)
 							}),
@@ -679,11 +655,11 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 
 func (g *Gui) renderBattleEnd(gtx layout.Context) layout.Dimensions {
 	return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		if g.TrainerBattle.ActionButtons[EndBattleBtn].Clicked(gtx) {
+		if g.Battle.ActionButtons[EndBattleBtn].Clicked(gtx) {
 			g.SetCurrentScreen(HomeScreen)
 		}
 
-		btnStyle := material.Button(g.Theme, g.TrainerBattle.ActionButtons[EndBattleBtn], "End Battle")
+		btnStyle := material.Button(g.Theme, g.Battle.ActionButtons[EndBattleBtn], "End Battle")
 		btnStyle.Background = SecondaryBackgroundColor
 		btnStyle.Color = TextColor
 
@@ -701,48 +677,154 @@ func (g *Gui) renderBattleLog(gtx layout.Context) layout.Dimensions {
 			availableHeight := gtx.Constraints.Max.Y
 
 			return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-				return material.List(g.Theme, g.TrainerBattle.LogList).Layout(gtx, len(g.TrainerBattle.LogContent), func(gtx layout.Context, index int) layout.Dimensions {
+				return material.List(g.Theme, g.Battle.LogList).Layout(gtx, len(g.Battle.LogContent), func(gtx layout.Context, index int) layout.Dimensions {
 					gtx.Constraints.Max.Y = availableHeight
-					return material.Body2(g.Theme, g.TrainerBattle.LogContent[index]).Layout(gtx)
+					return material.Body2(g.Theme, g.Battle.LogContent[index]).Layout(gtx)
 				})
 			})
 		}),
 	)
 }
 
+func (g *Gui) renderMoveBtn(gtx layout.Context, move *data.Moves, moveBtn *widget.Clickable) layout.FlexChild {
+	isDisabled := false
+	if move == nil || move.Name == "" {
+		isDisabled = true
+		move = &data.Moves{Name: ""}
+	}
+
+	return layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+		return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+			if !isDisabled && moveBtn.Clicked(gtx) {
+				g.performAttack(move)
+			}
+
+			btnStyle := material.Button(g.Theme, moveBtn, utils.ToCapitalizeFirstLetterOfEachWord(move.Name))
+			if isDisabled {
+				btnStyle.Background = ButtonDisabledColor
+			} else {
+				btnStyle.Background = SecondaryBackgroundColor
+			}
+			btnStyle.Color = TextColor
+
+			return btnStyle.Layout(gtx)
+		})
+	})
+}
+
+func (g *Gui) renderLearnNewMoveSelection(gtx layout.Context, index int, move data.Moves) layout.FlexChild {
+	return layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+		return layout.Inset{Top: unit.Dp(8), Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+			cardDims := image.Pt(gtx.Constraints.Max.X, gtx.Constraints.Max.Y)
+
+			slog.Info("renderLearnNewMoveSelection", "index", index, "selectedIndex", g.Battle.LearnNewMove.SelectedIndex)
+
+			isSelected := g.Battle.LearnNewMove.SelectedIndex == index
+			bgColor := PrimaryBackgroundColor // Default background
+			if isSelected {
+				bgColor = SelectedColor // Highlighted background
+			}
+
+			drawRoundedBorder(gtx, cardDims, CardBorderColor, unit.Dp(1), unit.Dp(8))
+			fillRoundedShape(gtx, image.Rectangle{Max: cardDims}, bgColor, 8)
+
+			return layout.Stack{
+				Alignment: layout.Center,
+			}.Layout(gtx,
+				// Move Name
+				layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+					return layout.Flex{
+						Axis:      layout.Vertical,
+						Spacing:   layout.SpaceBetween,
+						Alignment: layout.Middle,
+					}.Layout(gtx,
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							name := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(move.Name))
+							name.Alignment = text.Middle
+							return name.Layout(gtx)
+						}),
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							name := material.Body2(g.Theme, fmt.Sprintf("Type: %s", utils.ToCapitalizeFirstLetterOfEachWord(string(move.Type))))
+							name.Alignment = text.Middle
+							return name.Layout(gtx)
+						}),
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							return layout.Flex{
+								Axis:      layout.Horizontal,
+								Spacing:   layout.SpaceBetween,
+								Alignment: layout.Middle,
+							}.Layout(gtx,
+								layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+									name := material.Body2(g.Theme, fmt.Sprintf("Power: %v", move.Power))
+									name.Alignment = text.Middle
+									return layout.Inset{Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+										return name.Layout(gtx)
+									})
+								}),
+								layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+									name := material.Body2(g.Theme, fmt.Sprintf("Accuracy: %v", move.Accuracy))
+									name.Alignment = text.Middle
+									return layout.Inset{Right: unit.Dp(8)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+										return name.Layout(gtx)
+									})
+								}),
+							)
+						}),
+					)
+					// name := material.Body1(g.Theme, utils.ToCapitalizeFirstLetterOfEachWord(move.Name))
+					// name.Alignment = text.Middle
+					// return layout.Inset{Top: unit.Dp(cardDims.Y - int(name.TextSize) - 20)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					// 	return name.Layout(gtx)
+					// })
+				}),
+				// Clickable Overlay for selection
+				layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+					if g.Battle.LearnNewMove.ForgetMovesBtns[index].Clicked(gtx) {
+						slog.Info("clickable overlay", "index", index, "btns len", len(g.Battle.LearnNewMove.ForgetMovesBtns), "btns", g.Battle.LearnNewMove.ForgetMovesBtns)
+						g.Battle.LearnNewMove.SelectedIndex = index
+					}
+					return g.Battle.LearnNewMove.ForgetMovesBtns[index].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+						return layout.Dimensions{Size: cardDims}
+					})
+				}),
+			)
+		})
+	})
+}
+
 func (g *Gui) performAttack(move *data.Moves) {
-	g.TrainerBattle.ActionChan <- data.BattleAction{
+	g.Battle.ActionChan <- data.BattleAction{
 		ID:       uuid.NewString(),
 		Type:     data.Attack,
-		Selected: g.TrainerBattle.User.GetActivePokemon(),
-		Target:   g.TrainerBattle.Opponent.GetActivePokemon(),
+		Selected: g.Battle.User.GetActivePokemon(),
+		Target:   g.Battle.Opponent.GetActivePokemon(),
 		Move:     move,
 	}
 	g.SetActionBtns(Actions)
 }
 
 func (g *Gui) performSwitch(partyIndex int) {
-	g.TrainerBattle.ActionChan <- data.BattleAction{
+	g.Battle.ActionChan <- data.BattleAction{
 		ID:       uuid.NewString(),
 		Type:     data.Switch,
-		Selected: g.TrainerBattle.User.GetActivePokemon(),
-		Target:   g.TrainerBattle.User.GetParty()[partyIndex],
+		Selected: g.Battle.User.GetActivePokemon(),
+		Target:   g.Battle.User.GetParty()[partyIndex],
 	}
 	g.SetActionBtns(Actions)
 }
 func (g *Gui) performUseItem(item *data.Item) {
-	g.TrainerBattle.ActionChan <- data.BattleAction{
+	g.Battle.ActionChan <- data.BattleAction{
 		ID:       uuid.NewString(),
 		Type:     data.Bag,
-		Selected: g.TrainerBattle.User.GetActivePokemon(),
-		Target:   g.TrainerBattle.User.GetActivePokemon(),
+		Selected: g.Battle.User.GetActivePokemon(),
+		Target:   g.Battle.User.GetActivePokemon(),
 		Item:     item,
 	}
 	g.SetActionBtns(Actions)
 }
 
 func (g *Gui) renderActionBtns(gtx layout.Context) layout.Dimensions {
-	switch g.TrainerBattle.ActionArea {
+	switch g.Battle.ActionArea {
 	case Actions:
 		return g.renderBattleAction(gtx)
 	case Attack:
@@ -752,4 +834,324 @@ func (g *Gui) renderActionBtns(gtx layout.Context) layout.Dimensions {
 	default:
 		return g.renderBattleAction(gtx)
 	}
+}
+
+func (g *Gui) renderEvolveDialog(gtx layout.Context) layout.Dimensions {
+	drawRoundedBorder(gtx, gtx.Constraints.Max, CardBorderColor, unit.Dp(1), unit.Dp(8))
+	fillRoundedShape(gtx, image.Rectangle{Max: gtx.Constraints.Max}, SecondaryBackgroundColor, 8)
+
+	return layout.Stack{Alignment: layout.Center}.Layout(gtx,
+		layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+			// Overlay background
+			col := color.NRGBA{R: 0, G: 0, B: 0, A: 10} // Semi-transparent black
+			return layout.Inset{}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				paint.Fill(gtx.Ops, col)
+				return layout.Dimensions{Size: gtx.Constraints.Max}
+			})
+		}),
+		layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+			// Dialog box
+			return layout.UniformInset(unit.Dp(20)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				return layout.Stack{Alignment: layout.Center}.Layout(gtx,
+					layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+						return layout.Flex{
+							Axis:    layout.Vertical,
+							Spacing: layout.SpaceEvenly,
+						}.Layout(gtx,
+							// Title
+							layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+								label := material.H6(g.Theme, "Evolve Pokemon?")
+								label.Alignment = text.Middle
+								label.Font.Weight = font.Bold
+								return label.Layout(gtx)
+							}),
+							// Pokémon list
+							layout.Flexed(0.7, func(gtx layout.Context) layout.Dimensions {
+								evolveBody := g.Battle.LevelUpBody.(data.EventEvolveBody)
+
+								return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
+
+									// Pokémon Image
+									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
+										img := loadImage(evolveBody.CurrentBasePokemon.SpritesURL.FrontPath)
+										img.Fit = widget.Contain
+										img.Position = layout.Center
+										return img.Layout(gtx)
+									}),
+									// Name and HP bar
+									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
+										img := loadImage("assets/trainer/img/new_game_img.png")
+										img.Fit = widget.Contain
+										img.Position = layout.Center
+										return img.Layout(gtx)
+									}),
+									// Pokémon Image
+									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
+										img := loadImage(evolveBody.EvolvedBasePokemon.SpritesURL.FrontPath)
+										img.Fit = widget.Contain
+										img.Position = layout.Center
+										return img.Layout(gtx)
+									}),
+								)
+							}),
+
+							// Buttons
+							layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
+
+								return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
+									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+										btn := material.Button(g.Theme, g.Battle.ActionButtons[EvolveBtn], "Evolve!")
+										btn.Color = TextColor
+										btn.Background = PrimaryBackgroundColor
+										if g.Battle.ActionButtons[EvolveBtn].Clicked(gtx) {
+											g.SendLevelUpResponse(gtx, data.LevelUpEvent{
+												EventType: data.LevelUpEventEvolve,
+												Body: data.ResponseEvolveBody{
+													AcceptEvolution: true,
+												}},
+											)
+											g.Battle.DialogActionArea = MainBattle
+											g.Battle.ActionArea = EndBattle
+										}
+										return layout.Center.Layout(gtx, btn.Layout)
+									}),
+									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+										btn := material.Button(g.Theme, g.Battle.ActionButtons[CancelSwitchBtn], "Cancel")
+										btn.Background = RedBtnColor
+										if g.Battle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
+											g.SendLevelUpResponse(gtx, data.LevelUpEvent{
+												EventType: data.LevelUpEventEvolve,
+												Body: data.ResponseEvolveBody{
+													AcceptEvolution: false,
+												}},
+											)
+											g.Battle.DialogActionArea = MainBattle
+											g.Battle.ActionArea = EndBattle
+										}
+										return layout.Center.Layout(gtx, btn.Layout)
+									}),
+								)
+							}),
+						)
+					}),
+				)
+			})
+		}),
+	)
+}
+
+func (g *Gui) renderLearnMoveDialog(gtx layout.Context) layout.Dimensions {
+	learnMoveBody := g.Battle.LevelUpBody.(data.EventLearnMoveBody)
+
+	drawRoundedBorder(gtx, gtx.Constraints.Max, CardBorderColor, unit.Dp(1), unit.Dp(8))
+	fillRoundedShape(gtx, image.Rectangle{Max: gtx.Constraints.Max}, SecondaryBackgroundColor, 8)
+
+	return layout.Stack{Alignment: layout.Center}.Layout(gtx,
+		layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+			// Overlay background
+			col := color.NRGBA{R: 0, G: 0, B: 0, A: 10} // Semi-transparent black
+			return layout.Inset{}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				paint.Fill(gtx.Ops, col)
+				return layout.Dimensions{Size: gtx.Constraints.Max}
+			})
+		}),
+		layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+			// Dialog box
+			return layout.UniformInset(unit.Dp(20)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				return layout.Stack{Alignment: layout.Center}.Layout(gtx,
+					layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+						return layout.Flex{
+							Axis:    layout.Vertical,
+							Spacing: layout.SpaceEvenly,
+						}.Layout(gtx,
+							// Title
+							layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+								label := material.H6(g.Theme, "Learn Move?")
+								label.Alignment = text.Middle
+								label.Font.Weight = font.Bold
+								return label.Layout(gtx)
+							}),
+							// Move list
+							layout.Flexed(0.7, func(gtx layout.Context) layout.Dimensions {
+								return layout.Flex{Axis: layout.Vertical, Spacing: layout.SpaceBetween}.Layout(gtx,
+
+									layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+										label := material.H6(g.Theme, fmt.Sprintf("%s wants a learn a new move. Which move should be forgotten?", utils.ToCapitalizeFirstLetterOfEachWord(learnMoveBody.Pokemon.Name)))
+										label.Alignment = text.Middle
+										label.Font.Weight = font.Bold
+										return label.Layout(gtx)
+									}),
+									// Pokémon Image
+									layout.Flexed(0.6, func(gtx layout.Context) layout.Dimensions {
+										return layout.Flex{
+											Axis: layout.Vertical,
+										}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
+											var children []layout.FlexChild
+
+											children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+												return layout.Flex{
+													Axis: layout.Horizontal,
+												}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
+													var children []layout.FlexChild
+
+													children = append(children,
+														g.renderLearnNewMoveSelection(gtx, 1, *learnMoveBody.Pokemon.Moveset.Move1),
+														g.renderLearnNewMoveSelection(gtx, 2, *learnMoveBody.Pokemon.Moveset.Move2),
+													)
+													return children
+												}(gtx)...,
+												)
+											}))
+											children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+												return layout.Flex{
+													Axis: layout.Horizontal,
+												}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
+													var children []layout.FlexChild
+
+													children = append(children,
+														g.renderLearnNewMoveSelection(gtx, 3, *learnMoveBody.Pokemon.Moveset.Move3),
+														g.renderLearnNewMoveSelection(gtx, 4, *learnMoveBody.Pokemon.Moveset.Move4),
+													)
+													return children
+												}(gtx)...,
+												)
+											}))
+											return children
+										}(gtx)...,
+										)
+									}),
+									// New Move
+									layout.Flexed(0.3, func(gtx layout.Context) layout.Dimensions {
+										return layout.Flex{
+											Axis:    layout.Horizontal,
+											Spacing: layout.SpaceBetween,
+										}.Layout(gtx, func(gtx layout.Context) []layout.FlexChild {
+											var children []layout.FlexChild
+
+											children = append(children,
+												g.renderLearnNewMoveSelection(gtx, 0, learnMoveBody.NewMove),
+											)
+											return children
+										}(gtx)...,
+										)
+									}),
+								)
+							}),
+
+							// Buttons
+							layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
+								// initialized early to get accurate size
+								return layout.Flex{
+									Axis:    layout.Horizontal,
+									Spacing: layout.SpaceBetween,
+								}.Layout(gtx,
+									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+
+										btnBgColor := PrimaryBackgroundColor
+										if g.Battle.LearnNewMove.SelectedIndex == -1 {
+											btnBgColor = ButtonDisabledColor
+										}
+
+										if g.Battle.ActionButtons[LearnMoveBtn].Clicked(gtx) {
+											g.SendLearnNewMoveResponse(gtx, g.Battle.LearnNewMove.SelectedIndex, learnMoveBody)
+											g.Battle.LearnNewMove.SelectedIndex = -1
+											g.Battle.DialogActionArea = MainBattle
+										}
+										if g.Battle.ActionButtons[LearnMoveBtn].Hovered() {
+											btnBgColor = ButtonHoveredColor
+										}
+
+										return layout.UniformInset(unit.Dp(15)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+											btnSize := image.Point{X: 120, Y: 60}
+											radius := 5
+
+											// // define rounded border and fill
+											// drawRoundedBorder(gtx, btnSize, PrimaryBackgroundColor, unit.Dp(1), unit.Dp(radius))
+											// fillRoundedShape(gtx, image.Rectangle{Max: btnSize}, btnBgColor, radius)
+
+											return layout.Stack{
+												Alignment: layout.Center,
+											}.Layout(gtx,
+												layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+													// Draw the border around the text
+													drawRoundedBorder(gtx, btnSize, PrimaryBackgroundColor, unit.Dp(1), unit.Dp(radius))
+													fillRoundedShape(gtx, image.Rectangle{Max: btnSize}, btnBgColor, radius)
+													return layout.Dimensions{Size: btnSize}
+												}),
+												layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+													textStyle := material.Body2(g.Theme, "Forget Move!")
+													textStyle.Alignment = text.Middle
+													textStyle.Color = TextColor
+
+													return textStyle.Layout(gtx)
+												}),
+												layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+													if g.Battle.LearnNewMove.SelectedIndex == -1 {
+														return layout.Center.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+															return layout.Dimensions{Size: btnSize}
+														})
+													}
+
+													return g.Battle.ActionButtons[LearnMoveBtn].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+														return layout.Center.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+															return layout.Dimensions{Size: btnSize}
+														})
+													})
+												}),
+											)
+										})
+									}),
+									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
+										btn := material.Button(g.Theme, g.Battle.ActionButtons[CancelSwitchBtn], "Cancel")
+										btn.Background = RedBtnColor
+										if g.Battle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
+											g.SendLearnNewMoveResponse(gtx, 0, learnMoveBody)
+											g.Battle.LearnNewMove.SelectedIndex = -1
+											g.Battle.DialogActionArea = MainBattle
+										}
+										return layout.Center.Layout(gtx, btn.Layout)
+									}),
+								)
+							}),
+						)
+					}),
+				)
+			})
+		}),
+	)
+}
+
+func (g *Gui) SendLearnNewMoveResponse(gtx layout.Context, selectedIndex int, learnMove data.EventLearnMoveBody) {
+	if selectedIndex == -1 {
+		slog.Warn("Selected Index is -1")
+		return
+	}
+
+	var replacedMove data.Moves
+	updatedMoveset := learnMove.Pokemon.Moveset
+
+	if selectedIndex == 0 {
+		replacedMove = learnMove.NewMove
+	} else if selectedIndex == 1 {
+		replacedMove = *learnMove.Pokemon.Moveset.Move1
+		updatedMoveset.Move1 = &learnMove.NewMove
+	} else if selectedIndex == 2 {
+		replacedMove = *learnMove.Pokemon.Moveset.Move2
+		updatedMoveset.Move2 = &learnMove.NewMove
+	} else if selectedIndex == 3 {
+		replacedMove = *learnMove.Pokemon.Moveset.Move3
+		updatedMoveset.Move3 = &learnMove.NewMove
+	} else if selectedIndex == 4 {
+		replacedMove = *learnMove.Pokemon.Moveset.Move4
+		updatedMoveset.Move4 = &learnMove.NewMove
+	}
+
+	g.SendLevelUpResponse(gtx, data.LevelUpEvent{
+		EventType: data.LevelUpEventLearnMove,
+		Body: data.ResponseLearnMoveBody{
+			UpdatedMoveset: updatedMoveset,
+			NewMove:        learnMove.NewMove,
+			ReplacedMove:   replacedMove,
+		}},
+	)
 }

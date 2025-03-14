@@ -1,0 +1,128 @@
+{
+  "id": 17,
+  "name": "pidgeotto",
+  "base_experience": 122,
+  "growth_rate": "medium-slow",
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "13": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "22": {
+      "id": 239,
+      "name": "twister",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "37": {
+      "id": 17,
+      "name": "wing-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "45": {
+      "id": 13,
+      "name": "razor-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "normal"
+    },
+    "57": {
+      "id": 403,
+      "name": "air-slash",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "62": {
+      "id": 542,
+      "name": "hurricane",
+      "accuracy": 70,
+      "priority": 0,
+      "power": 110,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "9": {
+      "id": 16,
+      "name": "gust",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "flying"
+    }
+  },
+  "evolution_chain": {
+    "18": [
+      17
+    ],
+    "36": [
+      18
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0017.png",
+    "front_default": "./assets/pokemon/img/0017.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 63,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 71,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "normal",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

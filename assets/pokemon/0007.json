@@ -4,22 +4,13 @@
   "base_experience": 63,
   "growth_rate": "medium-slow",
   "moves_learned_by_level": {
-    "0": {
-      "id": 266,
-      "name": "follow-me",
-      "accuracy": 0,
-      "priority": 2,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
-    },
     "1": {
-      "id": 39,
-      "name": "tail-whip",
+      "id": 33,
+      "name": "tackle",
       "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
+      "power": 40,
+      "damage_class": "physical",
       "type": "normal"
     },
     "12": {
@@ -41,13 +32,13 @@
       "type": "water"
     },
     "27": {
-      "id": 504,
-      "name": "shell-smash",
-      "accuracy": 0,
+      "id": 61,
+      "name": "bubble-beam",
+      "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
     },
     "3": {
       "id": 55,
@@ -65,15 +56,6 @@
       "priority": 0,
       "power": 120,
       "damage_class": "physical",
-      "type": "water"
-    },
-    "6": {
-      "id": 110,
-      "name": "withdraw",
-      "accuracy": 0,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
       "type": "water"
     },
     "9": {
@@ -130,5 +112,7 @@
       "ev": 0
     }
   },
-  "type1": "water"
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
 }

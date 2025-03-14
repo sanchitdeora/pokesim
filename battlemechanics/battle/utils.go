@@ -2,6 +2,8 @@ package battle
 
 import (
 	"log/slog"
+	"math"
+	"math/rand"
 
 	"github.com/sanchitdeora/PokeSim/data"
 )
@@ -44,4 +46,14 @@ func GetNextUnfaintedPokemonAndCount(party []*data.BattlePokemon) (index, count 
 		}
 	}
 	return index, count
+}
+
+func IsRunSuccessful(pokemon, target *data.BattlePokemon, attempt int) bool {
+	if pokemon.Stats.Speed.Value >= target.Stats.Speed.Value {
+		return true
+	}
+
+	odd := (((float64(pokemon.Stats.Speed.Value) * 32.0) / (float64(target.Stats.Speed.Value) / 4.0)) + 30.0 * float64(attempt)) / 256.0
+
+	return math.Floor(rand.Float64() * 256) < odd 
 }

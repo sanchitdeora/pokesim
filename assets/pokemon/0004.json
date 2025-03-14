@@ -5,12 +5,12 @@
   "growth_rate": "medium-slow",
   "moves_learned_by_level": {
     "1": {
-      "id": 45,
-      "name": "growl",
+      "id": 10,
+      "name": "scratch",
       "accuracy": 100,
       "priority": 0,
-      "power": 0,
-      "damage_class": "status",
+      "power": 40,
+      "damage_class": "physical",
       "type": "normal"
     },
     "12": {
@@ -21,15 +21,6 @@
       "power": 60,
       "damage_class": "special",
       "type": "dragon"
-    },
-    "15": {
-      "id": 43,
-      "name": "leer",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
     },
     "18": {
       "id": 154,
@@ -58,15 +49,6 @@
       "damage_class": "physical",
       "type": "normal"
     },
-    "22": {
-      "id": 82,
-      "name": "dragon-rage",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "special",
-      "type": "dragon"
-    },
     "28": {
       "id": 481,
       "name": "flame-burst",
@@ -93,15 +75,6 @@
       "power": 40,
       "damage_class": "special",
       "type": "fire"
-    },
-    "8": {
-      "id": 108,
-      "name": "smokescreen",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "status",
-      "type": "normal"
     }
   },
   "evolution_chain": {
@@ -148,5 +121,7 @@
       "ev": 1
     }
   },
-  "type1": "fire"
+  "type1": "fire",
+  "is_legendary": false,
+  "is_mythical": false
 }
