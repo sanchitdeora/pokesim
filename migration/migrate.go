@@ -104,6 +104,7 @@ func (opts *migrationOpts) MigratePokemonToAsset(pokemonUrl string) {
 		Name:           loadedPokemon.Name,
 		BaseExperience: loadedPokemon.BaseExperience,
 		GrowthRate:     data.GrowthRateTypes(loadedSpecies.GrowthRate.Name),
+		CaptureRate:    loadedSpecies.CaptureRate,
 		MovesLearned:   MovesLearnedMapper(loadedPokemon.Moves),
 		EvolutionChain: opts.EvolutionChainMapper(loadedSpecies.EvolutionChain.Url),
 		SpritesURL: data.Sprites{

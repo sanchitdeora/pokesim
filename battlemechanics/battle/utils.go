@@ -1,19 +1,20 @@
 package battle
 
 import (
-	"log/slog"
 	"math"
 	"math/rand"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/utils"
 )
 
 func GetTurnOrder(userAction data.BattleAction, opponentAction data.BattleAction) []data.BattleAction {
 	// we will give preference to user whenever equal priority
 
-	if userAction.Type == data.Run || opponentAction.Type == data.Run {
-		slog.Error("cannot run in a trainer battle. Need to implement logic here")
-		panic("implement logic here")
+	if userAction.Type == data.Run {
+		return []data.BattleAction{userAction, opponentAction}
+	} else if opponentAction.Type == data.Run {
+		return []data.BattleAction{opponentAction, userAction}
 	} else if userAction.Type == data.Switch || userAction.Type == data.Bag {
 		return []data.BattleAction{userAction, opponentAction}
 	} else if opponentAction.Type == data.Switch || opponentAction.Type == data.Bag {
@@ -39,7 +40,7 @@ func GetNextUnfaintedPokemonAndCount(party []*data.BattlePokemon) (index, count 
 	index = -1
 	for i, p := range party {
 		if p.BattleHP != 0 {
-			count ++
+			count++
 			if index < 0 {
 				index = i
 			}
@@ -53,7 +54,14 @@ func IsRunSuccessful(pokemon, target *data.BattlePokemon, attempt int) bool {
 		return true
 	}
 
-	odd := (((float64(pokemon.Stats.Speed.Value) * 32.0) / (float64(target.Stats.Speed.Value) / 4.0)) + 30.0 * float64(attempt)) / 256.0
+	odd := (((float64(pokemon.Stats.Speed.Value) * 32.0) / (float64(target.Stats.Speed.Value) / 4.0)) + 30.0*float64(attempt)) / 256.0
 
-	return math.Floor(rand.Float64() * 256) < odd 
+	return math.Floor(rand.Float64()*256) < odd
+}
+
+func IsPokemonInParty(party []*data.BattlePokemon, target *data.BattlePokemon) bool {
+	if utils.Contains(party, target) {
+		return true
+	}
+	return false
 }

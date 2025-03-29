@@ -3,6 +3,7 @@
   "name": "caterpie",
   "base_experience": 39,
   "growth_rate": "medium",
+  "capture_rate": 255,
   "moves_learned_by_level": {
     "1": {
       "id": 33,

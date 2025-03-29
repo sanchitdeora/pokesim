@@ -15,8 +15,9 @@ type WildBattle struct {
 	user     battletrainer.BattleTrainer
 	opponent battletrainer.BattleTrainer
 
-	runAttemtps   int
+	wildCaught    bool
 	successfulRun bool
+	runAttemtps   int
 }
 
 type WildBattleOpts struct {
@@ -42,8 +43,9 @@ func WildBattleManager(opts WildBattleOpts, user battletrainer.BattleTrainer, op
 		user:     user,
 		opponent: opponent,
 
-		runAttemtps:   1,
+		wildCaught:    false,
 		successfulRun: false,
+		runAttemtps:   1,
 	}
 }
 
@@ -78,7 +80,7 @@ func (w *WildBattle) BattleConductor() {
 
 func (w *WildBattle) Conclusion() bool {
 	// check if battle concluded
-	return w.user.IsDefeated() || w.opponent.IsDefeated() || w.successfulRun
+	return w.user.IsDefeated() || w.opponent.IsDefeated() || w.successfulRun || w.wildCaught
 }
 
 func (w *WildBattle) handleBattleIntroduction() {
@@ -96,6 +98,9 @@ func (w *WildBattle) handleTurns() {
 	battleActions := GetTurnOrder(userAction, opponentAction)
 
 	for _, action := range battleActions {
+		if w.Conclusion() {
+			break
+		}
 		trainer := w.user
 		target := w.opponent
 		if action.ID == opponentAction.ID {
@@ -143,7 +148,6 @@ func (w *WildBattle) handleRun(action data.BattleAction) {
 		w.runAttemtps++
 		w.log("Cannot run")
 	}
-	return
 }
 
 func (w *WildBattle) handleUseBag(action data.BattleAction, trainer battletrainer.BattleTrainer) {
@@ -151,14 +155,18 @@ func (w *WildBattle) handleUseBag(action data.BattleAction, trainer battletraine
 		utils.ToCapitalizeFirstLetterOfEachWord(string(data.GetItemNameFromItem(*action.Item))),
 		utils.ToCapitalizeFirstLetterOfEachWord(action.Selected.Pokemon.Name)),
 	)
-	if action.Item != nil && action.Item.Category == data.MedicalItems {
+	if action.Item != nil {
 		err := trainer.HandleAction(action)
 		if err != nil {
 			//TODO: Add appropriate battle logs. Let user select again similar to Run
 			slog.Error(err.Error())
 		}
+
+		if action.Item.Category == data.PokeBalls {
+			w.wildCaught = IsPokemonInParty(trainer.GetParty(), action.Selected)
+		}
 	} else {
-		slog.Error("Item cannot be nil or category not medical item", "Item", action.Item)
+		slog.Error("Item cannot be nil", "Item", action.Item)
 	}
 }
 

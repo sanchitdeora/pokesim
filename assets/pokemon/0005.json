@@ -3,6 +3,7 @@
   "name": "charmeleon",
   "base_experience": 142,
   "growth_rate": "medium-slow",
+  "capture_rate": 45,
   "moves_learned_by_level": {
     "1": {
       "id": 52,

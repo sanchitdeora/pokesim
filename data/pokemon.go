@@ -33,6 +33,7 @@ type BasePokemon struct {
 	Name           string                  `json:"name"`
 	BaseExperience int                     `json:"base_experience"`
 	GrowthRate     GrowthRateTypes         `json:"growth_rate"`
+	CaptureRate    int                     `json:"capture_rate"`
 	MovesLearned   map[int]Moves           `json:"moves_learned_by_level"`
 	EvolutionChain map[int][]BasePokemonID `json:"evolution_chain"`
 	SpritesURL     Sprites                 `json:"sprites"`

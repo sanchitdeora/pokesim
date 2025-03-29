@@ -34,6 +34,18 @@ func (m *MockUserManager) EXPECT() *MockUserManagerMockRecorder {
 	return m.recorder
 }
 
+// AddNewPokemonToTeam mocks base method.
+func (m *MockUserManager) AddNewPokemonToTeam(arg0 *data.Pokemon) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "AddNewPokemonToTeam", arg0)
+}
+
+// AddNewPokemonToTeam indicates an expected call of AddNewPokemonToTeam.
+func (mr *MockUserManagerMockRecorder) AddNewPokemonToTeam(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddNewPokemonToTeam", reflect.TypeOf((*MockUserManager)(nil).AddNewPokemonToTeam), arg0)
+}
+
 // ChangePokemonOrder mocks base method.
 func (m *MockUserManager) ChangePokemonOrder(arg0 *data.Pokemon, arg1 data.PokemonChangeOrder) {
 	m.ctrl.T.Helper()

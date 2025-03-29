@@ -52,6 +52,9 @@ type Battle struct {
 	User          battletrainer.BattleTrainer
 	Opponent      battletrainer.BattleTrainer
 
+	CatchPokemonEnabled bool
+	RunBattleEnabled   bool
+
 	ActionChan chan data.BattleAction
 
 	LevelUpEventsChan   chan data.LevelUpEvent
@@ -127,6 +130,9 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
 		PokemonBattle: pokemonBattle,
 		Opponent:      battleTrainer,
 		User:          battleUser,
+
+		CatchPokemonEnabled: false,
+		RunBattleEnabled:   false,
 
 		ActionChan: battleAction,
 

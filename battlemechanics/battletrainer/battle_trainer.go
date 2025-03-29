@@ -147,6 +147,26 @@ func (b *BattleTrainerImpl) HandleUseBag(action data.BattleAction) error {
 	if healPokemon(target, action.Item) {
 		b.UserManager.UseItem(action.Item)
 	}
+
+	if action.Item.Category == data.PokeBalls && action.Target.BattleHP > 0 {
+		target := action.Target
+		isCaught, shakes := catchPokemon(target, action.Item, b.UserManager.GetUser().Stats.PokeDEX)
+		if !isCaught {
+			if shakes == 3 {
+				b.SendBattleLog(fmt.Sprintf("Appeared to be caught... to catching %s!", utils.ToCapitalizeFirstLetterOfEachWord(target.Pokemon.Name)))
+			} else if shakes == 2 {
+				b.SendBattleLog(fmt.Sprintf("You were so close to catching %s!", utils.ToCapitalizeFirstLetterOfEachWord(target.Pokemon.Name)))
+			} else if shakes == 1 {
+				b.SendBattleLog(fmt.Sprintf("%s broke free immediately!", utils.ToCapitalizeFirstLetterOfEachWord(target.Pokemon.Name)))
+			}
+		} else {
+			b.SendBattleLog(fmt.Sprintf("You caught %s!", utils.ToCapitalizeFirstLetterOfEachWord(target.Pokemon.Name)))
+
+			b.BattleParty = append(b.BattleParty, target)
+			b.UserManager.AddNewPokemonToTeam(target.Pokemon)
+		}
+		b.UserManager.UseItem(action.Item)
+	}
 	return nil
 }
 

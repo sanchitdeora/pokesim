@@ -69,6 +69,9 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 		Opponent:      battleTrainer,
 		User:          battleUser,
 
+		CatchPokemonEnabled: true,
+		RunBattleEnabled:   true,
+
 		ActionChan: battleAction,
 
 		LevelUpEventsChan:   levelUpEventsChan,

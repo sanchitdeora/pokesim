@@ -3,6 +3,7 @@
   "name": "charmander",
   "base_experience": 62,
   "growth_rate": "medium-slow",
+  "capture_rate": 45,
   "moves_learned_by_level": {
     "1": {
       "id": 10,

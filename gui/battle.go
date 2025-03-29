@@ -14,6 +14,7 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/google/uuid"
+	"github.com/sanchitdeora/PokeSim/battlemechanics/battle"
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
@@ -68,6 +69,26 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 							return g.renderSwitchDialog(gtx)
+						}),
+					)
+				})
+			}),
+		)
+	case BagDialog:
+		return layout.Stack{}.Layout(gtx,
+			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+				return mainScreen
+			}),
+			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+				return layout.Inset(layout.Inset{
+					Top:    unit.Dp(yInset),
+					Left:   unit.Dp(xInset),
+					Right:  unit.Dp(xInset),
+					Bottom: unit.Dp(yInset),
+				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							return g.renderBagDialog(gtx)
 						}),
 					)
 				})
@@ -174,7 +195,14 @@ func (g *Gui) renderOpponentInfo(gtx layout.Context) layout.Dimensions {
 
 // Opponent Image
 func (g *Gui) renderOpponentImage(gtx layout.Context) layout.Dimensions {
-	img := loadImage(g.Battle.Opponent.GetActivePokemon().SpritesURL.FrontPath) // Replace with your image loading logic
+	var img widget.Image
+
+	if battle.IsPokemonInParty(g.Battle.User.GetParty(), g.Battle.Opponent.GetActivePokemon()) {
+		img = loadImage("./assets/utils/pokeball.png")
+		g.SetActionBtns(EndBattle)
+	} else {
+		img = loadImage(g.Battle.Opponent.GetActivePokemon().SpritesURL.FrontPath) // Replace with your image loading logic
+	}
 	img.Fit = widget.Contain
 	img.Position = layout.Center
 	return img.Layout(gtx)
@@ -339,6 +367,7 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 						if g.Battle.ActionButtons[BagBtn].Clicked(gtx) {
+							slog.Info("Bag Button Clicked")
 							g.Battle.DialogActionArea = BagDialog
 						}
 
@@ -352,7 +381,7 @@ func (g *Gui) renderBattleAction(gtx layout.Context) layout.Dimensions {
 				children = append(children, layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
 					return layout.UniformInset(unit.Dp(10)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 						if g.Battle.ActionButtons[RunBtn].Clicked(gtx) {
-							g.Battle.LogChan <- "No! There's no running from a Trainer Battle!"
+							g.performRun()
 							g.SetActionBtns(Actions)
 						}
 
@@ -530,6 +559,10 @@ func (g *Gui) renderSwitchDialog(gtx layout.Context) layout.Dimensions {
 	)
 }
 
+func (g *Gui) canUseItemInBattle(item data.Item) bool {
+	return g.Battle.CatchPokemonEnabled || item.Category != data.PokeBalls
+}
+
 // Bag Dialog
 func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 	drawRoundedBorder(gtx, gtx.Constraints.Max, CardBorderColor, unit.Dp(1), unit.Dp(8))
@@ -560,7 +593,7 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 								}).Layout(gtx, len(data.AllItems), func(gtx layout.Context, i int) layout.Dimensions {
 									itemName := data.AllItems[i]
 									item, exists := g.Battle.User.GetTrainer().Bag[itemName]
-									if !exists {
+									if !exists || !g.canUseItemInBattle(item) || item.Count < 1 {
 										return layout.Dimensions{}
 									}
 
@@ -577,8 +610,6 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 										// }),
 										// Name and Description
 										layout.Flexed(0.4, func(gtx layout.Context) layout.Dimensions {
-											slog.Info("Item inside 1", "name", itemName, "count", item.Count, "gtx", gtx.Constraints.Max)
-
 											return layout.Inset(layout.Inset{
 												Top:    unit.Dp(8),
 												Left:   unit.Dp(8),
@@ -600,8 +631,6 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 											})
 										}),
 										layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-											slog.Info("Item inside 2", "name", itemName, "count", item.Count, "gtx", gtx.Constraints.Max)
-
 											label := material.Body1(g.Theme, fmt.Sprintf("x%v", item.Count))
 											label.Alignment = text.Middle
 											// label.Font.Weight = font.Bold
@@ -611,13 +640,13 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 
 										}),
 										layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
-											slog.Info("Item inside 3", "name", itemName, "count", item.Count, "gtx", gtx.Constraints.Max)
-
 											return layout.Inset(layout.Inset{Top: unit.Dp(8), Left: unit.Dp(8)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 												btnStyle := material.Button(g.Theme, g.Battle.UseItemButtons[itemName], "Use")
 												if g.Battle.UseItemButtons[itemName].Clicked(gtx) {
-													slog.Info("Using item", "item", itemName)
-													if g.Battle.User.GetTrainer().Bag[itemName].Category == data.MedicalItems && (g.Battle.User.GetActivePokemon().BattleHP < g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value) {
+													if (g.Battle.User.GetTrainer().Bag[itemName].Category == data.MedicalItems && (g.Battle.User.GetActivePokemon().BattleHP < g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value)) ||
+														g.Battle.User.GetTrainer().Bag[itemName].Category == data.PokeBalls && (g.Battle.Opponent.GetActivePokemon().BattleHP > 0) {
+
+														slog.Info("Healing item used", "item", itemName, "hp", g.Battle.User.GetActivePokemon().BattleHP, "max hp", g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value)
 														g.performUseItem(&item)
 														g.Battle.DialogActionArea = MainBattle
 													}
@@ -812,13 +841,31 @@ func (g *Gui) performSwitch(partyIndex int) {
 	}
 	g.SetActionBtns(Actions)
 }
+
 func (g *Gui) performUseItem(item *data.Item) {
+	var target *data.BattlePokemon
+	if item.Category == data.PokeBalls {
+		target = g.Battle.Opponent.GetActivePokemon()
+	} else {
+		target = g.Battle.User.GetActivePokemon()
+	}
+
 	g.Battle.ActionChan <- data.BattleAction{
 		ID:       uuid.NewString(),
 		Type:     data.Bag,
 		Selected: g.Battle.User.GetActivePokemon(),
-		Target:   g.Battle.User.GetActivePokemon(),
+		Target:   target,
 		Item:     item,
+	}
+	g.SetActionBtns(Actions)
+}
+
+func (g *Gui) performRun() {
+	g.Battle.ActionChan <- data.BattleAction{
+		ID:       uuid.NewString(),
+		Type:     data.Run,
+		Selected: g.Battle.User.GetActivePokemon(),
+		Target:   g.Battle.Opponent.GetActivePokemon(),
 	}
 	g.SetActionBtns(Actions)
 }
@@ -911,7 +958,7 @@ func (g *Gui) renderEvolveDialog(gtx layout.Context) layout.Dimensions {
 												}},
 											)
 											g.Battle.DialogActionArea = MainBattle
-											g.Battle.ActionArea = EndBattle
+											g.SetActionBtns(EndBattle)
 										}
 										return layout.Center.Layout(gtx, btn.Layout)
 									}),
@@ -926,7 +973,7 @@ func (g *Gui) renderEvolveDialog(gtx layout.Context) layout.Dimensions {
 												}},
 											)
 											g.Battle.DialogActionArea = MainBattle
-											g.Battle.ActionArea = EndBattle
+											g.SetActionBtns(EndBattle)
 										}
 										return layout.Center.Layout(gtx, btn.Layout)
 									}),

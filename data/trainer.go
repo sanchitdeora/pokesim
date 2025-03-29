@@ -1,12 +1,13 @@
 package data
 
 type ItemMap map[ItemName]Item
+type ItemMapSave map[ItemName]int
 
 // save models
 type BaseTrainerSave struct {
 	Name  string         `json:"name"`
 	Party []*PokemonSave `json:"party"`
-	Bag   ItemMap        `json:"bag"`
+	Bag   ItemMapSave    `json:"bag"`
 }
 
 type UserSave struct {
@@ -52,7 +53,7 @@ const (
 	GymLeaderPrefix  TrainerClass = "Gym Leader"
 	TournamentPrefix TrainerClass = "Tournament Trainer"
 	RivalPrefix      TrainerClass = "Rival"
-	WildPrefix      TrainerClass = "Wild"
+	WildPrefix       TrainerClass = "Wild"
 )
 
 type TrainerStats struct {
@@ -109,7 +110,7 @@ func (t *TrainerSave) ToTrainer() *Trainer {
 		BaseTrainer: BaseTrainer{
 			Name:  t.Name,
 			Party: party,
-			Bag:   t.Bag,
+			Bag:   t.Bag.ToItemMap(),
 		},
 		Type:    t.Type,
 		Rewards: t.Rewards,
@@ -126,7 +127,7 @@ func (u *UserSave) ToUser() *User {
 		BaseTrainer: BaseTrainer{
 			Name:  u.Name,
 			Party: party,
-			Bag:   u.Bag,
+			Bag:   u.Bag.ToItemMap(),
 		},
 		Stats: u.Stats,
 		Money: u.Money,
@@ -143,13 +144,12 @@ func (u *User) ToUserSave() *UserSave {
 		BaseTrainerSave: BaseTrainerSave{
 			Name:  u.Name,
 			Party: party,
-			Bag:   u.Bag,
+			Bag:   u.Bag.ToItemMapSave(),
 		},
 		Stats: u.Stats,
 		Money: u.Money,
 	}
 }
-
 
 func (u *User) GetBagItemCount() int {
 	count := 0

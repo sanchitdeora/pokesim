@@ -1,11 +1,13 @@
 package data
 
+import "log/slog"
+
 type Item struct {
 	Count       int          `json:"count"`
 	Category    ItemCategory `json:"category"`
 	CostPrice   int          `json:"cost_price"`
 	SellPrice   int          `json:"sell_price"`
-	Attribute   int          `json:"attribute"`
+	Attribute   float64      `json:"attribute"`
 	Description string       `json:"description"`
 }
 
@@ -48,35 +50,35 @@ var ItemStore = map[ItemName]Item{
 		Category:    MedicalItems,
 		CostPrice:   200,
 		SellPrice:   50,
-		Attribute:   20,
+		Attribute:   20.0,
 		Description: "Heals 20 HP",
 	},
 	SuperPotion: {
 		Category:    MedicalItems,
 		CostPrice:   400,
 		SellPrice:   200,
-		Attribute:   20,
+		Attribute:   20.0,
 		Description: "Heals 20 HP",
 	},
 	HyperPotion: {
 		Category:    MedicalItems,
 		CostPrice:   1000,
 		SellPrice:   500,
-		Attribute:   20,
+		Attribute:   20.0,
 		Description: "Heals 20 HP",
 	},
 	PokeBall: {
 		Category:    PokeBalls,
 		CostPrice:   10,
 		SellPrice:   5,
-		Attribute:   20,
+		Attribute:   1.0,
 		Description: "Catch Pokemon",
 	},
 	GreatBall: {
 		Category:    PokeBalls,
 		CostPrice:   10,
 		SellPrice:   5,
-		Attribute:   40,
+		Attribute:   1.5,
 		Description: "Great Chance of Catching a Pokemon",
 	},
 	UltraBall: {
@@ -102,4 +104,24 @@ func GetItemNameFromItem(item Item) ItemName {
 		}
 	}
 	return ""
+}
+
+func (i ItemMap) ToItemMapSave() ItemMapSave {
+	itemMapSave := make(map[ItemName]int)
+	for name, item := range i {
+		itemMapSave[name] = item.Count
+		slog.Info("item", "name", name, "item", item)
+	}
+	return itemMapSave
+}
+
+func (i ItemMapSave) ToItemMap() ItemMap {
+	itemMap := make(map[ItemName]Item)
+	for name, count := range i {
+		item := ItemStore[name]
+		item.Count = count
+		itemMap[name] = item
+		slog.Info("item", "name", name, "count", count, "item", item)
+	}
+	return itemMap
 }

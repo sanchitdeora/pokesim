@@ -5,6 +5,7 @@ type PokemonSpecies struct {
 		Url string `json:"url"`
 	} `json:"evolution_chain"`
 	GrowthRate     BaseStruct       `json:"growth_rate"`
+	CaptureRate    int              `json:"capture_rate"`
 	PokedexNumbers []PokedexNumbers `json:"pokedex_numbers"`
 	IsLegendary    bool             `json:"is_legendary"`
 	IsMythical     bool             `json:"is_mythical"`

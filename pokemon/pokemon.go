@@ -65,10 +65,16 @@ func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 	}
 
 	evolvedBasePokemonPath := pokemon.EvolutionChain[pokemon.Level]
+	for lvl, evolutionChain := range pokemon.EvolutionChain {
+		if pokemon.Level > lvl {
+			evolvedBasePokemonPath = evolutionChain
+		}
+	}
+	
 	if len(evolvedBasePokemonPath) > 1 {
 		//TODO: add option to choose which pokemon to evolve to
 		panic("implemenet multiple pokemon evolution")
-
+	
 	} else if len(evolvedBasePokemonPath) == 0 {
 		slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name)
 	} else {

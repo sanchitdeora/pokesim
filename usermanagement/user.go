@@ -12,12 +12,13 @@ type UserManager interface {
 	SaveUser() error
 	GetUser() *data.User
 	StatUpdate(res data.Result)
-	ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder)
 	UseItem(item *data.Item)
+	ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder)
+	AddNewPokemonToTeam(pokemon *data.Pokemon)
 }
 
 type UserOpts struct {
-	GameState     gamestate.GameStateManager
+	GameState gamestate.GameStateManager
 }
 
 type UserImpl struct {
@@ -26,7 +27,7 @@ type UserImpl struct {
 }
 
 func NewUserManager(opts UserOpts) UserManager {
-	if (opts.GameState == nil) {
+	if opts.GameState == nil {
 		slog.Error("invalid opts")
 		return nil
 	}
@@ -73,6 +74,25 @@ func (u *UserImpl) SaveUser() error {
 	return u.opts.GameState.Save()
 }
 
+func (u *UserImpl) UseItem(item *data.Item) {
+	itemName := data.GetItemNameFromItem(*item)
+	itemInBag, exists := u.user.Bag[itemName]
+	if !exists {
+		slog.Debug("item not found in bag")
+		return
+	}
+	if itemInBag.Count == 0 {
+		slog.Debug("item count not enough")
+		return
+	}
+	itemInBag.Count -= 1
+
+	u.user.Bag[itemName] = itemInBag
+
+	// Save User
+	u.SaveUser()
+}
+
 func (u *UserImpl) ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder) {
 	currentIdx := GetPokemonIndexInParty(u.user.Party, pokemon)
 	switchIdx := currentIdx
@@ -94,20 +114,14 @@ func (u *UserImpl) ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonC
 	u.SaveUser()
 }
 
-func (u *UserImpl) UseItem(item *data.Item) {
-	itemName := data.GetItemNameFromItem(*item)
-	itemInBag, exists := u.user.Bag[itemName]
-	if !exists {
-		slog.Debug("item not found in bag")
+func (u *UserImpl) AddNewPokemonToTeam(pokemon *data.Pokemon) {
+	if len(u.user.Party) < 6 {
+		u.user.Party = append(u.user.Party, pokemon)
+	} else {
+		// add to box
+		slog.Debug("team full")
 		return
 	}
-	if itemInBag.Count == 0 {
-		slog.Debug("item count not enough")
-		return
-	}
-	itemInBag.Count -= 1
-
-	u.user.Bag[itemName] = itemInBag
 
 	// Save User
 	u.SaveUser()

@@ -147,8 +147,8 @@
     "type2": "poison",
     "evolved_at": 16,
     "environments": [
-      "forest",
-      "swamp"
+      "swamp",
+      "forest"
     ],
     "base_rarity": 1
   },
@@ -181,9 +181,9 @@
     "type1": "fire",
     "evolved_at": 1,
     "environments": [
+      "volcano",
       "mountain",
-      "desert",
-      "volcano"
+      "desert"
     ],
     "base_rarity": 0
   },
@@ -193,9 +193,9 @@
     "type1": "fire",
     "evolved_at": 16,
     "environments": [
-      "desert",
       "volcano",
-      "mountain"
+      "mountain",
+      "desert"
     ],
     "base_rarity": 1
   },
@@ -206,12 +206,12 @@
     "type2": "flying",
     "evolved_at": 36,
     "environments": [
-      "mountain",
       "desert",
       "volcano",
-      "forest",
+      "mountain",
       "sky",
-      "beach"
+      "beach",
+      "forest"
     ],
     "base_rarity": 2
   },
@@ -223,8 +223,8 @@
     "environments": [
       "beach",
       "swamp",
-      "lake",
-      "tundra"
+      "tundra",
+      "lake"
     ],
     "base_rarity": 0
   },
@@ -234,10 +234,10 @@
     "type1": "water",
     "evolved_at": 16,
     "environments": [
-      "lake",
       "beach",
       "swamp",
-      "tundra"
+      "tundra",
+      "lake"
     ],
     "base_rarity": 1
   },
@@ -247,10 +247,10 @@
     "type1": "water",
     "evolved_at": 36,
     "environments": [
-      "tundra",
       "lake",
       "beach",
-      "swamp"
+      "swamp",
+      "tundra"
     ],
     "base_rarity": 2
   }
