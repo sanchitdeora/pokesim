@@ -1,0 +1,89 @@
+{
+  "id": 97,
+  "name": "hypno",
+  "base_experience": 169,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "13": {
+      "id": 29,
+      "name": "headbutt",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "29": {
+      "id": 358,
+      "name": "wake-up-slap",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "37": {
+      "id": 485,
+      "name": "synchronoise",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "26": [
+      97
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0097.png",
+    "front_default": "./assets/pokemon/img/0097.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 73,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 73,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 115,
+      "iv": 0,
+      "ev": 2
+    },
+    "speed": {
+      "value": 67,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "psychic",
+  "is_legendary": false,
+  "is_mythical": false
+}

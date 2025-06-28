@@ -1,0 +1,125 @@
+{
+  "id": 98,
+  "name": "krabby",
+  "base_experience": 65,
+  "growth_rate": "medium",
+  "capture_rate": 225,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 145,
+      "name": "bubble",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "12": {
+      "id": 341,
+      "name": "mud-shot",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "20": {
+      "id": 61,
+      "name": "bubble-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "24": {
+      "id": 23,
+      "name": "stomp",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "32": {
+      "id": 534,
+      "name": "razor-shell",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "44": {
+      "id": 152,
+      "name": "crabhammer",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "5": {
+      "id": 11,
+      "name": "vice-grip",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "8": {
+      "id": 232,
+      "name": "metal-claw",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "steel"
+    }
+  },
+  "evolution_chain": {
+    "28": [
+      99
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0098.png",
+    "front_default": "./assets/pokemon/img/0098.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 1
+    },
+    "defense": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

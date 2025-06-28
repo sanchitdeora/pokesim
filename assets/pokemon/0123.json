@@ -1,0 +1,126 @@
+{
+  "id": 123,
+  "name": "scyther",
+  "base_experience": 100,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "12": {
+      "id": 17,
+      "name": "wing-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "20": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "24": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "32": {
+      "id": 13,
+      "name": "razor-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "normal"
+    },
+    "4": {
+      "id": 210,
+      "name": "fury-cutter",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "6": {
+      "id": 318,
+      "name": "silver-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "bug"
+    },
+    "9": {
+      "id": 228,
+      "name": "pursuit",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dark"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      212
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0123.png",
+    "front_default": "./assets/pokemon/img/0123.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 110,
+      "iv": 0,
+      "ev": 1
+    },
+    "defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 105,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

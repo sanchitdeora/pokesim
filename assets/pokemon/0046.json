@@ -1,0 +1,117 @@
+{
+  "id": 46,
+  "name": "paras",
+  "base_experience": 57,
+  "growth_rate": "medium",
+  "capture_rate": 190,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 71,
+      "name": "absorb",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "15": {
+      "id": 474,
+      "name": "venoshock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "17": {
+      "id": 210,
+      "name": "fury-cutter",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "21": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "23": {
+      "id": 141,
+      "name": "leech-life",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "37": {
+      "id": 404,
+      "name": "x-scissor",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "47": {
+      "id": 412,
+      "name": "energy-ball",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "special",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "24": [
+      47
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0046.png",
+    "front_default": "./assets/pokemon/img/0046.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 70,
+      "iv": 0,
+      "ev": 1
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "type2": "grass",
+  "is_legendary": false,
+  "is_mythical": false
+}

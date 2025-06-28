@@ -1,0 +1,98 @@
+{
+  "id": 24,
+  "name": "arbok",
+  "base_experience": 157,
+  "growth_rate": "medium",
+  "capture_rate": 90,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "20": {
+      "id": 51,
+      "name": "acid",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "36": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "39": {
+      "id": 426,
+      "name": "mud-bomb",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "48": {
+      "id": 562,
+      "name": "belch",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "poison"
+    }
+  },
+  "evolution_chain": {
+    "22": [
+      24
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0024.png",
+    "front_default": "./assets/pokemon/img/0024.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 69,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 79,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

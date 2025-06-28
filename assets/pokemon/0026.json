@@ -1,0 +1,65 @@
+{
+  "id": 26,
+  "name": "raichu",
+  "base_experience": 218,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 609,
+      "name": "nuzzle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "electric"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      25
+    ],
+    "25": [
+      26
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0026.png",
+    "front_default": "./assets/pokemon/img/0026.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 110,
+      "iv": 0,
+      "ev": 3
+    }
+  },
+  "type1": "electric",
+  "is_legendary": false,
+  "is_mythical": false
+}

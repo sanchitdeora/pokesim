@@ -202,7 +202,7 @@ func (p *PokemonImpl) ExperienceGain(pokemon *data.Pokemon, faintedPokemon data.
 
 	p.opts.Logger.Log(fmt.Sprintf("%s gained %v experience points", utils.ToCapitalizeFirstLetterOfEachWord(pokemon.Name), expGain))
 
-	for {
+	for pokemon.Level < 100 {
 		if pokemon.ExperienceLeft > expGain {
 			pokemon.ExperienceLeft -= expGain
 			break
@@ -267,7 +267,7 @@ func (p *PokemonImpl) GenerateStarterPokemon(basePokemon data.BasePokemon) *data
 func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
 	minLvl, maxLvl := p.getWildPokemonLevelRange()
 
-	wildEncounters, _ := utils.ReadJsonFromFile[map[data.BasePokemonID]data.WildEncounter]("./testfiles/wild_encounters.json")
+	wildEncounters, _ := utils.ReadJsonFromFile[map[data.BasePokemonID]data.WildEncounter]("./assets/wild_encounters.json")
 
 	filterByLvlAndEnvs := make([]data.WildEncounter, 0)
 
@@ -513,8 +513,6 @@ func generatePokemon(basePokemon data.BasePokemon, level int) *data.Pokemon {
 		},
 		Moveset: setupMoveset(basePokemon, level),
 	}
-
-	slog.Info("Generated pokemon", "pokemon", pokemon, "level", level)
 
 	return pokemon
 }

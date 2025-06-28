@@ -1,0 +1,93 @@
+{
+  "id": 92,
+  "name": "gastly",
+  "base_experience": 62,
+  "growth_rate": "medium-slow",
+  "capture_rate": 190,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 122,
+      "name": "lick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "ghost"
+    },
+    "12": {
+      "id": 371,
+      "name": "payback",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "32": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "48": {
+      "id": 138,
+      "name": "dream-eater",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "special",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      93
+    ],
+    "40": [
+      94
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0092.png",
+    "front_default": "./assets/pokemon/img/0092.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "ghost",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

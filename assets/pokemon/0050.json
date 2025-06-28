@@ -1,0 +1,98 @@
+{
+  "id": 50,
+  "name": "diglett",
+  "base_experience": 53,
+  "growth_rate": "medium",
+  "capture_rate": 255,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 10,
+      "name": "scratch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "20": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "24": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "8": {
+      "id": 310,
+      "name": "astonish",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "ghost"
+    }
+  },
+  "evolution_chain": {
+    "26": [
+      51
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0050.png",
+    "front_default": "./assets/pokemon/img/0050.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 10,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 95,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "ground",
+  "is_legendary": false,
+  "is_mythical": false
+}

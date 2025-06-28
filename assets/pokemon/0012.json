@@ -1,8 +1,9 @@
 {
   "id": 12,
   "name": "butterfree",
-  "base_experience": 198,
+  "base_experience": 178,
   "growth_rate": "medium",
+  "capture_rate": 45,
   "moves_learned_by_level": {
     "1": {
       "id": 450,

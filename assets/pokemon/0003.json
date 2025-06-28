@@ -1,7 +1,7 @@
 {
   "id": 3,
   "name": "venusaur",
-  "base_experience": 263,
+  "base_experience": 236,
   "growth_rate": "medium-slow",
   "capture_rate": 45,
   "moves_learned_by_level": {

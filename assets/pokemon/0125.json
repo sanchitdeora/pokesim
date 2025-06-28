@@ -1,0 +1,92 @@
+{
+  "id": 125,
+  "name": "electabuzz",
+  "base_experience": 172,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "11": {
+      "id": 209,
+      "name": "spark",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "electric"
+    },
+    "16": {
+      "id": 351,
+      "name": "shock-wave",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "34": {
+      "id": 435,
+      "name": "discharge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "electric"
+    }
+  },
+  "evolution_chain": {
+    "30": [
+      125
+    ],
+    "40": [
+      466
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0125.png",
+    "front_default": "./assets/pokemon/img/0125.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 83,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 57,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 105,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "electric",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -21,6 +21,7 @@ func CalculateAttackDamage(attackPokemon *BattlePokemon, targetPokemon *BattlePo
 		defenseStat = float64(attackPokemon.Pokemon.Stats.SpecialDefense.Value)
 	} else {
 		slog.Warn("Move Damage class not supported", "move damage class", attackMove.DamageClass)
+		return 0, 1, false
 	}
 
 	pokemonTypes := []PokemonTypeName{targetPokemon.Pokemon.BasePokemon.Type1}

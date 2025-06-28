@@ -1,0 +1,83 @@
+{
+  "id": 117,
+  "name": "seadra",
+  "base_experience": 154,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 239,
+      "name": "twister",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "20": {
+      "id": 225,
+      "name": "dragon-breath",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "25": {
+      "id": 61,
+      "name": "bubble-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    }
+  },
+  "evolution_chain": {
+    "32": [
+      117
+    ],
+    "40": [
+      230
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0117.png",
+    "front_default": "./assets/pokemon/img/0117.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

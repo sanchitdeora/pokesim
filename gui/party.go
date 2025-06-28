@@ -15,12 +15,12 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
-func DefaultPartyProps() Party {
+func DefaultPartyProps() PartyProps {
 	pokmemonSelectionBtns := make([]*widget.Clickable, 6)
 	for i := range pokmemonSelectionBtns {
 		pokmemonSelectionBtns[i] = new(widget.Clickable)
 	}
-	return Party{
+	return PartyProps{
 		SelectedIndex:       -1,
 		PokemonSelectedBtns: pokmemonSelectionBtns,
 		SummaryBtn:          new(widget.Clickable),
@@ -29,7 +29,7 @@ func DefaultPartyProps() Party {
 	}
 }
 
-type Party struct {
+type PartyProps struct {
 	SelectedIndex       int
 	PokemonSelectedBtns []*widget.Clickable
 	SummaryBtn          *widget.Clickable
@@ -38,55 +38,39 @@ type Party struct {
 }
 
 func (g *Gui) RenderPartyScreen(gtx layout.Context) layout.Dimensions {
-	// Create a theme for styling
+	return layout.Flex{
+		Axis: layout.Vertical,
+	}.Layout(gtx,
 
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
+		// Title
+		layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+			title := material.H4(g.Theme, "Party")
+			title.Font.Weight = font.Bold
 
-	return layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{
-			Axis: layout.Vertical,
-		}.Layout(gtx,
+			return title.Layout(gtx)
+		}),
 
-			// Title
-			layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
-				// slog.Info("Title Size", "gtx min", gtx.Constraints.Min, "gtx Max", gtx.Constraints.Max, "Inset X", xInset, "Inset Y", yInset)
+		layout.Flexed(0.8, func(gtx layout.Context) layout.Dimensions {
+			return layout.Inset(layout.Inset{
+				Top:    unit.Dp(8),
+				Left:   unit.Dp(32),
+				Right:  unit.Dp(128),
+				Bottom: unit.Dp(8),
+			}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				return layout.Flex{
+					Axis:    layout.Vertical,
+					Spacing: layout.SpaceBetween,
+				}.Layout(gtx,
+					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+						return g.renderPartyList(gtx)
+					}))
+			})
+		}),
 
-				title := material.H4(g.Theme, "Party")
-				title.Font.Weight = font.Bold
-
-				return title.Layout(gtx)
-			}),
-
-			layout.Flexed(0.8, func(gtx layout.Context) layout.Dimensions {
-				return layout.Inset(layout.Inset{
-					Top:    unit.Dp(8),
-					Left:   unit.Dp(32),
-					Right:  unit.Dp(128),
-					Bottom: unit.Dp(8),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return layout.Flex{
-						Axis:    layout.Vertical,
-						Spacing: layout.SpaceBetween,
-					}.Layout(gtx,
-						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderPartyList(gtx)
-						}))
-				})
-			}),
-
-			layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
-				// slog.Info("Title Size", "gtx min", gtx.Constraints.Min, "gtx Max", gtx.Constraints.Max, "Inset X", xInset, "Inset Y", yInset)
-
-				return g.renderButtonRow(gtx)
-			}),
-		)
-	})
+		layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+			return g.renderPartyButtonRow(gtx)
+		}),
+	)
 }
 
 func (g *Gui) renderPartyList(gtx layout.Context) layout.Dimensions {
@@ -96,7 +80,7 @@ func (g *Gui) renderPartyList(gtx layout.Context) layout.Dimensions {
 	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 		func(gtx layout.Context) []layout.FlexChild {
 			var rows []layout.FlexChild
-			for i := 0; i < 6; i++ {
+			for i := range 6 {
 				index := i
 				if i < len(party) {
 					// Render the Pokémon in the party
@@ -154,8 +138,7 @@ func (g *Gui) renderPartyRow(gtx layout.Context, pokemon *data.Pokemon, index in
 	})
 }
 
-func (g *Gui) renderButtonRow(gtx layout.Context) layout.Dimensions {
-
+func (g *Gui) renderPartyButtonRow(gtx layout.Context) layout.Dimensions {
 	return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween, Alignment: layout.Middle}.Layout(gtx,
 		layout.Flexed(0.4, func(gtx layout.Context) layout.Dimensions {
 			return layout.Dimensions{Size: gtx.Constraints.Max}

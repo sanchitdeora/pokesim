@@ -1,0 +1,134 @@
+{
+  "id": 114,
+  "name": "tangela",
+  "base_experience": 87,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 132,
+      "name": "constrict",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 10,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 491,
+      "name": "acid-spray",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "16": {
+      "id": 22,
+      "name": "vine-whip",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 45,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "18": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "25": {
+      "id": 412,
+      "name": "energy-ball",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "28": {
+      "id": 282,
+      "name": "knock-off",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "34": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "40": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "48": {
+      "id": 438,
+      "name": "power-whip",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "0": [
+      465
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0114.png",
+    "front_default": "./assets/pokemon/img/0114.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 115,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "is_legendary": false,
+  "is_mythical": false
+}

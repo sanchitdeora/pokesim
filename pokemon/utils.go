@@ -1,7 +1,6 @@
 package pokemon
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
 	"slices"
@@ -101,7 +100,6 @@ func setupMoveset(basePokemon data.BasePokemon, level int) data.Moveset {
 
 	moveIdx := 0
 	for lvl := range level {
-		fmt.Printf("levelIndex:%v, move:%v\n", lvl, basePokemon.MovesLearned[lvl])
 		move, ok := basePokemon.MovesLearned[lvl]
 		if ok {
 			switch moveIdx % 4 {

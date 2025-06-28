@@ -3,7 +3,6 @@ package gui
 import (
 	"image"
 	"image/color"
-	"log/slog"
 
 	"gioui.org/font"
 	"gioui.org/layout"
@@ -15,35 +14,25 @@ import (
 
 func (g *Gui) RenderTrainerScreen(gtx layout.Context) layout.Dimensions {
 	// Use a vertical layout for screen elements
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
+	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+		// Title
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			title := material.H4(g.Theme, "Trainer Screen")
+			title.Font.Weight = font.Bold
+			return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+		}),
 
-	return layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-			// Title
-			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-				title := material.H4(g.Theme, "Trainer Screen")
-				title.Font.Weight = font.Bold
-				return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
-			}),
-
-			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis:    layout.Vertical,
-					Spacing: layout.SpaceBetween,
-				}.Layout(gtx,
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						trainers := g.setupTrainersList()
-						return g.renderTrainerGallery(gtx, trainers)
-					}))
-			}),
-		)
-	})
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:    layout.Vertical,
+				Spacing: layout.SpaceBetween,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					trainers := setupTrainersList()
+					return g.renderTrainerGallery(gtx, trainers)
+				}))
+		}),
+	)
 }
 
 func (g *Gui) renderTrainerGallery(gtx layout.Context, trainers []TrainerUI) layout.Dimensions {
@@ -123,7 +112,6 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
 				if trainer.Unlocked {
 					if g.Buttons[BattleScreen].Clicked(gtx) {
-						slog.Info("Battle Screen clicked")
 						g.Battle = g.NewTrainerBattle(g.opts.UserManager.GetUser(), trainer.Trainer)
 						return g.LoadBattle(gtx)
 					}

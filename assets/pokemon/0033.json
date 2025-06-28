@@ -1,0 +1,101 @@
+{
+  "id": 33,
+  "name": "nidorino",
+  "base_experience": 128,
+  "growth_rate": "medium-slow",
+  "capture_rate": 120,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 64,
+      "name": "peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "15": {
+      "id": 31,
+      "name": "fury-attack",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "29": {
+      "id": 24,
+      "name": "double-kick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "36": {
+      "id": 30,
+      "name": "horn-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "71": {
+      "id": 414,
+      "name": "earth-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "special",
+      "type": "ground"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      33
+    ],
+    "25": [
+      34
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0033.png",
+    "front_default": "./assets/pokemon/img/0033.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 61,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 72,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 57,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

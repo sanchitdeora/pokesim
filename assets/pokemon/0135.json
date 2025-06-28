@@ -1,0 +1,116 @@
+{
+  "id": 135,
+  "name": "jolteon",
+  "base_experience": 184,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "0": {
+      "id": 84,
+      "name": "thunder-shock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "1": {
+      "id": 343,
+      "name": "covet",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "10": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "25": {
+      "id": 24,
+      "name": "double-kick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "35": {
+      "id": 42,
+      "name": "pin-missile",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 25,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "40": {
+      "id": 435,
+      "name": "discharge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "55": {
+      "id": 387,
+      "name": "last-resort",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      134
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0135.png",
+    "front_default": "./assets/pokemon/img/0135.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 110,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 130,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "electric",
+  "is_legendary": false,
+  "is_mythical": false
+}

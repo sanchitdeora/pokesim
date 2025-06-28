@@ -1,0 +1,98 @@
+{
+  "id": 90,
+  "name": "shellder",
+  "base_experience": 61,
+  "growth_rate": "slow",
+  "capture_rate": 190,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "22": {
+      "id": 128,
+      "name": "clamp",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "24": {
+      "id": 62,
+      "name": "aurora-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ice"
+    },
+    "32": {
+      "id": 534,
+      "name": "razor-shell",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "8": {
+      "id": 420,
+      "name": "ice-shard",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "ice"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      91
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0090.png",
+    "front_default": "./assets/pokemon/img/0090.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

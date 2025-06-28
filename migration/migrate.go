@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/migration/types"
@@ -64,6 +65,7 @@ func main() {
 		slog.Info("Migrating pokemon", "id", i)
 		opts.MigratePokemonToAsset(fmt.Sprintf("%s/%s/%d/", PokeApiBaseUrl, PokemonResource, i))
 		fmt.Println("==============================================================================")
+		time.Sleep(time.Second * 5)
 	}
 
 	// save wild encounters
@@ -229,9 +231,10 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 			opts.reportManualAdjustmentReq(
 				evolutionChain.Species.Name,
 				"evolvesTo is more than one pokemon species: "+speciesListStr,
-				"plan how to split",
+				" plan how to split",
 			)
-			panic("evolves to more than one pokemon")
+			// panic("evolves to more than one pokemon")
+			slog.Error("evolves to more than one pokemon", "evolvesTo", speciesListStr)
 		}
 
 		evolvesToChain := evolvesTo[0]
@@ -365,7 +368,7 @@ func GetAdjustedEvolutionLevel(details types.EvolutionDetails, stage data.Evolut
 		}
 
 		// Handle location-based evolutions (e.g., Magneton → Magnezone)
-		if details.Location != "" {
+		if details.Location.Name != "" {
 			return 35
 		}
 	}

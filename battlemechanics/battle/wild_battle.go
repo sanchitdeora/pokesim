@@ -152,8 +152,8 @@ func (w *WildBattle) handleRun(action data.BattleAction) {
 
 func (w *WildBattle) handleUseBag(action data.BattleAction, trainer battletrainer.BattleTrainer) {
 	w.log(fmt.Sprintf("%s is using %s on %s", w.getUserName(),
-		utils.ToCapitalizeFirstLetterOfEachWord(string(data.GetItemNameFromItem(*action.Item))),
-		utils.ToCapitalizeFirstLetterOfEachWord(action.Selected.Pokemon.Name)),
+		utils.ToCapitalizeFirstLetterOfEachWord(string(data.GetNameFromItem(*action.Item))),
+		utils.ToCapitalizeFirstLetterOfEachWord(action.Target.Name)),
 	)
 	if action.Item != nil {
 		err := trainer.HandleAction(action)

@@ -1,0 +1,122 @@
+{
+  "id": 145,
+  "name": "zapdos",
+  "base_experience": 261,
+  "growth_rate": "slow",
+  "capture_rate": 3,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 64,
+      "name": "peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "15": {
+      "id": 365,
+      "name": "pluck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "25": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "35": {
+      "id": 65,
+      "name": "drill-peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "45": {
+      "id": 435,
+      "name": "discharge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "5": {
+      "id": 84,
+      "name": "thunder-shock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "70": {
+      "id": 192,
+      "name": "zap-cannon",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "72": {
+      "id": 143,
+      "name": "sky-attack",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "flying"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0145.png",
+    "front_default": "./assets/pokemon/img/0145.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 125,
+      "iv": 0,
+      "ev": 3
+    },
+    "special_defense": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "electric",
+  "type2": "flying",
+  "is_legendary": true,
+  "is_mythical": false
+}

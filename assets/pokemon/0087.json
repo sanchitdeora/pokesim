@@ -1,0 +1,126 @@
+{
+  "id": 87,
+  "name": "dewgong",
+  "base_experience": 166,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "17": {
+      "id": 420,
+      "name": "ice-shard",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "ice"
+    },
+    "27": {
+      "id": 62,
+      "name": "aurora-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ice"
+    },
+    "31": {
+      "id": 453,
+      "name": "aqua-jet",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "33": {
+      "id": 362,
+      "name": "brine",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "45": {
+      "id": 291,
+      "name": "dive",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "49": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "7": {
+      "id": 61,
+      "name": "bubble-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    }
+  },
+  "evolution_chain": {
+    "34": [
+      87
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0087.png",
+    "front_default": "./assets/pokemon/img/0087.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 2
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "type2": "ice",
+  "is_legendary": false,
+  "is_mythical": false
+}

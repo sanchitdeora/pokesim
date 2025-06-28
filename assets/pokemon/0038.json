@@ -1,0 +1,80 @@
+{
+  "id": 38,
+  "name": "ninetales",
+  "base_experience": 177,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 517,
+      "name": "inferno",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "15": {
+      "id": 172,
+      "name": "flame-wheel",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "fire"
+    },
+    "29": {
+      "id": 326,
+      "name": "extrasensory",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      38
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0038.png",
+    "front_default": "./assets/pokemon/img/0038.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 73,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 76,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 81,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    },
+    "speed": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "fire",
+  "is_legendary": false,
+  "is_mythical": false
+}

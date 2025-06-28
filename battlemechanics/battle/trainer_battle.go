@@ -128,7 +128,7 @@ func (t *TrainerBattle) handleSwitch(switchAction data.BattleAction, trainer bat
 
 func (t *TrainerBattle) handleUseBag(action data.BattleAction, trainer battletrainer.BattleTrainer) {
 	t.log(fmt.Sprintf("%s is using %s on %s", t.getUserName(),
-		utils.ToCapitalizeFirstLetterOfEachWord(string(data.GetItemNameFromItem(*action.Item))),
+		utils.ToCapitalizeFirstLetterOfEachWord(string(data.GetNameFromItem(*action.Item))),
 		utils.ToCapitalizeFirstLetterOfEachWord(action.Selected.Pokemon.Name)),
 	)
 	if action.Item != nil && action.Item.Category == data.MedicalItems {

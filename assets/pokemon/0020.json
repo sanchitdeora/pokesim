@@ -3,6 +3,7 @@
   "name": "raticate",
   "base_experience": 145,
   "growth_rate": "medium",
+  "capture_rate": 127,
   "moves_learned_by_level": {
     "1": {
       "id": 154,
@@ -76,15 +77,6 @@
       "damage_class": "physical",
       "type": "dark"
     },
-    "34": {
-      "id": 162,
-      "name": "super-fang",
-      "accuracy": 90,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "physical",
-      "type": "normal"
-    },
     "39": {
       "id": 38,
       "name": "double-edge",
@@ -100,15 +92,6 @@
       "accuracy": 100,
       "priority": 1,
       "power": 40,
-      "damage_class": "physical",
-      "type": "normal"
-    },
-    "44": {
-      "id": 283,
-      "name": "endeavor",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
       "damage_class": "physical",
       "type": "normal"
     }

@@ -1,0 +1,104 @@
+{
+  "id": 142,
+  "name": "aerodactyl",
+  "base_experience": 180,
+  "growth_rate": "slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "10": {
+      "id": 17,
+      "name": "wing-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "21": {
+      "id": 88,
+      "name": "rock-throw",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "30": {
+      "id": 242,
+      "name": "crunch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "35": {
+      "id": 442,
+      "name": "iron-head",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "40": {
+      "id": 36,
+      "name": "take-down",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0142.png",
+    "front_default": "./assets/pokemon/img/0142.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 130,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "rock",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

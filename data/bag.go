@@ -1,7 +1,5 @@
 package data
 
-import "log/slog"
-
 type Item struct {
 	Count       int          `json:"count"`
 	Category    ItemCategory `json:"category"`
@@ -45,72 +43,113 @@ var AllItems = []ItemName{
 	MasterBall,
 }
 
-var ItemStore = map[ItemName]Item{
-	Potion: {
-		Category:    MedicalItems,
-		CostPrice:   200,
-		SellPrice:   50,
-		Attribute:   20.0,
-		Description: "Heals 20 HP",
+type StoreItem struct {
+	Name ItemName `json:"name"`
+	Item Item     `json:"item"`
+}
+
+var StoreItems = []StoreItem{
+	{
+		Name: Potion,
+		Item: Item{
+			Count: 1,
+			Category:    MedicalItems,
+			CostPrice:   200,
+			SellPrice:   50,
+			Attribute:   20.0,
+			Description: "Heals 20 HP",
+		},
 	},
-	SuperPotion: {
-		Category:    MedicalItems,
-		CostPrice:   400,
-		SellPrice:   200,
-		Attribute:   20.0,
-		Description: "Heals 20 HP",
+	{
+		Name: SuperPotion,
+		Item: Item{
+			Count: 1,
+			Category:    MedicalItems,
+			CostPrice:   700,
+			SellPrice:   175,
+			Attribute:   60.0,
+			Description: "Heals 60 HP",
+		},
 	},
-	HyperPotion: {
-		Category:    MedicalItems,
-		CostPrice:   1000,
-		SellPrice:   500,
-		Attribute:   20.0,
-		Description: "Heals 20 HP",
+	{
+		Name: HyperPotion,
+		Item: Item{
+			Count: 1,
+			Category:    MedicalItems,
+			CostPrice:   1500,
+			SellPrice:   375,
+			Attribute:   120.0,
+			Description: "Heals 120 HP",
+		},
 	},
-	PokeBall: {
-		Category:    PokeBalls,
-		CostPrice:   10,
-		SellPrice:   5,
-		Attribute:   1.0,
-		Description: "Catch Pokemon",
+	{
+		Name: PokeBall,
+		Item: Item{
+			Count: 1,
+			Category:    PokeBalls,
+			CostPrice:   200,
+			SellPrice:   50,
+			Attribute:   1.0,
+			Description: "Catching a Pokemon",
+		},
 	},
-	GreatBall: {
-		Category:    PokeBalls,
-		CostPrice:   10,
-		SellPrice:   5,
-		Attribute:   1.5,
-		Description: "Great Chance of Catching a Pokemon",
+	{
+		Name: GreatBall,
+		Item: Item{
+			Count: 1,
+			Category:    PokeBalls,
+			CostPrice:   600,
+			SellPrice:   150,
+			Attribute:   1.5,
+			Description: "High Chance of Catching a Pokemon",
+		},
 	},
-	UltraBall: {
-		Category:    PokeBalls,
-		CostPrice:   10,
-		SellPrice:   5,
-		Attribute:   60,
-		Description: "Higher chance of catching a Pokemon",
+	{
+		Name: UltraBall,
+		Item: Item{
+			Count: 1,
+			Category:    PokeBalls,
+			CostPrice:   800,
+			SellPrice:   200,
+			Attribute:   2.0,
+			Description: "Higher Chance of Catching a Pokemon",
+		},
 	},
-	MasterBall: {
-		Category:    PokeBalls,
-		CostPrice:   10,
-		SellPrice:   5,
-		Attribute:   100,
-		Description: "Guarantees catching a Pokemon",
+	{
+		Name: MasterBall,
+		Item: Item{
+			Count:       1,
+			Category:    PokeBalls,
+			CostPrice:   10,
+			SellPrice:   5,
+			Attribute:   255.0,
+			Description: "Guarantees Catching a Pokemon",
+		},
 	},
 }
 
-func GetItemNameFromItem(item Item) ItemName {
-	for name, i := range ItemStore {
-		if i.Description == item.Description && i.Attribute == item.Attribute {
-			return name
+func GetNameFromItem(item Item) ItemName {
+	for _, i := range StoreItems {
+		if i.Item.Description == item.Description && i.Item.Attribute == item.Attribute {
+			return i.Name
 		}
 	}
 	return ""
+}
+
+func GetItemFromName(name ItemName) Item {
+	for _, i := range StoreItems {
+		if i.Name == name {
+			return i.Item
+		}
+	}
+	return Item{}
 }
 
 func (i ItemMap) ToItemMapSave() ItemMapSave {
 	itemMapSave := make(map[ItemName]int)
 	for name, item := range i {
 		itemMapSave[name] = item.Count
-		slog.Info("item", "name", name, "item", item)
 	}
 	return itemMapSave
 }
@@ -118,10 +157,11 @@ func (i ItemMap) ToItemMapSave() ItemMapSave {
 func (i ItemMapSave) ToItemMap() ItemMap {
 	itemMap := make(map[ItemName]Item)
 	for name, count := range i {
-		item := ItemStore[name]
+
+		item := GetItemFromName(name)
+
 		item.Count = count
 		itemMap[name] = item
-		slog.Info("item", "name", name, "count", count, "item", item)
 	}
 	return itemMap
 }

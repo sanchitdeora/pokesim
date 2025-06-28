@@ -1,0 +1,144 @@
+{
+  "id": 138,
+  "name": "omanyte",
+  "base_experience": 71,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 132,
+      "name": "constrict",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 10,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "25": {
+      "id": 341,
+      "name": "mud-shot",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "26": {
+      "id": 88,
+      "name": "rock-throw",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "30": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "34": {
+      "id": 30,
+      "name": "horn-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "45": {
+      "id": 350,
+      "name": "rock-blast",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 25,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "46": {
+      "id": 131,
+      "name": "spike-cannon",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "5": {
+      "id": 205,
+      "name": "rollout",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "60": {
+      "id": 56,
+      "name": "hydro-pump",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 110,
+      "damage_class": "special",
+      "type": "water"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      139
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0138.png",
+    "front_default": "./assets/pokemon/img/0138.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "rock",
+  "type2": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

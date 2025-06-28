@@ -72,6 +72,20 @@ func (mr *MockUserManagerMockRecorder) GetUser() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUser", reflect.TypeOf((*MockUserManager)(nil).GetUser))
 }
 
+// PurchaseItem mocks base method.
+func (m *MockUserManager) PurchaseItem(arg0 data.Item) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PurchaseItem", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// PurchaseItem indicates an expected call of PurchaseItem.
+func (mr *MockUserManagerMockRecorder) PurchaseItem(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PurchaseItem", reflect.TypeOf((*MockUserManager)(nil).PurchaseItem), arg0)
+}
+
 // SaveUser mocks base method.
 func (m *MockUserManager) SaveUser() error {
 	m.ctrl.T.Helper()
@@ -84,6 +98,20 @@ func (m *MockUserManager) SaveUser() error {
 func (mr *MockUserManagerMockRecorder) SaveUser() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveUser", reflect.TypeOf((*MockUserManager)(nil).SaveUser))
+}
+
+// SellItem mocks base method.
+func (m *MockUserManager) SellItem(arg0 data.Item) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SellItem", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SellItem indicates an expected call of SellItem.
+func (mr *MockUserManagerMockRecorder) SellItem(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SellItem", reflect.TypeOf((*MockUserManager)(nil).SellItem), arg0)
 }
 
 // StatUpdate mocks base method.
@@ -99,13 +127,13 @@ func (mr *MockUserManagerMockRecorder) StatUpdate(arg0 interface{}) *gomock.Call
 }
 
 // UseItem mocks base method.
-func (m *MockUserManager) UseItem(arg0 *data.Item) {
+func (m *MockUserManager) UseItem(arg0 *data.Item, arg1 int) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "UseItem", arg0)
+	m.ctrl.Call(m, "UseItem", arg0, arg1)
 }
 
 // UseItem indicates an expected call of UseItem.
-func (mr *MockUserManagerMockRecorder) UseItem(arg0 interface{}) *gomock.Call {
+func (mr *MockUserManagerMockRecorder) UseItem(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UseItem", reflect.TypeOf((*MockUserManager)(nil).UseItem), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UseItem", reflect.TypeOf((*MockUserManager)(nil).UseItem), arg0, arg1)
 }

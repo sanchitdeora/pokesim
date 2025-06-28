@@ -1,0 +1,77 @@
+{
+  "id": 131,
+  "name": "lapras",
+  "base_experience": 187,
+  "growth_rate": "slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 55,
+      "name": "water-gun",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "20": {
+      "id": 420,
+      "name": "ice-shard",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "ice"
+    },
+    "35": {
+      "id": 362,
+      "name": "brine",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0131.png",
+    "front_default": "./assets/pokemon/img/0131.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 130,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "type2": "ice",
+  "is_legendary": false,
+  "is_mythical": false
+}

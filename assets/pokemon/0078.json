@@ -1,0 +1,152 @@
+{
+  "id": 78,
+  "name": "rapidash",
+  "base_experience": 175,
+  "growth_rate": "medium",
+  "capture_rate": 60,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 684,
+      "name": "smart-strike",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "15": {
+      "id": 488,
+      "name": "flame-charge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "fire"
+    },
+    "29": {
+      "id": 126,
+      "name": "fire-blast",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 110,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "30": {
+      "id": 23,
+      "name": "stomp",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "35": {
+      "id": 83,
+      "name": "fire-spin",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "37": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "43": {
+      "id": 36,
+      "name": "take-down",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "47": {
+      "id": 394,
+      "name": "flare-blitz",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "fire"
+    },
+    "49": {
+      "id": 517,
+      "name": "inferno",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "5": {
+      "id": 52,
+      "name": "ember",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "9": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      78
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0078.png",
+    "front_default": "./assets/pokemon/img/0078.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 105,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "fire",
+  "is_legendary": false,
+  "is_mythical": false
+}

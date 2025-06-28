@@ -3,6 +3,7 @@
   "name": "abra",
   "base_experience": 62,
   "growth_rate": "medium-slow",
+  "capture_rate": 200,
   "moves_learned_by_level": {},
   "evolution_chain": {
     "16": [

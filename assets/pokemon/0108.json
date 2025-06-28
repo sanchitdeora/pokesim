@@ -1,0 +1,161 @@
+{
+  "id": 108,
+  "name": "lickitung",
+  "base_experience": 77,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 122,
+      "name": "lick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "ghost"
+    },
+    "10": {
+      "id": 51,
+      "name": "acid",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "11": {
+      "id": 523,
+      "name": "bulldoze",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "18": {
+      "id": 428,
+      "name": "zen-headbutt",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "psychic"
+    },
+    "25": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "30": {
+      "id": 23,
+      "name": "stomp",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "34": {
+      "id": 205,
+      "name": "rollout",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "36": {
+      "id": 282,
+      "name": "knock-off",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "37": {
+      "id": 498,
+      "name": "chip-away",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "43": {
+      "id": 416,
+      "name": "giga-impact",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 150,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "48": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "54": {
+      "id": 438,
+      "name": "power-whip",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "0": [
+      463
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0108.png",
+    "front_default": "./assets/pokemon/img/0108.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 90,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "normal",
+  "is_legendary": false,
+  "is_mythical": false
+}

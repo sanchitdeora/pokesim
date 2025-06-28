@@ -1,0 +1,62 @@
+{
+  "id": 129,
+  "name": "magikarp",
+  "base_experience": 40,
+  "growth_rate": "slow",
+  "capture_rate": 255,
+  "moves_learned_by_level": {
+    "15": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      130
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0129.png",
+    "front_default": "./assets/pokemon/img/0129.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 10,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 15,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 20,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

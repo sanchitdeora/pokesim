@@ -3,6 +3,7 @@
   "name": "metapod",
   "base_experience": 72,
   "growth_rate": "medium",
+  "capture_rate": 120,
   "moves_learned_by_level": {},
   "evolution_chain": {
     "10": [

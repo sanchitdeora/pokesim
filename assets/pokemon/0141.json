@@ -1,0 +1,108 @@
+{
+  "id": 141,
+  "name": "kabutops",
+  "base_experience": 173,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 400,
+      "name": "night-slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "15": {
+      "id": 453,
+      "name": "aqua-jet",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "25": {
+      "id": 341,
+      "name": "mud-shot",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "30": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "49": {
+      "id": 141,
+      "name": "leech-life",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "56": {
+      "id": 710,
+      "name": "liquidation",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 85,
+      "damage_class": "physical",
+      "type": "water"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      141
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0141.png",
+    "front_default": "./assets/pokemon/img/0141.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 115,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 105,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "rock",
+  "type2": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -3,6 +3,7 @@
   "name": "beedrill",
   "base_experience": 178,
   "growth_rate": "medium",
+  "capture_rate": 45,
   "moves_learned_by_level": {
     "1": {
       "id": 450,
@@ -66,15 +67,6 @@
       "power": 25,
       "damage_class": "physical",
       "type": "bug"
-    },
-    "41": {
-      "id": 283,
-      "name": "endeavor",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "physical",
-      "type": "normal"
     },
     "44": {
       "id": 565,

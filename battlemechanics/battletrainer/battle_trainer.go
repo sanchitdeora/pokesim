@@ -145,11 +145,12 @@ func (b *BattleTrainerImpl) HandleUseBag(action data.BattleAction) error {
 		}
 	}
 	if healPokemon(target, action.Item) {
-		b.UserManager.UseItem(action.Item)
+		b.UserManager.UseItem(action.Item, 1)
 	}
 
 	if action.Item.Category == data.PokeBalls && action.Target.BattleHP > 0 {
 		target := action.Target
+		slog.Info("Trying to catch pokemon", "pokemon", target.Name)
 		isCaught, shakes := catchPokemon(target, action.Item, b.UserManager.GetUser().Stats.PokeDEX)
 		if !isCaught {
 			if shakes == 3 {
@@ -165,7 +166,7 @@ func (b *BattleTrainerImpl) HandleUseBag(action data.BattleAction) error {
 			b.BattleParty = append(b.BattleParty, target)
 			b.UserManager.AddNewPokemonToTeam(target.Pokemon)
 		}
-		b.UserManager.UseItem(action.Item)
+		b.UserManager.UseItem(action.Item, 1)
 	}
 	return nil
 }
@@ -177,7 +178,7 @@ func (b *BattleTrainerImpl) CalculateResult(opponent BattleTrainer) data.Result 
 		result.Money = data.GetMoneyLost(b.UserManager.GetUser())
 
 		b.SendBattleLog("You lost the battle!")
-		b.SendBattleLog(fmt.Sprintf("You lost $%v!", result.Money))
+		b.SendBattleLog(fmt.Sprintf("You lost %v ₽!", result.Money))
 
 	} else {
 		result.Status = data.Won
@@ -185,12 +186,12 @@ func (b *BattleTrainerImpl) CalculateResult(opponent BattleTrainer) data.Result 
 		result.BonusItems = opponent.GetRewards().Items
 
 		b.SendBattleLog(fmt.Sprintf("%s has won the battle!", utils.ToCapitalizeFirstLetterOfEachWord(b.GetTrainer().Name)))
-		b.SendBattleLog(fmt.Sprintf("You got $%v!", result.Money))
+		b.SendBattleLog(fmt.Sprintf("You got %v ₽!", result.Money))
 
 		// if gym battle; earn badge
 		if opponent.GetTrainerType() == data.GymLeaderPrefix {
 			result.BadgeEarned = opponent.GetRewards().Badge
-			b.SendBattleLog(fmt.Sprintf("You earned a $%v!", result.BadgeEarned.Name))
+			b.SendBattleLog(fmt.Sprintf("You earned a %v ₽!", result.BadgeEarned.Name))
 		}
 	}
 	return result

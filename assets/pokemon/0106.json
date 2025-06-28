@@ -1,0 +1,116 @@
+{
+  "id": 106,
+  "name": "hitmonlee",
+  "base_experience": 159,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 252,
+      "name": "fake-out",
+      "accuracy": 100,
+      "priority": 3,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "16": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "24": {
+      "id": 299,
+      "name": "blaze-kick",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 85,
+      "damage_class": "physical",
+      "type": "fire"
+    },
+    "30": {
+      "id": 26,
+      "name": "jump-kick",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "32": {
+      "id": 25,
+      "name": "mega-kick",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "4": {
+      "id": 24,
+      "name": "double-kick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "50": {
+      "id": 853,
+      "name": "axe-kick",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "fighting"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      106
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0106.png",
+    "front_default": "./assets/pokemon/img/0106.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 120,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 53,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 110,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 87,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fighting",
+  "is_legendary": false,
+  "is_mythical": false
+}

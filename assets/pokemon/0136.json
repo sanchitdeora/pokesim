@@ -1,0 +1,116 @@
+{
+  "id": 136,
+  "name": "flareon",
+  "base_experience": 184,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "0": {
+      "id": 52,
+      "name": "ember",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "1": {
+      "id": 343,
+      "name": "covet",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "10": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "20": {
+      "id": 123,
+      "name": "smog",
+      "accuracy": 70,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "25": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "40": {
+      "id": 436,
+      "name": "lava-plume",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "55": {
+      "id": 387,
+      "name": "last-resort",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      134
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0136.png",
+    "front_default": "./assets/pokemon/img/0136.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 130,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 110,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fire",
+  "is_legendary": false,
+  "is_mythical": false
+}

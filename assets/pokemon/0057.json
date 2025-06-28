@@ -1,0 +1,146 @@
+{
+  "id": 57,
+  "name": "primeape",
+  "base_experience": 159,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 343,
+      "name": "covet",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "12": {
+      "id": 228,
+      "name": "pursuit",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "13": {
+      "id": 2,
+      "name": "karate-chop",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "15": {
+      "id": 514,
+      "name": "retaliate",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "22": {
+      "id": 238,
+      "name": "cross-chop",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "26": {
+      "id": 372,
+      "name": "assurance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "30": {
+      "id": 130,
+      "name": "skull-bash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 130,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "35": {
+      "id": 889,
+      "name": "rage-fist",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "ghost"
+    },
+    "5": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "8": {
+      "id": 189,
+      "name": "mud-slap",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "special",
+      "type": "ground"
+    }
+  },
+  "evolution_chain": {
+    "0": [
+      979
+    ],
+    "28": [
+      57
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0057.png",
+    "front_default": "./assets/pokemon/img/0057.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fighting",
+  "is_legendary": false,
+  "is_mythical": false
+}

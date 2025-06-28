@@ -16,62 +16,50 @@ import (
 )
 
 func (g *Gui) RenderHomeScreen(gtx layout.Context) layout.Dimensions {
-	// Create a theme for styling
+	return layout.Flex{
+		Axis: layout.Vertical,
+	}.Layout(gtx,
 
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
+		// Title
+		layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
 
-	return layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{
-			Axis: layout.Vertical,
-		}.Layout(gtx,
+			title := material.H4(g.Theme, "Home")
+			title.Font.Weight = font.Bold
 
-			// Title
-			layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+			return title.Layout(gtx)
+		}),
 
-				title := material.H4(g.Theme, "Home")
-				title.Font.Weight = font.Bold
+		layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
 
-				return title.Layout(gtx)
-			}),
+			return layout.Inset(layout.Inset{
+				Top: unit.Dp(20),
+			}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				return g.renderStatCard(gtx)
+			})
+		}),
 
-			layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
-
-				return layout.Inset(layout.Inset{
-					Top: unit.Dp(20),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return g.renderStatCard(gtx)
-				})
-			}),
-
-			layout.Flexed(0.7, func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis:      layout.Vertical,
-					Alignment: layout.Middle,
-				}.Layout(gtx,
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						return layout.Inset(layout.Inset{
-							Top: unit.Dp(10),
-						}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-							return g.renderActionCard(gtx)
-						})
-					}),
-					layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
-						return layout.Inset(layout.Inset{
-							Top: unit.Dp(15),
-						}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-							return g.renderQuickAccess(gtx)
-						})
-					}),
-				)
-			}),
-		)
-	})
+		layout.Flexed(0.7, func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:      layout.Vertical,
+				Alignment: layout.Middle,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					return layout.Inset(layout.Inset{
+						Top: unit.Dp(10),
+					}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+						return g.renderActionCard(gtx)
+					})
+				}),
+				layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
+					return layout.Inset(layout.Inset{
+						Top: unit.Dp(15),
+					}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+						return g.renderQuickAccess(gtx)
+					})
+				}),
+			)
+		}),
+	)
 }
 
 func (g *Gui) renderStatCard(gtx layout.Context) layout.Dimensions {
@@ -154,8 +142,8 @@ func (g *Gui) renderActionCard(gtx layout.Context) layout.Dimensions {
 		{"Trainers", nil, TrainerScreen},
 		{"Wild", nil, WildScreen},
 		{"Tournaments", nil, ToBeReplaced},
-		{"PokéShop", nil, ToBeReplaced},
-		{"Save", nil, ToBeReplaced},
+		{"PokéShop", nil, ShopScreen},
+		// {"Save", nil, ToBeReplaced},
 	}
 
 	cardHeight := gtx.Dp(unit.Dp(80))
@@ -283,7 +271,7 @@ func (g *Gui) renderQuickAccess(gtx layout.Context) layout.Dimensions {
 		page      Screen
 	}{
 		{icon: i1, title: "Party", subtext: fmt.Sprintf("You have %v/6 Pokemon", lenParty), buttonTxt: "View Party", page: PartyScreen},
-		{icon: i2, title: "Bag", subtext: fmt.Sprintf("You have %v items", itemCount), buttonTxt: "View Bag", page: Bag},
+		{icon: i2, title: "Bag", subtext: fmt.Sprintf("You have %v items", itemCount), buttonTxt: "View Bag", page: BagScreen},
 		{icon: i3, title: "Pokédex", subtext: fmt.Sprintf("%v Pokemon seen", 7), buttonTxt: "Open", page: ToBeReplaced},
 	}
 

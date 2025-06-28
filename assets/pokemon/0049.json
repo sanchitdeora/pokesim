@@ -1,0 +1,90 @@
+{
+  "id": 49,
+  "name": "venomoth",
+  "base_experience": 158,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 318,
+      "name": "silver-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "bug"
+    },
+    "11": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "25": {
+      "id": 72,
+      "name": "mega-drain",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "47": {
+      "id": 305,
+      "name": "poison-fang",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "poison"
+    }
+  },
+  "evolution_chain": {
+    "31": [
+      49
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0049.png",
+    "front_default": "./assets/pokemon/img/0049.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 90,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "bug",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

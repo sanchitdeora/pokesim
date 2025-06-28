@@ -332,7 +332,7 @@ func (tb *TrainerBattleImpl) Report() (*data.Result, error) {
 	if tb.UserUnfaintedPartyCount == 0 {
 		report.Money = data.GetMoneyLost(tb.UserTrainer)
 
-		tb.BattleLog(fmt.Sprintf("You lost $%v!", report.Money))
+		tb.BattleLog(fmt.Sprintf("You lost %v ₽!", report.Money))
 		tb.BattleLog(fmt.Sprintf("You lost the battle to %s!", tb.OpponentTrainer.Name))
 		report.UserWin = false
 
@@ -342,12 +342,12 @@ func (tb *TrainerBattleImpl) Report() (*data.Result, error) {
 		report.BonusItems = tb.OpponentTrainer.Rewards.Items
 
 		tb.BattleLog(fmt.Sprintf("%s has won the battle!", tb.UserTrainer.Name))
-		tb.BattleLog(fmt.Sprintf("You got $%v!", report.Money))
+		tb.BattleLog(fmt.Sprintf("You got %v ₽!", report.Money))
 
 		// if gym battle; earn badge
 		if tb.OpponentTrainer.Type == data.GymLeaderPrefix {
 			report.BadgeEarned = tb.OpponentTrainer.Rewards.Badge
-			tb.BattleLog(fmt.Sprintf("You earned a $%v!", tb.OpponentTrainer.Rewards.Badge.Name))
+			tb.BattleLog(fmt.Sprintf("You earned a %v ₽!", tb.OpponentTrainer.Rewards.Badge.Name))
 		}
 	}
 

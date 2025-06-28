@@ -1,0 +1,66 @@
+{
+  "id": 40,
+  "name": "wigglytuff",
+  "base_experience": 196,
+  "growth_rate": "fast",
+  "capture_rate": 50,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 497,
+      "name": "echoed-voice",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      39
+    ],
+    "25": [
+      40
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0040.png",
+    "front_default": "./assets/pokemon/img/0040.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 140,
+      "iv": 0,
+      "ev": 3
+    },
+    "attack": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "normal",
+  "type2": "fairy",
+  "is_legendary": false,
+  "is_mythical": false
+}

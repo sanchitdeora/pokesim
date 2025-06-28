@@ -3,6 +3,7 @@
   "name": "pidgeotto",
   "base_experience": 122,
   "growth_rate": "medium-slow",
+  "capture_rate": 120,
   "moves_learned_by_level": {
     "1": {
       "id": 33,

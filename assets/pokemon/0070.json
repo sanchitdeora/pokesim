@@ -1,0 +1,102 @@
+{
+  "id": 70,
+  "name": "weepinbell",
+  "base_experience": 137,
+  "growth_rate": "medium-slow",
+  "capture_rate": 120,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 35,
+      "name": "wrap",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "24": {
+      "id": 51,
+      "name": "acid",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "44": {
+      "id": 75,
+      "name": "razor-leaf",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "physical",
+      "type": "grass"
+    },
+    "54": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "58": {
+      "id": 438,
+      "name": "power-whip",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "21": [
+      70
+    ],
+    "25": [
+      71
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0070.png",
+    "front_default": "./assets/pokemon/img/0070.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 90,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

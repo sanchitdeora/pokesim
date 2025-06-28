@@ -1,0 +1,85 @@
+{
+  "id": 150,
+  "name": "mewtwo",
+  "base_experience": 306,
+  "growth_rate": "slow",
+  "capture_rate": 3,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "16": {
+      "id": 427,
+      "name": "psycho-cut",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "psychic"
+    },
+    "72": {
+      "id": 540,
+      "name": "psystrike",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "8": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0150.png",
+    "front_default": "./assets/pokemon/img/0150.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 106,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 110,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 154,
+      "iv": 0,
+      "ev": 3
+    },
+    "special_defense": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 130,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "psychic",
+  "is_legendary": true,
+  "is_mythical": false
+}

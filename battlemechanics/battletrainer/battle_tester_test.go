@@ -151,7 +151,7 @@ func TestBattleTester_TestHandleUseBag_LessThan10(t *testing.T) {
 		Item:     &item,
 	}
 
-	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
+	mocks.UserManager.EXPECT().UseItem(&item, 1).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 
@@ -174,7 +174,7 @@ func TestBattleTester_TestHandleUseBag_LessThan50(t *testing.T) {
 		Item:     &item,
 	}
 
-	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
+	mocks.UserManager.EXPECT().UseItem(&item, 1).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 
@@ -197,7 +197,7 @@ func TestBattleTester_TestHandleUseBag_LessThan50_InParty(t *testing.T) {
 		Item:     &item,
 	}
 
-	mocks.UserManager.EXPECT().UseItem(&item).Times(1)
+	mocks.UserManager.EXPECT().UseItem(&item, 1).Times(1)
 	err := tester.HandleAction(action)
 	assert.Nil(t, err)
 

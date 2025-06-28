@@ -1,0 +1,134 @@
+{
+  "id": 105,
+  "name": "marowak",
+  "base_experience": 149,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 189,
+      "name": "mud-slap",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "12": {
+      "id": 125,
+      "name": "bone-club",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "16": {
+      "id": 514,
+      "name": "retaliate",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "18": {
+      "id": 99,
+      "name": "rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "24": {
+      "id": 707,
+      "name": "stomping-tantrum",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "31": {
+      "id": 198,
+      "name": "bone-rush",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 25,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "48": {
+      "id": 155,
+      "name": "bonemerang",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "54": {
+      "id": 37,
+      "name": "thrash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "60": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "28": [
+      105
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0105.png",
+    "front_default": "./assets/pokemon/img/0105.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 110,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "ground",
+  "is_legendary": false,
+  "is_mythical": false
+}

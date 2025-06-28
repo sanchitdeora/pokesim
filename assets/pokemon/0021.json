@@ -1,0 +1,108 @@
+{
+  "id": 21,
+  "name": "spearow",
+  "base_experience": 52,
+  "growth_rate": "medium",
+  "capture_rate": 255,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 64,
+      "name": "peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "11": {
+      "id": 31,
+      "name": "fury-attack",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "18": {
+      "id": 17,
+      "name": "wing-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "22": {
+      "id": 36,
+      "name": "take-down",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "36": {
+      "id": 65,
+      "name": "drill-peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "8": {
+      "id": 372,
+      "name": "assurance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      22
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0021.png",
+    "front_default": "./assets/pokemon/img/0021.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 31,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 31,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "normal",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

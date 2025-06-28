@@ -1,0 +1,129 @@
+{
+  "id": 111,
+  "name": "rhyhorn",
+  "base_experience": 69,
+  "growth_rate": "slow",
+  "capture_rate": 120,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "11": {
+      "id": 249,
+      "name": "rock-smash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "15": {
+      "id": 30,
+      "name": "horn-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "19": {
+      "id": 88,
+      "name": "rock-throw",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "25": {
+      "id": 498,
+      "name": "chip-away",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "52": {
+      "id": 416,
+      "name": "giga-impact",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 150,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "55": {
+      "id": 224,
+      "name": "megahorn",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "7": {
+      "id": 31,
+      "name": "fury-attack",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      464
+    ],
+    "42": [
+      112
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0111.png",
+    "front_default": "./assets/pokemon/img/0111.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "ground",
+  "type2": "rock",
+  "is_legendary": false,
+  "is_mythical": false
+}

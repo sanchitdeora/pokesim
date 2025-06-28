@@ -1,0 +1,110 @@
+{
+  "id": 126,
+  "name": "magmar",
+  "base_experience": 173,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 123,
+      "name": "smog",
+      "accuracy": 70,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "12": {
+      "id": 499,
+      "name": "clear-smog",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "16": {
+      "id": 172,
+      "name": "flame-wheel",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "fire"
+    },
+    "22": {
+      "id": 481,
+      "name": "flame-burst",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "34": {
+      "id": 436,
+      "name": "lava-plume",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "fire"
+    },
+    "6": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "30": [
+      126
+    ],
+    "40": [
+      467
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0126.png",
+    "front_default": "./assets/pokemon/img/0126.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 57,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_defense": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 93,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fire",
+  "is_legendary": false,
+  "is_mythical": false
+}

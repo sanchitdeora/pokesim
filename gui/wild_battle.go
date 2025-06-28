@@ -1,8 +1,6 @@
 package gui
 
 import (
-	"log/slog"
-
 	"gioui.org/layout"
 	"gioui.org/widget"
 	"github.com/sanchitdeora/PokeSim/battlemechanics/battle"
@@ -11,6 +9,20 @@ import (
 	"github.com/sanchitdeora/PokeSim/logger"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 )
+
+func DefaultWildEnvironmentProps() WildEnvironmentProps {
+	return WildEnvironmentProps{
+		WildEnvironmentList:       &widget.List{
+				List: layout.List{Axis: layout.Vertical},
+			},
+		Environments: getEnvironments(),
+	}
+}
+
+type WildEnvironmentProps struct {
+	WildEnvironmentList *widget.List
+	Environments        []EnvironmentUI
+}
 
 func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 	battleAction := make(chan data.BattleAction, 1)
@@ -70,7 +82,7 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 		User:          battleUser,
 
 		CatchPokemonEnabled: true,
-		RunBattleEnabled:   true,
+		RunBattleEnabled:    true,
 
 		ActionChan: battleAction,
 
@@ -94,12 +106,4 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 			ForgetMovesBtns: forgetMovesBtns,
 		},
 	}
-}
-
-func (g *Gui) RenderWildScreen(gtx layout.Context) layout.Dimensions {
-	slog.Info("Starting Battle Screen")
-	g.Battle = g.NewWildBattle(g.opts.UserManager.GetUser(), g.opts.PokemonService.SearchWildPokemon(data.Forest))
-	slog.Info("Starting Battle Screen", "battle", g.Battle)
-
-	return g.LoadBattle(gtx)
 }

@@ -1,0 +1,98 @@
+{
+  "id": 51,
+  "name": "dugtrio",
+  "base_experience": 149,
+  "growth_rate": "medium",
+  "capture_rate": 50,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 400,
+      "name": "night-slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "15": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "20": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "24": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "25": {
+      "id": 426,
+      "name": "mud-bomb",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ground"
+    }
+  },
+  "evolution_chain": {
+    "26": [
+      51
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0051.png",
+    "front_default": "./assets/pokemon/img/0051.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 120,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "ground",
+  "is_legendary": false,
+  "is_mythical": false
+}

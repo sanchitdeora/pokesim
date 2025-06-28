@@ -4,6 +4,7 @@ import (
 	"log/slog"
 
 	"github.com/sanchitdeora/PokeSim/data"
+	"github.com/sanchitdeora/PokeSim/errors"
 	"github.com/sanchitdeora/PokeSim/gamestate"
 )
 
@@ -12,9 +13,11 @@ type UserManager interface {
 	SaveUser() error
 	GetUser() *data.User
 	StatUpdate(res data.Result)
-	UseItem(item *data.Item)
 	ChangePokemonOrder(pokemon *data.Pokemon, order data.PokemonChangeOrder)
 	AddNewPokemonToTeam(pokemon *data.Pokemon)
+	UseItem(item *data.Item, count int)
+	PurchaseItem(item data.Item) error
+	SellItem(item data.Item) error
 }
 
 type UserOpts struct {
@@ -37,6 +40,10 @@ func NewUserManager(opts UserOpts) UserManager {
 		opts: opts,
 		user: gameState.User,
 	}
+}
+
+func (u *UserImpl) GetUser() *data.User {
+	return u.user
 }
 
 func (u *UserImpl) StatUpdate(result data.Result) {
@@ -74,18 +81,44 @@ func (u *UserImpl) SaveUser() error {
 	return u.opts.GameState.Save()
 }
 
-func (u *UserImpl) UseItem(item *data.Item) {
-	itemName := data.GetItemNameFromItem(*item)
+func (u *UserImpl) PurchaseItem(item data.Item) error {
+	cost := item.CostPrice * item.Count
+	if cost > u.user.Money {
+		return errors.ErrNotEnoughMoney
+	}
+	u.user.Money -= cost
+	u.addItemToBag(u.user.Bag, data.GetNameFromItem(item), item)
+
+	// Save User
+	u.SaveUser()
+
+	return nil
+}
+
+func (u *UserImpl) SellItem(item data.Item) error {
+	cost := item.SellPrice * item.Count
+	if item.Count > u.user.Bag[data.GetNameFromItem(item)].Count {
+		return errors.ErrItemCountNotEnough
+	}
+
+	u.user.Money += cost
+	u.UseItem(&item, item.Count)
+
+	return nil
+}
+
+func (u *UserImpl) UseItem(item *data.Item, count int) {
+	itemName := data.GetNameFromItem(*item)
 	itemInBag, exists := u.user.Bag[itemName]
 	if !exists {
 		slog.Debug("item not found in bag")
 		return
 	}
-	if itemInBag.Count == 0 {
+	if itemInBag.Count < count {
 		slog.Debug("item count not enough")
 		return
 	}
-	itemInBag.Count -= 1
+	itemInBag.Count -= count
 
 	u.user.Bag[itemName] = itemInBag
 
@@ -125,10 +158,6 @@ func (u *UserImpl) AddNewPokemonToTeam(pokemon *data.Pokemon) {
 
 	// Save User
 	u.SaveUser()
-}
-
-func (u *UserImpl) GetUser() *data.User {
-	return u.user
 }
 
 func (u *UserImpl) addItemToBag(bag data.ItemMap, itemName data.ItemName, item data.Item) {

@@ -2,10 +2,12 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"log/slog"
 	"os"
 	"path/filepath"
 	"runtime"
+	"syscall"
 )
 
 func ReadJsonFromFile[T any](relativePath string) (T, error) {
@@ -43,6 +45,13 @@ func WriteJsonToFile[T any](relativePath string, data T) error {
 
 	// Open the file for writing, overwriting any existing content
 	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if errors.Is(err, syscall.ENOTDIR) {
+		file, err := os.Create(filePath)
+        if err != nil {
+            return err
+        }
+        defer file.Close()
+	}
 	if err != nil {
 		slog.Error("error while opening file", "filename", filePath, "error", err)
 		return err

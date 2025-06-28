@@ -17,5 +17,5 @@ type EvolutionDetails struct {
 	MinHappiness int        `json:"min_happiness"`
 	HeldItem     BaseStruct `json:"held_item"`
 	TimeOfDay    string     `json:"time_of_day"`
-	Location     string     `json:"location"`
+	Location     BaseStruct `json:"location"`
 }

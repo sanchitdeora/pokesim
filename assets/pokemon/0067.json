@@ -1,0 +1,182 @@
+{
+  "id": 67,
+  "name": "machoke",
+  "base_experience": 142,
+  "growth_rate": "medium-slow",
+  "capture_rate": 90,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 279,
+      "name": "revenge",
+      "accuracy": 100,
+      "priority": -4,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "11": {
+      "id": 418,
+      "name": "bullet-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "16": {
+      "id": 282,
+      "name": "knock-off",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "18": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "22": {
+      "id": 183,
+      "name": "mach-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "24": {
+      "id": 233,
+      "name": "vital-throw",
+      "accuracy": 0,
+      "priority": -1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "26": {
+      "id": 66,
+      "name": "submission",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "27": {
+      "id": 358,
+      "name": "wake-up-slap",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "34": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "36": {
+      "id": 530,
+      "name": "dual-chop",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dragon"
+    },
+    "43": {
+      "id": 370,
+      "name": "close-combat",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "54": {
+      "id": 223,
+      "name": "dynamic-punch",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "6": {
+      "id": 249,
+      "name": "rock-smash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "60": {
+      "id": 238,
+      "name": "cross-chop",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "fighting"
+    }
+  },
+  "evolution_chain": {
+    "28": [
+      67
+    ],
+    "40": [
+      68
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0067.png",
+    "front_default": "./assets/pokemon/img/0067.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fighting",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -1,0 +1,101 @@
+{
+  "id": 147,
+  "name": "dratini",
+  "base_experience": 60,
+  "growth_rate": "slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 35,
+      "name": "wrap",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "25": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "31": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "35": {
+      "id": 407,
+      "name": "dragon-rush",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "dragon"
+    },
+    "5": {
+      "id": 239,
+      "name": "twister",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "dragon"
+    }
+  },
+  "evolution_chain": {
+    "30": [
+      148
+    ],
+    "55": [
+      149
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0147.png",
+    "front_default": "./assets/pokemon/img/0147.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 41,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 64,
+      "iv": 0,
+      "ev": 1
+    },
+    "defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "dragon",
+  "is_legendary": false,
+  "is_mythical": false
+}

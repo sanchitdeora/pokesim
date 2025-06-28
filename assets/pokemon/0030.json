@@ -1,0 +1,119 @@
+{
+  "id": 30,
+  "name": "nidorina",
+  "base_experience": 128,
+  "growth_rate": "medium-slow",
+  "capture_rate": 120,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 40,
+      "name": "poison-sting",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "poison"
+    },
+    "15": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "29": {
+      "id": 24,
+      "name": "double-kick",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "36": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "58": {
+      "id": 305,
+      "name": "poison-fang",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "poison"
+    },
+    "64": {
+      "id": 242,
+      "name": "crunch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "71": {
+      "id": 414,
+      "name": "earth-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "special",
+      "type": "ground"
+    }
+  },
+  "evolution_chain": {
+    "16": [
+      30
+    ],
+    "25": [
+      31
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0030.png",
+    "front_default": "./assets/pokemon/img/0030.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 70,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 62,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 67,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 56,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

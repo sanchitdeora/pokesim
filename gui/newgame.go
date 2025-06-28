@@ -43,69 +43,58 @@ type NewGameUI struct {
 
 func (g *Gui) RenderNewGameScreen(gtx layout.Context) layout.Dimensions {
 	// Create a theme for styling
+	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+		// Title
+		layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+			title := material.H4(g.Theme, "New Game")
+			title.Font.Weight = font.Bold
+			return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+		}),
 
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
+		layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis: layout.Vertical,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					title := material.H6(g.Theme, "Enter your Trainer Name")
+					title.Font.Weight = font.Bold
+					return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+				}),
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					// text field to input name
+					g.NewGame.NewTrainerEditor.SingleLine = true // Ensure single-line input
+					g.NewGame.NewTrainerEditor.MaxLen = 20
+					g.NewGame.NewTrainerEditor.Submit = true
 
-	return layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-			// Title
-			layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
-				title := material.H4(g.Theme, "New Game")
-				title.Font.Weight = font.Bold
-				return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
-			}),
+					return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+						return material.Editor(g.Theme, &g.NewGame.NewTrainerEditor, "Enter Name...").Layout(gtx)
+					})
+				}),
+			)
+		}),
 
-			layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis: layout.Vertical,
-				}.Layout(gtx,
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						title := material.H6(g.Theme, "Enter your Trainer Name")
-						title.Font.Weight = font.Bold
-						return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
-					}),
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						// text field to input name
-						g.NewGame.NewTrainerEditor.SingleLine = true // Ensure single-line input
-						g.NewGame.NewTrainerEditor.MaxLen = 20
-						g.NewGame.NewTrainerEditor.Submit = true
+		layout.Flexed(0.6, func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:    layout.Vertical,
+				Spacing: layout.SpaceBetween,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					title := material.H6(g.Theme, "Select a Starter Pokemon")
+					title.Font.Weight = font.Bold
+					return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+				}),
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					starterPokemonsList := fetchStarterPokemonList()
+					return g.renderStarterPokemonGallery(gtx, starterPokemonsList)
+				}),
+			)
+		}),
 
-						return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-							return material.Editor(g.Theme, &g.NewGame.NewTrainerEditor, "Enter Name...").Layout(gtx)
-						})
-					}),
-				)
-			}),
-
-			layout.Flexed(0.6, func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis:    layout.Vertical,
-					Spacing: layout.SpaceBetween,
-				}.Layout(gtx,
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						title := material.H6(g.Theme, "Select a Starter Pokemon")
-						title.Font.Weight = font.Bold
-						return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
-					}),
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						starterPokemonsList := g.fetchStarterPokemonList()
-						return g.renderStarterPokemonGallery(gtx, starterPokemonsList)
-					}),
-				)
-			}),
-
-			// Start Game button
-			layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
-				return g.renderStartGameBtn(gtx)
-			}),
-		)
-	})
+		// Start Game button
+		layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
+			return g.renderStartGameBtn(gtx)
+		}),
+	)
 }
 
 func (g *Gui) renderStarterPokemonGallery(gtx layout.Context, starterPokemons []data.BasePokemon) layout.Dimensions {
@@ -206,7 +195,7 @@ func (g *Gui) renderStartGameBtn(gtx layout.Context) layout.Dimensions {
 	if g.NewGame.StartGameBtn.Clicked(gtx) {
 		// start a new game
 		g.opts.GameManager = gamestate.NewGameStateManager(
-			g.prepareNewGameUser(g.NewGame.NewTrainerEditor.Text(), g.fetchStarterPokemonList()[g.NewGame.SelectedIndex]),
+			g.prepareNewGameUser(g.NewGame.NewTrainerEditor.Text(), fetchStarterPokemonList()[g.NewGame.SelectedIndex]),
 			"", g.NewGame.NewTrainerEditor.Text(),
 		)
 		g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})

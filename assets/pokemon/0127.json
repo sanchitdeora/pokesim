@@ -1,0 +1,112 @@
+{
+  "id": 127,
+  "name": "pinsir",
+  "base_experience": 175,
+  "growth_rate": "slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 11,
+      "name": "vice-grip",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 55,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "20": {
+      "id": 480,
+      "name": "storm-throw",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "24": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "28": {
+      "id": 233,
+      "name": "vital-throw",
+      "accuracy": 0,
+      "priority": -1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "44": {
+      "id": 66,
+      "name": "submission",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "49": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "8": {
+      "id": 20,
+      "name": "bind",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0127.png",
+    "front_default": "./assets/pokemon/img/0127.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 125,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "bug",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -1,0 +1,75 @@
+{
+  "id": 71,
+  "name": "victreebel",
+  "base_experience": 221,
+  "growth_rate": "medium-slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 536,
+      "name": "leaf-tornado",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "44": {
+      "id": 348,
+      "name": "leaf-blade",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "21": [
+      70
+    ],
+    "25": [
+      71
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0071.png",
+    "front_default": "./assets/pokemon/img/0071.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 3
+    },
+    "defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -1,0 +1,90 @@
+{
+  "id": 102,
+  "name": "exeggcute",
+  "base_experience": 65,
+  "growth_rate": "slow",
+  "capture_rate": 90,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 140,
+      "name": "barrage",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 72,
+      "name": "mega-drain",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "20": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "40": {
+      "id": 326,
+      "name": "extrasensory",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "psychic"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      103
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0102.png",
+    "front_default": "./assets/pokemon/img/0102.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "psychic",
+  "is_legendary": false,
+  "is_mythical": false
+}

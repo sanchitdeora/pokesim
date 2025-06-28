@@ -1,0 +1,107 @@
+{
+  "id": 134,
+  "name": "vaporeon",
+  "base_experience": 184,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "0": {
+      "id": 145,
+      "name": "bubble",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "1": {
+      "id": 343,
+      "name": "covet",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "10": {
+      "id": 98,
+      "name": "quick-attack",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "25": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "30": {
+      "id": 62,
+      "name": "aurora-beam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ice"
+    },
+    "55": {
+      "id": 387,
+      "name": "last-resort",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "25": [
+      134
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0134.png",
+    "front_default": "./assets/pokemon/img/0134.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 130,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 110,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "is_legendary": false,
+  "is_mythical": false
+}

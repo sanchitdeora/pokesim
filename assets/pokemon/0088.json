@@ -1,0 +1,89 @@
+{
+  "id": 88,
+  "name": "grimer",
+  "base_experience": 65,
+  "growth_rate": "medium",
+  "capture_rate": 190,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 1,
+      "name": "pound",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 124,
+      "name": "sludge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "18": {
+      "id": 426,
+      "name": "mud-bomb",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "46": {
+      "id": 562,
+      "name": "belch",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "poison"
+    }
+  },
+  "evolution_chain": {
+    "38": [
+      89
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0088.png",
+    "front_default": "./assets/pokemon/img/0088.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 80,
+      "iv": 0,
+      "ev": 1
+    },
+    "attack": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 25,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

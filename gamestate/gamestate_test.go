@@ -8,10 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createGameState() gamestate.GameStateManager {
-	return gamestate.NewGameStateManager(nil, "testfiles/gametest", "unittestgame")
-}
-
 func TestNewGamestate_WithNilConstraints(t *testing.T) {
 	gameManager := gamestate.NewGameStateManager(nil, "testfiles/gametest", "nilUserTest")
 	assert.NotNil(t, gameManager)

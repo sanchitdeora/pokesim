@@ -1,0 +1,99 @@
+{
+  "id": 137,
+  "name": "porygon",
+  "base_experience": 79,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "15": {
+      "id": 209,
+      "name": "spark",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "electric"
+    },
+    "40": {
+      "id": 435,
+      "name": "discharge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "45": {
+      "id": 161,
+      "name": "tri-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "normal"
+    },
+    "60": {
+      "id": 192,
+      "name": "zap-cannon",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "electric"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      233,
+      474
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0137.png",
+    "front_default": "./assets/pokemon/img/0137.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "normal",
+  "is_legendary": false,
+  "is_mythical": false
+}

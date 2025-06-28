@@ -1,7 +1,7 @@
 {
   "id": 9,
   "name": "blastoise",
-  "base_experience": 265,
+  "base_experience": 239,
   "growth_rate": "medium-slow",
   "capture_rate": 45,
   "moves_learned_by_level": {

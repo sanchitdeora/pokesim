@@ -20,38 +20,27 @@ import (
 )
 
 func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
-	// Use a vertical layout for screen elements
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
-
-	mainScreen := layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis:    layout.Vertical,
-					Spacing: layout.SpaceBetween,
-				}.Layout(gtx,
-					// Top Row: Opponent Info
-					layout.Flexed(0.35, func(gtx layout.Context) layout.Dimensions {
-						return g.renderOpponentSection(gtx)
-					}),
-					// Middle Row: User Info
-					layout.Flexed(0.35, func(gtx layout.Context) layout.Dimensions {
-						return g.renderUserSection(gtx)
-					}),
-					// Bottom Section: Battle Options
-					layout.Flexed(0.3, func(gtx layout.Context) layout.Dimensions {
-						return g.renderBattleOptions(gtx)
-					}),
-				)
-			}),
-		)
-	})
+	mainScreen := layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:    layout.Vertical,
+				Spacing: layout.SpaceBetween,
+			}.Layout(gtx,
+				// Top Row: Opponent Info
+				layout.Flexed(0.35, func(gtx layout.Context) layout.Dimensions {
+					return g.renderOpponentSection(gtx)
+				}),
+				// Middle Row: User Info
+				layout.Flexed(0.35, func(gtx layout.Context) layout.Dimensions {
+					return g.renderUserSection(gtx)
+				}),
+				// Bottom Section: Battle Options
+				layout.Flexed(0.3, func(gtx layout.Context) layout.Dimensions {
+					return g.renderBattleOptions(gtx)
+				}),
+			)
+		}),
+	)
 
 	switch g.Battle.DialogActionArea {
 	case SwitchDialog:
@@ -60,18 +49,11 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				return mainScreen
 			}),
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
-				return layout.Inset(layout.Inset{
-					Top:    unit.Dp(yInset),
-					Left:   unit.Dp(xInset),
-					Right:  unit.Dp(xInset),
-					Bottom: unit.Dp(yInset),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderSwitchDialog(gtx)
-						}),
-					)
-				})
+				return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+						return g.renderSwitchDialog(gtx)
+					}),
+				)
 			}),
 		)
 	case BagDialog:
@@ -80,18 +62,11 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				return mainScreen
 			}),
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
-				return layout.Inset(layout.Inset{
-					Top:    unit.Dp(yInset),
-					Left:   unit.Dp(xInset),
-					Right:  unit.Dp(xInset),
-					Bottom: unit.Dp(yInset),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderBagDialog(gtx)
-						}),
-					)
-				})
+				return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+						return g.renderBagDialog(gtx)
+					}),
+				)
 			}),
 		)
 	case EvolveDialog:
@@ -100,18 +75,11 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				return mainScreen
 			}),
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
-				return layout.Inset(layout.Inset{
-					Top:    unit.Dp(yInset),
-					Left:   unit.Dp(xInset),
-					Right:  unit.Dp(xInset),
-					Bottom: unit.Dp(yInset),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderEvolveDialog(gtx)
-						}),
-					)
-				})
+				return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+						return g.renderEvolveDialog(gtx)
+					}),
+				)
 			}),
 		)
 	case LearnMoveDialog:
@@ -120,18 +88,11 @@ func (g *Gui) RenderBattleScreen(gtx layout.Context) layout.Dimensions {
 				return mainScreen
 			}),
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
-				return layout.Inset(layout.Inset{
-					Top:    unit.Dp(yInset),
-					Left:   unit.Dp(xInset),
-					Right:  unit.Dp(xInset),
-					Bottom: unit.Dp(yInset),
-				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-							return g.renderLearnMoveDialog(gtx)
-						}),
-					)
-				})
+				return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+						return g.renderLearnMoveDialog(gtx)
+					}),
+				)
 			}),
 		)
 	default:
@@ -598,7 +559,7 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 									}
 
 									return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
-										// // Item Image
+										// Item Image
 										// layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
 										// 	img := g.loadPokemonImage(pokemon.SpritesURL.FrontPath)
 										// 	img.Fit = widget.Contain
@@ -646,7 +607,6 @@ func (g *Gui) renderBagDialog(gtx layout.Context) layout.Dimensions {
 													if (g.Battle.User.GetTrainer().Bag[itemName].Category == data.MedicalItems && (g.Battle.User.GetActivePokemon().BattleHP < g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value)) ||
 														g.Battle.User.GetTrainer().Bag[itemName].Category == data.PokeBalls && (g.Battle.Opponent.GetActivePokemon().BattleHP > 0) {
 
-														slog.Info("Healing item used", "item", itemName, "hp", g.Battle.User.GetActivePokemon().BattleHP, "max hp", g.Battle.User.GetActivePokemon().Pokemon.Stats.HP.Value)
 														g.performUseItem(&item)
 														g.Battle.DialogActionArea = MainBattle
 													}

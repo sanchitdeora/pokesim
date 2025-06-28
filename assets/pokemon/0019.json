@@ -3,6 +3,7 @@
   "name": "rattata",
   "base_experience": 51,
   "growth_rate": "medium",
+  "capture_rate": 255,
   "moves_learned_by_level": {
     "1": {
       "id": 33,
@@ -67,30 +68,12 @@
       "damage_class": "physical",
       "type": "dark"
     },
-    "28": {
-      "id": 162,
-      "name": "super-fang",
-      "accuracy": 90,
-      "priority": 0,
-      "power": 0,
-      "damage_class": "physical",
-      "type": "normal"
-    },
     "31": {
       "id": 38,
       "name": "double-edge",
       "accuracy": 100,
       "priority": 0,
       "power": 120,
-      "damage_class": "physical",
-      "type": "normal"
-    },
-    "34": {
-      "id": 283,
-      "name": "endeavor",
-      "accuracy": 100,
-      "priority": 0,
-      "power": 0,
       "damage_class": "physical",
       "type": "normal"
     },

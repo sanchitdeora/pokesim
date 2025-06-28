@@ -1,0 +1,117 @@
+{
+  "id": 130,
+  "name": "gyarados",
+  "base_experience": 189,
+  "growth_rate": "slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "0": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "1": {
+      "id": 239,
+      "name": "twister",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "12": {
+      "id": 362,
+      "name": "brine",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "water"
+    },
+    "16": {
+      "id": 20,
+      "name": "bind",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "21": {
+      "id": 99,
+      "name": "rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "32": {
+      "id": 401,
+      "name": "aqua-tail",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "water"
+    },
+    "48": {
+      "id": 37,
+      "name": "thrash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      130
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0130.png",
+    "front_default": "./assets/pokemon/img/0130.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 125,
+      "iv": 0,
+      "ev": 2
+    },
+    "defense": {
+      "value": 79,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 81,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "water",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

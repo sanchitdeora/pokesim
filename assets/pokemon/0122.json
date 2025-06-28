@@ -1,0 +1,120 @@
+{
+  "id": 122,
+  "name": "mr-mime",
+  "base_experience": 161,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 93,
+      "name": "confusion",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "10": {
+      "id": 3,
+      "name": "double-slap",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "18": {
+      "id": 428,
+      "name": "zen-headbutt",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "psychic"
+    },
+    "28": {
+      "id": 60,
+      "name": "psybeam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "34": {
+      "id": 94,
+      "name": "psychic",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "special",
+      "type": "psychic"
+    },
+    "40": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "46": {
+      "id": 605,
+      "name": "dazzling-gleam",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "fairy"
+    }
+  },
+  "evolution_chain": {
+    "0": [
+      122
+    ],
+    "42": [
+      866
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0122.png",
+    "front_default": "./assets/pokemon/img/0122.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 120,
+      "iv": 0,
+      "ev": 2
+    },
+    "speed": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "psychic",
+  "type2": "fairy",
+  "is_legendary": false,
+  "is_mythical": false
+}

@@ -52,8 +52,9 @@ const (
 	WildScreen
 	PartyScreen
 	PokemonSummaryScreen
-	Box
-	Bag
+	BoxScreen
+	BagScreen
+	ShopScreen
 	ToBeReplaced
 )
 
@@ -69,16 +70,21 @@ type Gui struct {
 	Theme         *material.Theme
 	Buttons       map[Screen]*widget.Clickable
 
-	// Trainer and Battle Props
-	TrainerList *widget.List
-	Battle      Battle
+	// Trainer/Wild and Battle Props
+	TrainerList         *widget.List
+	WildEnvironmentProps WildEnvironmentProps
+	Battle              Battle
 
 	// Pokemon Party and Summary Props
-	Party          Party
+	Party          PartyProps
 	SummaryPokemon *data.Pokemon
 
 	NewGame   NewGameUI
 	LoadGames []LoadGameUI
+
+	// Shop Props
+	Shop     ShopProps
+	ItemList *widget.List
 }
 
 func InitializeGUI() {
@@ -99,8 +105,9 @@ func InitializeGUI() {
 			BattleScreen:         new(widget.Clickable),
 			PartyScreen:          new(widget.Clickable),
 			PokemonSummaryScreen: new(widget.Clickable),
-			Box:                  new(widget.Clickable),
-			Bag:                  new(widget.Clickable),
+			BoxScreen:            new(widget.Clickable),
+			BagScreen:            new(widget.Clickable),
+			ShopScreen:           new(widget.Clickable),
 			ToBeReplaced:         new(widget.Clickable),
 		}
 
@@ -118,11 +125,18 @@ func InitializeGUI() {
 				List: layout.List{Axis: layout.Vertical},
 			},
 
+			WildEnvironmentProps: DefaultWildEnvironmentProps(),
+
 			Party:          DefaultPartyProps(),
 			SummaryPokemon: nil,
 
 			NewGame:   NewGameUI{},
 			LoadGames: createLoadGamesUI(),
+
+			Shop: DefaultShopProps(),
+			ItemList: &widget.List{
+				List: layout.List{Axis: layout.Vertical},
+			},
 		}
 
 		if err := run(window, gui); err != nil {
@@ -220,7 +234,17 @@ func (g *Gui) drawCentralContainer(gtx layout.Context) layout.Dimensions {
 			// Main content area below the menu bar
 			layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
 				// Content of the main white container
-				return g.RenderCurrentScreen(gtx)
+				xInset := gtx.Dp(unit.Dp(200))
+				yInset := gtx.Dp(unit.Dp(30))
+
+				return layout.Inset(layout.Inset{
+					Top:    unit.Dp(yInset),
+					Left:   unit.Dp(xInset),
+					Right:  unit.Dp(xInset),
+					Bottom: unit.Dp(yInset),
+				}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					return g.RenderCurrentScreen(gtx)
+				})
 			}),
 		)
 	})

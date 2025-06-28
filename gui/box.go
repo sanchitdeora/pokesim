@@ -1,19 +1,21 @@
 package gui
 
 import (
+	"gioui.org/font"
 	"gioui.org/layout"
 	"gioui.org/widget/material"
 )
 
-func (g *Gui) renderBoxWindow(gtx layout.Context) layout.Dimensions {
-	// Create a theme for styling
-	th := material.NewTheme()
+func (g *Gui) RenderBoxScreen(gtx layout.Context) layout.Dimensions {
+	return layout.Flex{
+		Axis: layout.Vertical,
+	}.Layout(gtx,
 
-	// Use a vertical layout for screen elements
-	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 		// Title
 		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-			title := material.H5(th, "Box Screen")
+			title := material.H4(g.Theme, "Box")
+			title.Font.Weight = font.Bold
+
 			return title.Layout(gtx)
 		}),
 	)

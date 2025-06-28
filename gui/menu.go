@@ -49,8 +49,8 @@ func (g *Gui) renderMenuItems() layout.FlexChild {
 	}{
 		{"Home", HomeScreen},
 		{"Trainer", TrainerScreen},
-		{"Bag", Bag},
-		{"Box", Box},
+		{"Bag", BagScreen},
+		{"Box", BoxScreen},
 	}
 
 	return layout.Flexed(0.3, func(gtx layout.Context) layout.Dimensions {
@@ -106,12 +106,14 @@ func (g *Gui) RenderCurrentScreen(gtx layout.Context) layout.Dimensions {
 		return g.RenderPartyScreen(gtx)
 	case PokemonSummaryScreen:
 		return g.RenderPokemonSummary(gtx)
-	case Bag:
-		return g.renderBagWindow(gtx)
-	case Box:
-		return g.renderBoxWindow(gtx)
+	case BagScreen:
+		return g.RenderBagScreen(gtx)
+	case BoxScreen:
+		return g.RenderBoxScreen(gtx)
+	case ShopScreen:
+		return g.RenderShopScreen(gtx)
 	case ToBeReplaced:
-		return g.renderBagWindow(gtx)
+		return g.RenderBoxScreen(gtx)
 	default:
 		return layout.Dimensions{}
 	}

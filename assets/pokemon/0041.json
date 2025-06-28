@@ -1,0 +1,138 @@
+{
+  "id": 41,
+  "name": "zubat",
+  "base_experience": 49,
+  "growth_rate": "medium",
+  "capture_rate": 255,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 71,
+      "name": "absorb",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "11": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "15": {
+      "id": 305,
+      "name": "poison-fang",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "poison"
+    },
+    "18": {
+      "id": 314,
+      "name": "air-cutter",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "25": {
+      "id": 440,
+      "name": "cross-poison",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "poison"
+    },
+    "34": {
+      "id": 403,
+      "name": "air-slash",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "special",
+      "type": "flying"
+    },
+    "40": {
+      "id": 474,
+      "name": "venoshock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "43": {
+      "id": 141,
+      "name": "leech-life",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "bug"
+    },
+    "5": {
+      "id": 310,
+      "name": "astonish",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "ghost"
+    }
+  },
+  "evolution_chain": {
+    "22": [
+      42
+    ],
+    "30": [
+      169
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0041.png",
+    "front_default": "./assets/pokemon/img/0041.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 55,
+      "iv": 0,
+      "ev": 1
+    }
+  },
+  "type1": "poison",
+  "type2": "flying",
+  "is_legendary": false,
+  "is_mythical": false
+}

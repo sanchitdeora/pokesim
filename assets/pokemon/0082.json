@@ -1,0 +1,120 @@
+{
+  "id": 82,
+  "name": "magneton",
+  "base_experience": 163,
+  "growth_rate": "medium",
+  "capture_rate": 60,
+  "moves_learned_by_level": {
+    "0": {
+      "id": 161,
+      "name": "tri-attack",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "normal"
+    },
+    "1": {
+      "id": 84,
+      "name": "thunder-shock",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "11": {
+      "id": 443,
+      "name": "magnet-bomb",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "20": {
+      "id": 209,
+      "name": "spark",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "physical",
+      "type": "electric"
+    },
+    "23": {
+      "id": 429,
+      "name": "mirror-shot",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "steel"
+    },
+    "40": {
+      "id": 435,
+      "name": "discharge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "special",
+      "type": "electric"
+    },
+    "64": {
+      "id": 192,
+      "name": "zap-cannon",
+      "accuracy": 50,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "electric"
+    }
+  },
+  "evolution_chain": {
+    "30": [
+      82
+    ],
+    "35": [
+      462
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0082.png",
+    "front_default": "./assets/pokemon/img/0082.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 120,
+      "iv": 0,
+      "ev": 2
+    },
+    "special_defense": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "electric",
+  "type2": "steel",
+  "is_legendary": false,
+  "is_mythical": false
+}

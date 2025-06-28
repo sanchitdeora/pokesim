@@ -3,6 +3,7 @@
   "name": "pidgey",
   "base_experience": 50,
   "growth_rate": "medium-slow",
+  "capture_rate": 255,
   "moves_learned_by_level": {
     "1": {
       "id": 33,

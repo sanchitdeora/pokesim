@@ -1,0 +1,116 @@
+{
+  "id": 107,
+  "name": "hitmonchan",
+  "base_experience": 159,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 252,
+      "name": "fake-out",
+      "accuracy": 100,
+      "priority": 3,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "11": {
+      "id": 228,
+      "name": "pursuit",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "16": {
+      "id": 279,
+      "name": "revenge",
+      "accuracy": 100,
+      "priority": -4,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "25": {
+      "id": 146,
+      "name": "dizzy-punch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "32": {
+      "id": 5,
+      "name": "mega-punch",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "41": {
+      "id": 327,
+      "name": "sky-uppercut",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 85,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "8": {
+      "id": 612,
+      "name": "power-up-punch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "fighting"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      106
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0107.png",
+    "front_default": "./assets/pokemon/img/0107.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 79,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 110,
+      "iv": 0,
+      "ev": 2
+    },
+    "speed": {
+      "value": 76,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fighting",
+  "is_legendary": false,
+  "is_mythical": false
+}

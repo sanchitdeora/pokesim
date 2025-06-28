@@ -1,0 +1,104 @@
+{
+  "id": 144,
+  "name": "articuno",
+  "base_experience": 261,
+  "growth_rate": "slow",
+  "capture_rate": 3,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 64,
+      "name": "peck",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "flying"
+    },
+    "15": {
+      "id": 420,
+      "name": "ice-shard",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "ice"
+    },
+    "25": {
+      "id": 246,
+      "name": "ancient-power",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "rock"
+    },
+    "35": {
+      "id": 573,
+      "name": "freeze-dry",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "special",
+      "type": "ice"
+    },
+    "5": {
+      "id": 181,
+      "name": "powder-snow",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "ice"
+    },
+    "72": {
+      "id": 143,
+      "name": "sky-attack",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "flying"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0144.png",
+    "front_default": "./assets/pokemon/img/0144.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 125,
+      "iv": 0,
+      "ev": 3
+    },
+    "speed": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "ice",
+  "type2": "flying",
+  "is_legendary": true,
+  "is_mythical": false
+}

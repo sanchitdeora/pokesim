@@ -1,0 +1,110 @@
+{
+  "id": 35,
+  "name": "clefairy",
+  "base_experience": 113,
+  "growth_rate": "fast",
+  "capture_rate": 150,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "12": {
+      "id": 3,
+      "name": "double-slap",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 15,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "22": {
+      "id": 358,
+      "name": "wake-up-slap",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "fighting"
+    },
+    "32": {
+      "id": 309,
+      "name": "meteor-mash",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 90,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "44": {
+      "id": 585,
+      "name": "moonblast",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 95,
+      "damage_class": "special",
+      "type": "fairy"
+    },
+    "5": {
+      "id": 584,
+      "name": "fairy-wind",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "fairy"
+    }
+  },
+  "evolution_chain": {
+    "20": [
+      35
+    ],
+    "25": [
+      36
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0035.png",
+    "front_default": "./assets/pokemon/img/0035.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 70,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 48,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "fairy",
+  "is_legendary": false,
+  "is_mythical": false
+}

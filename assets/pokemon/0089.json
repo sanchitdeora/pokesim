@@ -1,0 +1,89 @@
+{
+  "id": 89,
+  "name": "muk",
+  "base_experience": 175,
+  "growth_rate": "medium",
+  "capture_rate": 75,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 585,
+      "name": "moonblast",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 95,
+      "damage_class": "special",
+      "type": "fairy"
+    },
+    "15": {
+      "id": 124,
+      "name": "sludge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "18": {
+      "id": 426,
+      "name": "mud-bomb",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 65,
+      "damage_class": "special",
+      "type": "ground"
+    },
+    "52": {
+      "id": 562,
+      "name": "belch",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "poison"
+    }
+  },
+  "evolution_chain": {
+    "38": [
+      89
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0089.png",
+    "front_default": "./assets/pokemon/img/0089.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 105,
+      "iv": 0,
+      "ev": 1
+    },
+    "attack": {
+      "value": 105,
+      "iv": 0,
+      "ev": 1
+    },
+    "defense": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 100,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

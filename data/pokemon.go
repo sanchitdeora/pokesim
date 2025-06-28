@@ -28,6 +28,8 @@ type Pokemon struct {
 	EvolutionRejected bool         `json:"evolution_rejected"`
 }
 
+type Box []*PokemonSave
+
 type BasePokemon struct {
 	ID             BasePokemonID           `json:"id"`
 	Name           string                  `json:"name"`

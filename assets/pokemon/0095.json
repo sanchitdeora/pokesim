@@ -1,0 +1,162 @@
+{
+  "id": 95,
+  "name": "onix",
+  "base_experience": 77,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 205,
+      "name": "rollout",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "10": {
+      "id": 99,
+      "name": "rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "11": {
+      "id": 523,
+      "name": "bulldoze",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "12": {
+      "id": 225,
+      "name": "dragon-breath",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "special",
+      "type": "dragon"
+    },
+    "18": {
+      "id": 157,
+      "name": "rock-slide",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 75,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "28": {
+      "id": 328,
+      "name": "sand-tomb",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "34": {
+      "id": 667,
+      "name": "high-horsepower",
+      "accuracy": 95,
+      "priority": 0,
+      "power": 95,
+      "damage_class": "physical",
+      "type": "ground"
+    },
+    "36": {
+      "id": 21,
+      "name": "slam",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "4": {
+      "id": 479,
+      "name": "smack-down",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 50,
+      "damage_class": "physical",
+      "type": "rock"
+    },
+    "43": {
+      "id": 231,
+      "name": "iron-tail",
+      "accuracy": 75,
+      "priority": 0,
+      "power": 100,
+      "damage_class": "physical",
+      "type": "steel"
+    },
+    "56": {
+      "id": 38,
+      "name": "double-edge",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "6": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {
+    "40": [
+      208
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0095.png",
+    "front_default": "./assets/pokemon/img/0095.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 35,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 160,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_attack": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "rock",
+  "type2": "ground",
+  "is_legendary": false,
+  "is_mythical": false
+}

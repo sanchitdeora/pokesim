@@ -17,41 +17,28 @@ import (
 )
 
 func (g *Gui) RenderLoadGameScreen(gtx layout.Context) layout.Dimensions {
-	// Create a theme for styling
+	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+		// Title
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			title := material.H4(g.Theme, "Load Game")
+			title.Font.Weight = font.Bold
+			return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+		}),
 
-	xInset := gtx.Dp(unit.Dp(200))
-	yInset := gtx.Dp(unit.Dp(30))
-
-	return layout.Inset(layout.Inset{
-		Top:    unit.Dp(yInset),
-		Left:   unit.Dp(xInset),
-		Right:  unit.Dp(xInset),
-		Bottom: unit.Dp(yInset),
-	}).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-		return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-			// Title
-			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-				title := material.H4(g.Theme, "Load Game")
-				title.Font.Weight = font.Bold
-				return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
-			}),
-
-			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-				return layout.Flex{
-					Axis:    layout.Vertical,
-					Spacing: layout.SpaceBetween,
-				}.Layout(gtx,
-					layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-						return g.renderLoadGameGallery(gtx)
-					}))
-			}),
-		)
-	})
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:    layout.Vertical,
+				Spacing: layout.SpaceBetween,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					return g.renderLoadGameGallery(gtx)
+				}))
+		}),
+	)
 }
 
 func (g *Gui) renderLoadGameGallery(gtx layout.Context) layout.Dimensions {
 	// Wrap the trainer list in a flex layout for better control
-
 	gameList := &widget.List{
 		List: layout.List{Axis: layout.Vertical},
 	}
@@ -121,8 +108,8 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
 				if loadGame.FileName != "New Game" {
 					// Process click event
-					if loadGame.LoadGameButton.Clicked(gtx) {
-						slog.Info("btn", "btn click", loadGame.LoadGameButton.Clicked(gtx))
+					if loadGame.LoadGameBtn.Clicked(gtx) {
+						slog.Info("btn", "btn click", loadGame.LoadGameBtn.Clicked(gtx))
 
 						g.opts.GameManager = gamestate.NewGameStateManager(nil, "", displayFileName(loadGame.FileName))
 						g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
@@ -131,7 +118,7 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 						g.SetCurrentScreen(HomeScreen)
 					}
 
-					return loadGame.LoadGameButton.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					return loadGame.LoadGameBtn.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 						return layout.Dimensions{Size: cardDims}
 					})
 				} else {

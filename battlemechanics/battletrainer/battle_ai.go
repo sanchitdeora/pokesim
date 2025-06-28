@@ -51,7 +51,7 @@ func (b *BattleAI) HandleUseBag(action data.BattleAction) error {
 
 	// TODO: implement healing for trainer management
 	if healPokemon(target, action.Item) {
-		b.UserManager.UseItem(action.Item)
+		b.UserManager.UseItem(action.Item, 1)
 	}
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	data "github.com/sanchitdeora/PokeSim/data"
 	gamestate "github.com/sanchitdeora/PokeSim/gamestate"
 )
 
@@ -60,19 +61,18 @@ func (mr *MockGameStateManagerMockRecorder) Get() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockGameStateManager)(nil).Get))
 }
 
-// Load mocks base method.
-func (m *MockGameStateManager) Load() (*gamestate.GameState, error) {
+// GetBox mocks base method.
+func (m *MockGameStateManager) GetBox() *data.Box {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Load")
-	ret0, _ := ret[0].(*gamestate.GameState)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret := m.ctrl.Call(m, "GetBox")
+	ret0, _ := ret[0].(*data.Box)
+	return ret0
 }
 
-// Load indicates an expected call of Load.
-func (mr *MockGameStateManagerMockRecorder) Load() *gomock.Call {
+// GetBox indicates an expected call of GetBox.
+func (mr *MockGameStateManagerMockRecorder) GetBox() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Load", reflect.TypeOf((*MockGameStateManager)(nil).Load))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBox", reflect.TypeOf((*MockGameStateManager)(nil).GetBox))
 }
 
 // Save mocks base method.

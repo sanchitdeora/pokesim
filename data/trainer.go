@@ -13,14 +13,15 @@ type BaseTrainerSave struct {
 type UserSave struct {
 	BaseTrainerSave
 	Stats *TrainerStats `json:"stats"`
-	Money int
+	Money int           `json:"money"`
 }
 
 type TrainerSave struct {
 	BaseTrainerSave
-	TrainerID string
-	Type      TrainerClass
-	Rewards   *Rewards
+	TrainerID string       `json:"trainer_id"`
+	Type      TrainerClass `json:"type"`
+	Rewards   *Rewards     `json:"rewards"`
+	ImagePath string       `json:"image_path"`
 }
 
 type User struct {
@@ -37,8 +38,9 @@ type BaseTrainer struct {
 
 type Trainer struct {
 	BaseTrainer
-	Type    TrainerClass
-	Rewards *Rewards
+	Type      TrainerClass
+	Rewards   *Rewards
+	ImagePath string
 }
 
 type Rewards struct {
@@ -112,8 +114,9 @@ func (t *TrainerSave) ToTrainer() *Trainer {
 			Party: party,
 			Bag:   t.Bag.ToItemMap(),
 		},
-		Type:    t.Type,
-		Rewards: t.Rewards,
+		Type:      t.Type,
+		Rewards:   t.Rewards,
+		ImagePath: t.ImagePath,
 	}
 }
 

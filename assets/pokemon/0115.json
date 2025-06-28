@@ -1,0 +1,157 @@
+{
+  "id": 115,
+  "name": "kangaskhan",
+  "base_experience": 172,
+  "growth_rate": "medium",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 4,
+      "name": "comet-punch",
+      "accuracy": 85,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "12": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "22": {
+      "id": 99,
+      "name": "rage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "24": {
+      "id": 29,
+      "name": "headbutt",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "28": {
+      "id": 389,
+      "name": "sucker-punch",
+      "accuracy": 100,
+      "priority": 1,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "31": {
+      "id": 498,
+      "name": "chip-away",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "32": {
+      "id": 458,
+      "name": "double-hit",
+      "accuracy": 90,
+      "priority": 0,
+      "power": 35,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "33": {
+      "id": 146,
+      "name": "dizzy-punch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "36": {
+      "id": 242,
+      "name": "crunch",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 80,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "48": {
+      "id": 200,
+      "name": "outrage",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "physical",
+      "type": "dragon"
+    },
+    "52": {
+      "id": 387,
+      "name": "last-resort",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 140,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "8": {
+      "id": 252,
+      "name": "fake-out",
+      "accuracy": 100,
+      "priority": 3,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
+  "evolution_chain": {},
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0115.png",
+    "front_default": "./assets/pokemon/img/0115.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 105,
+      "iv": 0,
+      "ev": 2
+    },
+    "attack": {
+      "value": 95,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 40,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "normal",
+  "is_legendary": false,
+  "is_mythical": false
+}

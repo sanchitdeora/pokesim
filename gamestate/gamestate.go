@@ -10,17 +10,27 @@ import (
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
+const (
+	SavedGamePrefix = "/saved/game"
+	SavedBoxPrefix  = "/saved/box"
+)
+
 //go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_game_state_manager.go -package=mock_game_state_manager github.com/sanchitdeora/PokeSim/gamestate GameStateManager
 type GameStateManager interface {
 	Save() error
-	// Load() (*GameState, error)
 	Get() *GameState
+	GetBox() *data.Box
 	AddTrainerProgress(trainerID string)
 }
 
 type GameStateImpl struct {
+	// gamestate
 	*GameState
-	Filepath string
+	GamePath string
+
+	// boxstate
+	Box     *data.Box
+	BoxPath string
 }
 
 type GameState struct {
@@ -35,9 +45,9 @@ type GameStateSave struct {
 	// Pokedex         *data.Pokedex
 }
 
-func GetGameStates(prefix string) []string {
+func GetGameStatesPath(prefix string) []string {
 	if prefix == "" {
-		prefix = "/saved"
+		prefix = SavedGamePrefix
 	}
 
 	return utils.GetListOfFilesInDirectory(prefix)
@@ -50,39 +60,57 @@ func NewGameStateManager(user *data.User, prefixPath string, filename string) Ga
 		filename = fmt.Sprintf("pokesim_%v", time.Now().Unix())
 	}
 
-	var filepath string
+	var gamePath string
 	if prefixPath != "" {
-		filepath = fmt.Sprintf("%s/%s.json", prefixPath, filename)
+		gamePath = fmt.Sprintf("%s/%s.json", prefixPath, filename)
 	} else {
-		filepath = fmt.Sprintf("saved/%s.json", filename)
+		gamePath = fmt.Sprintf("%s/%s.json", SavedGamePrefix, filename)
 	}
 
+	var boxPath string
+	if prefixPath != "" {
+		boxPath = fmt.Sprintf("%s/box/%s.json", prefixPath, filename)
+	} else {
+		boxPath = fmt.Sprintf("%s/%s.json", SavedBoxPrefix, filename)
+	}
+
+	game, err := LoadGame(gamePath)
+
 	// Load Game
-	if utils.CheckPathExists(filepath) {
-		slog.Info("Loading game state...", "filepath", filepath)
-		game, err := LoadGame(filepath)
-		if err != nil {
-			slog.Error("error while loading game state", "error", err)
-			panic(err)
+	if game != nil {
+		slog.Info("Loading game state...", "gamePath", gamePath)
+
+		box, err := LoadBox(boxPath)
+		if box == nil {
+			box = make(data.Box, 0)
+		} else if err != nil {
+			slog.Error("error while loading box state", "error", err)
 		}
 
 		return &GameStateImpl{
 			GameState: game,
-			Filepath:  filepath,
+			GamePath:  gamePath,
+
+			Box:     &box,
+			BoxPath: boxPath,
 		}
 	}
 
 	// New Game
+	box := make(data.Box, 0)
 	gameState := &GameStateImpl{
 		GameState: &GameState{
 			User:            user,
 			TrainerProgress: make([]string, 0),
 			// Pokedex:         pokedex,
 		},
-		Filepath: filepath,
+		GamePath: gamePath,
+
+		Box:     &box,
+		BoxPath: boxPath,
 	}
 
-	err := gameState.Save()
+	err = gameState.Save()
 	if err != nil {
 		slog.Error("error while saving game state", "error", err)
 	}
@@ -96,8 +124,20 @@ func (g *GameStateImpl) AddTrainerProgress(trainerID string) {
 }
 
 func (g *GameStateImpl) Save() error {
-	slog.Info("Saving game state...", "filepath", g.Filepath, "game", g.GameState)
-	return utils.WriteJsonToFile(g.Filepath, g.ToGameStateSave())
+	slog.Info("Saving game state...", "filepath", g.GamePath, "game", g.GameState)
+	err := utils.WriteJsonToFile(g.GamePath, g.ToGameStateSave())
+	if err != nil {
+		slog.Error("error while saving game state", "error", err)
+		return err
+	}
+
+	err = utils.WriteJsonToFile(g.BoxPath, g.Box)
+	if err != nil {
+		slog.Error("error while saving box state", "error", err)
+		return err
+	}
+
+	return nil
 }
 
 func LoadGame(filepath string) (*GameState, error) {
@@ -118,8 +158,30 @@ func LoadGame(filepath string) (*GameState, error) {
 	return gameState.ToGameState(), nil
 }
 
+func LoadBox(filepath string) (data.Box, error) {
+	var boxState data.Box
+	var err error
+
+	if utils.CheckPathExists(filepath) {
+		boxState, err = utils.ReadJsonFromFile[data.Box](filepath)
+		if err != nil {
+			slog.Error("could not read from saved file", "error", err)
+			return nil, errors.ErrCouldNotReadFromFile
+		}
+	} else {
+		slog.Error("file does not exist...")
+		return nil, errors.ErrFileDoesNotExist
+	}
+
+	return boxState, nil
+}
+
 func (g *GameStateImpl) Get() *GameState {
 	return g.GameState
+}
+
+func (g *GameStateImpl) GetBox() *data.Box {
+	return g.Box
 }
 
 func (g *GameState) ToGameStateSave() *GameStateSave {
