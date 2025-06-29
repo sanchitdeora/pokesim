@@ -18,7 +18,7 @@ type BoxManager interface {
 
 type BoxOpts struct {
 	Logger    logger.Logger
-	GameState gamestate.GameStateManager
+	GameStateManager gamestate.GameStateManager
 }
 
 type BoxImpl struct {
@@ -33,10 +33,10 @@ func NewBoxManager(opts BoxOpts) BoxManager {
 }
 
 func (b *BoxImpl) AddToBox(pokemon *data.Pokemon) error {
-	box := b.opts.GameState.GetBox()
+	box := b.opts.GameStateManager.GetBox()
 	(*box) = append((*box), pokemon.ToPokemonSave())
 
-	err := b.opts.GameState.Save()
+	err := b.opts.GameStateManager.Save()
 	if err != nil {
 		return err
 	}
@@ -44,12 +44,12 @@ func (b *BoxImpl) AddToBox(pokemon *data.Pokemon) error {
 }
 
 func (b *BoxImpl) Release(pokemon *data.Pokemon) error {
-	box := b.opts.GameState.GetBox()
+	box := b.opts.GameStateManager.GetBox()
 
 	for i := range *box {
 		if (*box)[i].PokemonUUID == pokemon.PokemonUUID {
 			(*box) = slices.Delete((*box), i, i+1)
-			err := b.opts.GameState.Save()
+			err := b.opts.GameStateManager.Save()
 			if err != nil {
 				return err
 			}
@@ -61,8 +61,8 @@ func (b *BoxImpl) Release(pokemon *data.Pokemon) error {
 }
 
 func (b *BoxImpl) Swap(boxPokemon *data.Pokemon, partyPokemon *data.Pokemon) error {
-	box := b.opts.GameState.GetBox()
-	gamestate := b.opts.GameState.Get()
+	box := b.opts.GameStateManager.GetBox()
+	gamestate := b.opts.GameStateManager.Get()
 
 	// party pokemon index
 	if partyPokemon != nil {
@@ -89,10 +89,10 @@ func (b *BoxImpl) Swap(boxPokemon *data.Pokemon, partyPokemon *data.Pokemon) err
 		gamestate.User.Party = append(gamestate.User.Party, boxPokemon)
 	}
 
-	b.opts.GameState.Save()
+	b.opts.GameStateManager.Save()
 	return nil
 }
 
 func (b *BoxImpl) GetBoxPokemon() data.Box {
-	return *b.opts.GameState.GetBox()
+	return *b.opts.GameStateManager.GetBox()
 }

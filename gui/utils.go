@@ -87,12 +87,12 @@ func (g *Gui) GetRemainingHPFraction(bPokemon *data.BattlePokemon) float32 {
 	return float32(bPokemon.BattleHP) / float32(bPokemon.Stats.HP.Value)
 }
 
-func (g *Gui) GetRemainingEXPFraction(bPokemon *data.BattlePokemon) float32 {
-	totalExp := g.opts.PokemonService.GetExperienceRequiredForNextLevel(bPokemon.Pokemon)
+func (g *Gui) GetRemainingEXPFraction(pokemon *data.Pokemon) float32 {
+	totalExp := g.opts.PokemonService.GetExperienceRequiredForNextLevel(pokemon)
 
 	// slog.Info("GetRemainingEXPFraction", "totalExp", totalExp, "bPokemon.ExperienceLeft", bPokemon.ExperienceLeft)
 
-	return float32(totalExp-bPokemon.ExperienceLeft) / float32(totalExp)
+	return float32(totalExp-pokemon.ExperienceLeft) / float32(totalExp)
 }
 
 func drawRoundedBorder(gtx layout.Context, size image.Point, borderColor color.NRGBA, borderWidth unit.Dp, cornerRadius unit.Dp) {

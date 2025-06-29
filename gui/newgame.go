@@ -10,9 +10,6 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/sanchitdeora/PokeSim/data"
-	"github.com/sanchitdeora/PokeSim/gamestate"
-	"github.com/sanchitdeora/PokeSim/pokemon"
-	"github.com/sanchitdeora/PokeSim/usermanagement"
 	"github.com/sanchitdeora/PokeSim/utils"
 )
 
@@ -194,14 +191,11 @@ func (g *Gui) renderStartGameBtn(gtx layout.Context) layout.Dimensions {
 
 	if g.NewGame.StartGameBtn.Clicked(gtx) {
 		// start a new game
-		g.opts.GameManager = gamestate.NewGameStateManager(
+		g.LazyLoadGameOpts(
 			g.prepareNewGameUser(g.NewGame.NewTrainerEditor.Text(), fetchStarterPokemonList()[g.NewGame.SelectedIndex]),
-			"", g.NewGame.NewTrainerEditor.Text(),
+			g.NewGame.NewTrainerEditor.Text(),
 		)
-		g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
-		g.opts.PokemonService = pokemon.NewPokemonService(pokemon.PokemonOpts{GameStateManager: g.opts.GameManager})
 
-		// slog.Info("Starting new game", "user", *g.opts.GameManager.Get())
 		g.NewGame = DefaultNewGameProps()
 		g.SetCurrentScreen(HomeScreen)
 	}

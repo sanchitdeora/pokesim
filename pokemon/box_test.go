@@ -135,7 +135,7 @@ func TestBoxImpl_Swap_OnePokemonMove(t *testing.T) {
 func createBoxManager() BoxManager {	
 	return NewBoxManager(BoxOpts{
 		Logger:    logger.NewDefaultLogger(),
-		GameState: gamestate.NewGameStateManager(nil, "testfiles/gametest", "unittestgame"),
+		GameStateManager: gamestate.NewGameStateManager(nil, "testfiles/gametest", "unittestgame"),
 	})
 }
 

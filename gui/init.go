@@ -62,6 +62,7 @@ type GuiOpts struct {
 	GameManager    gamestate.GameStateManager
 	UserManager    usermanagement.UserManager
 	PokemonService pokemon.PokemonService
+	BoxManager     pokemon.BoxManager
 }
 
 type Gui struct {
@@ -71,9 +72,9 @@ type Gui struct {
 	Buttons       map[Screen]*widget.Clickable
 
 	// Trainer/Wild and Battle Props
-	TrainerList         *widget.List
+	TrainerList          *widget.List
 	WildEnvironmentProps WildEnvironmentProps
-	Battle              Battle
+	Battle               Battle
 
 	// Pokemon Party and Summary Props
 	Party          PartyProps
@@ -81,6 +82,9 @@ type Gui struct {
 
 	NewGame   NewGameUI
 	LoadGames []LoadGameUI
+
+	BoxList *widget.List
+	Box     BoxProps
 
 	// Shop Props
 	Shop     ShopProps
@@ -125,15 +129,19 @@ func InitializeGUI() {
 				List: layout.List{Axis: layout.Vertical},
 			},
 
-			WildEnvironmentProps: DefaultWildEnvironmentProps(),
+			// WildEnvironmentProps: DefaultWildEnvironmentProps(),
 
-			Party:          DefaultPartyProps(),
+			// Party:          DefaultPartyProps(),
 			SummaryPokemon: nil,
+
+			BoxList: &widget.List{
+				List: layout.List{Axis: layout.Vertical},
+			},
 
 			NewGame:   NewGameUI{},
 			LoadGames: createLoadGamesUI(),
 
-			Shop: DefaultShopProps(),
+			// Shop: DefaultShopProps(),
 			ItemList: &widget.List{
 				List: layout.List{Axis: layout.Vertical},
 			},

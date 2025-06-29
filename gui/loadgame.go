@@ -11,6 +11,7 @@ import (
 	"gioui.org/unit"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
+	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/gamestate"
 	"github.com/sanchitdeora/PokeSim/pokemon"
 	"github.com/sanchitdeora/PokeSim/usermanagement"
@@ -111,9 +112,7 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 					if loadGame.LoadGameBtn.Clicked(gtx) {
 						slog.Info("btn", "btn click", loadGame.LoadGameBtn.Clicked(gtx))
 
-						g.opts.GameManager = gamestate.NewGameStateManager(nil, "", displayFileName(loadGame.FileName))
-						g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
-						g.opts.PokemonService = pokemon.NewPokemonService(pokemon.PokemonOpts{GameStateManager: g.opts.GameManager})
+						g.LazyLoadGameOpts(nil, displayFileName(loadGame.FileName))
 
 						g.SetCurrentScreen(HomeScreen)
 					}
@@ -133,6 +132,19 @@ func (g *Gui) renderLoadGameCard(gtx layout.Context, loadGame LoadGameUI) layout
 			}),
 		)
 	})
+}
+
+func (g *Gui) LazyLoadGameOpts(user *data.User, fileName string) {
+	g.opts.GameManager = gamestate.NewGameStateManager(user, "", fileName)
+
+	g.opts.UserManager = usermanagement.NewUserManager(usermanagement.UserOpts{GameState: g.opts.GameManager})
+	g.opts.PokemonService = pokemon.NewPokemonService(pokemon.PokemonOpts{GameStateManager: g.opts.GameManager})
+	g.opts.BoxManager = pokemon.NewBoxManager(pokemon.BoxOpts{GameStateManager: g.opts.GameManager})
+
+	g.Box = DefaultBoxProps(len(*g.opts.GameManager.GetBox()))
+	g.Party = DefaultPartyProps()
+	g.Shop = DefaultShopProps()
+	g.WildEnvironmentProps = DefaultWildEnvironmentProps()
 }
 
 func displayFileName(fileName string) string {

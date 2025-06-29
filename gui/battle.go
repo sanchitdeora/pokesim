@@ -240,7 +240,7 @@ func (g *Gui) renderUserInfo(gtx layout.Context) layout.Dimensions {
 			// Experience Bar
 			layout.Rigid(func(gtx layout.Context) layout.Dimensions {
 				return layout.Inset{Top: unit.Dp(10), Left: unit.Dp(75), Right: unit.Dp(75)}.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
-					return g.renderEXPBar(gtx, g.GetRemainingEXPFraction(g.Battle.User.GetActivePokemon()))
+					return g.renderEXPBar(gtx, g.GetRemainingEXPFraction(g.Battle.User.GetActivePokemon().Pokemon))
 				})
 			}),
 		)

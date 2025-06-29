@@ -26,6 +26,7 @@ func DefaultPartyProps() PartyProps {
 		SummaryBtn:          new(widget.Clickable),
 		MoveUpBtn:           new(widget.Clickable),
 		MoveDownBtn:         new(widget.Clickable),
+		MoveToBoxBtn:        new(widget.Clickable),
 	}
 }
 
@@ -35,6 +36,7 @@ type PartyProps struct {
 	SummaryBtn          *widget.Clickable
 	MoveUpBtn           *widget.Clickable
 	MoveDownBtn         *widget.Clickable
+	MoveToBoxBtn        *widget.Clickable
 }
 
 func (g *Gui) RenderPartyScreen(gtx layout.Context) layout.Dimensions {
@@ -281,6 +283,54 @@ func (g *Gui) renderPartyButtonRow(gtx layout.Context) layout.Dimensions {
 						}
 
 						return g.Party.MoveDownBtn.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+							return layout.Dimensions{Size: gtx.Constraints.Max}
+						})
+					}),
+				)
+			})
+		}),
+
+		// Move To Box Btn
+		layout.Flexed(0.2, func(gtx layout.Context) layout.Dimensions {
+			isBtnDisabled := g.Party.SelectedIndex == -1
+
+			btnBgColor := SecondaryBackgroundColor // Grey background for disabled
+			if isBtnDisabled {
+				btnBgColor = ButtonDisabledColor // Active background (blue)
+			}
+
+			if g.Party.MoveToBoxBtn.Clicked(gtx) {
+				g.opts.BoxManager.Swap(nil, g.opts.UserManager.GetUser().Party[g.Party.SelectedIndex])
+				g.Box = DefaultBoxProps(len(*g.opts.GameManager.GetBox()))
+			}
+			if g.Party.MoveToBoxBtn.Hovered() {
+				btnBgColor = ButtonHoveredColor
+			}
+
+			return layout.UniformInset(unit.Dp(8)).Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+				maxDims := gtx.Constraints.Max
+				radius := 8
+
+				// define rounded border and fill
+				drawRoundedBorder(gtx, maxDims, SecondaryBackgroundColor, unit.Dp(1), unit.Dp(radius))
+				fillRoundedShape(gtx, image.Rectangle{Max: maxDims}, btnBgColor, radius)
+
+				return layout.Stack{
+					Alignment: layout.Center,
+				}.Layout(gtx,
+					layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+						textStyle := material.Body2(g.Theme, "Move To Box")
+						textStyle.Alignment = text.Middle
+						textStyle.Color = TextColor
+
+						return textStyle.Layout(gtx)
+					}),
+					layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+						if isBtnDisabled {
+							return layout.Dimensions{Size: gtx.Constraints.Max}
+						}
+
+						return g.Party.MoveToBoxBtn.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 							return layout.Dimensions{Size: gtx.Constraints.Max}
 						})
 					}),

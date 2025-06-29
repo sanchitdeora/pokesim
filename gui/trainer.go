@@ -126,14 +126,14 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 	})
 }
 
-func (g *Gui) renderPlaceholderCard(gtx layout.Context) layout.Dimensions {
-	return layout.Dimensions{
-		Size: image.Point{
-			X: gtx.Constraints.Max.X / 4, // Same width as trainer cards
-			Y: gtx.Dp(unit.Dp(250)),      // Same height as trainer cards
-		},
-	}
-}
+// func (g *Gui) renderPlaceholderCard(gtx layout.Context) layout.Dimensions {
+// 	return layout.Dimensions{
+// 		Size: image.Point{
+// 			X: gtx.Constraints.Max.X / 4, // Same width as trainer cards
+// 			Y: gtx.Dp(unit.Dp(250)),      // Same height as trainer cards
+// 		},
+// 	}
+// }
 
 func (g *Gui) greyedOutImage(gtx layout.Context, img widget.Image) layout.Dimensions {
 	// Render the image first
