@@ -78,7 +78,11 @@
       "type": "normal"
     }
   },
-  "evolution_chain": {},
+  "evolution_chain": {
+    "1": [
+      128
+    ]
+  },
   "sprites": {
     "back_default": "./assets/pokemon/img/back/0128.png",
     "front_default": "./assets/pokemon/img/0128.png"

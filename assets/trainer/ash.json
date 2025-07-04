@@ -1,0 +1,232 @@
+{
+  "name": "Ash",
+  "party": [
+    {
+      "base_pokemon_id": 1,
+      "pokemon_uuid": "85bde654-3f0a-4f81-aa3f-5a0f49290cf6",
+      "stats": {
+        "hp": {
+          "value": 42,
+          "iv": 27,
+          "ev": 0
+        },
+        "attack": {
+          "value": 23,
+          "iv": 24,
+          "ev": 0
+        },
+        "defense": {
+          "value": 23,
+          "iv": 28,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 29,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 27,
+          "iv": 22,
+          "ev": 0
+        },
+        "speed": {
+          "value": 18,
+          "iv": 3,
+          "ev": 0
+        }
+      },
+      "level": 15,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 22,
+          "name": "vine-whip",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 45,
+          "damage_class": "physical",
+          "type": "grass"
+        },
+        "move3": {
+          "id": 75,
+          "name": "razor-leaf",
+          "accuracy": 95,
+          "priority": 0,
+          "power": 55,
+          "damage_class": "physical",
+          "type": "grass"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 4,
+      "pokemon_uuid": "d35161e0-63ef-4fd7-81c2-c2ee63852ce8",
+      "stats": {
+        "hp": {
+          "value": 40,
+          "iv": 12,
+          "ev": 0
+        },
+        "attack": {
+          "value": 22,
+          "iv": 7,
+          "ev": 0
+        },
+        "defense": {
+          "value": 19,
+          "iv": 5,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 25,
+          "iv": 6,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 24,
+          "iv": 19,
+          "ev": 0
+        },
+        "speed": {
+          "value": 28,
+          "iv": 17,
+          "ev": 0
+        }
+      },
+      "level": 16,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 10,
+          "name": "scratch",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 52,
+          "name": "ember",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "fire"
+        },
+        "move3": {
+          "id": 225,
+          "name": "dragon-breath",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "special",
+          "type": "dragon"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 7,
+      "pokemon_uuid": "87fbd2e5-e17b-4271-8539-dbf2eb234982",
+      "stats": {
+        "hp": {
+          "value": 46,
+          "iv": 14,
+          "ev": 0
+        },
+        "attack": {
+          "value": 23,
+          "iv": 9,
+          "ev": 0
+        },
+        "defense": {
+          "value": 31,
+          "iv": 18,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 27,
+          "iv": 27,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 31,
+          "iv": 17,
+          "ev": 0
+        },
+        "speed": {
+          "value": 24,
+          "iv": 20,
+          "ev": 0
+        }
+      },
+      "level": 18,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 55,
+          "name": "water-gun",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "water"
+        },
+        "move3": {
+          "id": 229,
+          "name": "rapid-spin",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": {
+          "id": 44,
+          "name": "bite",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "dark"
+        }
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "trainer",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "",
+      "region": ""
+    }
+  },
+  "image_path": "assets/trainer/img/trainer_ash.png"
+}

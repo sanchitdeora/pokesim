@@ -5,7 +5,7 @@
   "growth_rate": "slow",
   "capture_rate": 255,
   "moves_learned_by_level": {
-    "15": {
+    "1": {
       "id": 33,
       "name": "tackle",
       "accuracy": 100,
@@ -16,6 +16,9 @@
     }
   },
   "evolution_chain": {
+    "1": [
+      129
+    ],
     "20": [
       130
     ]

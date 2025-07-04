@@ -22,6 +22,7 @@ type TrainerUI struct {
 	Name     string
 	Unlocked bool
 	Trainer  *data.Trainer
+	TrainerBtn *widget.Clickable
 }
 
 type EnvironmentUI struct {
@@ -61,13 +62,9 @@ func createLoadGamesUI() []LoadGameUI {
 	return loadGamesUI
 }
 
-func setupTrainersList() []TrainerUI {
+func SetupTrainersList() []TrainerUI {
 	trainers1 := []string{
-		"assets/trainer/brock.json",
-		"testfiles/trainer_files/test_trainer.json",
-		"testfiles/trainer_files/test_trainer.json",
-		"testfiles/trainer_files/test_trainer.json",
-		"testfiles/trainer_files/test_trainer.json",
+		"assets/trainer/ash.json",
 	}
 
 	var trainers []TrainerUI
@@ -80,6 +77,30 @@ func setupTrainersList() []TrainerUI {
 	}
 	return trainers
 }
+
+func SetupGymTrainersList() []TrainerUI {
+	trainers1 := []string{
+		"assets/trainer/gym/brock.json",
+		"assets/trainer/gym/misty.json",
+		"assets/trainer/gym/lt_surge.json",
+		"assets/trainer/gym/erika.json",
+		"assets/trainer/gym/koga.json",
+		"assets/trainer/gym/sabrina.json",
+		"assets/trainer/gym/blaine.json",
+		"assets/trainer/gym/giovanni.json",
+	}
+
+	var trainers []TrainerUI
+
+	for _, t := range trainers1 {
+		trainerManager := trainermanagement.NewTrainerManager(trainermanagement.TrainerOpts{
+			SavedTrainerPath: t,
+		})
+		trainers = append(trainers, createTrainerUI(trainerManager))
+	}
+	return trainers
+}
+
 
 func createTrainerUI(trainer trainermanagement.TrainerManager) TrainerUI {
 	var path string
@@ -94,6 +115,7 @@ func createTrainerUI(trainer trainermanagement.TrainerManager) TrainerUI {
 		Trainer:  trainer.GetTrainer(),
 		Image:    loadImage(path),
 		Unlocked: true,
+		TrainerBtn: &widget.Clickable{},
 	}
 }
 

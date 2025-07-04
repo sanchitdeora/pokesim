@@ -224,7 +224,7 @@ func (t *TrainerBattle) getUserName() string {
 }
 
 func (t *TrainerBattle) getOpponenetName() string {
-	return fmt.Sprintf("%s %s", t.opponent.GetTrainerType(), utils.ToCapitalizeFirstLetterOfEachWord(t.opponent.GetTrainer().Name))
+	return fmt.Sprintf("%s %s", utils.ToCapitalizeFirstLetterOfEachWord(string(t.opponent.GetTrainerType())), utils.ToCapitalizeFirstLetterOfEachWord(t.opponent.GetTrainer().Name))
 }
 
 func getActivePokemonName(t battletrainer.BattleTrainer) string {

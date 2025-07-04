@@ -33,7 +33,11 @@
       "type": "water"
     }
   },
-  "evolution_chain": {},
+  "evolution_chain": {
+    "1": [
+      131
+    ]
+  },
   "sprites": {
     "back_default": "./assets/pokemon/img/back/0131.png",
     "front_default": "./assets/pokemon/img/0131.png"

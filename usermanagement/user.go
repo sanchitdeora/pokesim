@@ -6,6 +6,7 @@ import (
 	"github.com/sanchitdeora/PokeSim/data"
 	"github.com/sanchitdeora/PokeSim/errors"
 	"github.com/sanchitdeora/PokeSim/gamestate"
+	"github.com/sanchitdeora/PokeSim/utils"
 )
 
 //go:generate mockgen -build_flags=--mod=mod -destination=mocks/mock_user_manager.go -package=mock_user_manager github.com/sanchitdeora/PokeSim/usermanagement UserManager
@@ -47,11 +48,13 @@ func (u *UserImpl) GetUser() *data.User {
 }
 
 func (u *UserImpl) StatUpdate(result data.Result) {
+	slog.Debug("Update Stats", "user", u.user, "result", result)
+	// update stats
 	u.user.Stats.Battles++
 
 	if result.Status == data.Won {
 		u.user.Stats.Wins++
-		if result.BadgeEarned.Name != "" {
+		if result.BadgeEarned.Name != "" && !utils.Contains(u.user.Stats.Badges, result.BadgeEarned) {
 			u.user.Stats.Badges = append(u.user.Stats.Badges, result.BadgeEarned)
 		}
 

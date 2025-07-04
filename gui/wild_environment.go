@@ -85,10 +85,14 @@ func (g *Gui) renderEnvironmentCard(gtx layout.Context, environment EnvironmentU
 		}.Layout(gtx,
 			// Environment Image
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+				newCtx := gtx
+				newCtx.Constraints.Max = cardDims
+				newCtx.Constraints.Max.Y -= 50
+				
 				img := environment.Image
-				img.Fit = widget.Contain
+				img.Fit = widget.Fill
 				img.Position = layout.Center
-				return img.Layout(gtx)
+				return img.Layout(newCtx)
 			}),
 			// Environment Name
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {

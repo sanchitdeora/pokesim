@@ -6,10 +6,10 @@
     "type2": "poison",
     "evolved_at": 1,
     "environments": [
-      "forest",
-      "swamp"
+      "swamp",
+      "forest"
     ],
-    "base_rarity": 0
+    "base_rarity": 1
   },
   "10": {
     "base_pokemon_id": 10,
@@ -17,10 +17,10 @@
     "type1": "bug",
     "evolved_at": 1,
     "environments": [
-      "swamp",
-      "forest"
+      "forest",
+      "swamp"
     ],
-    "base_rarity": 0
+    "base_rarity": 2
   },
   "100": {
     "base_pokemon_id": 100,
@@ -29,8 +29,8 @@
     "evolved_at": 1,
     "environments": [
       "plains",
-      "beach",
-      "sky"
+      "sky",
+      "beach"
     ],
     "base_rarity": 0
   },
@@ -40,9 +40,9 @@
     "type1": "electric",
     "evolved_at": 30,
     "environments": [
-      "plains",
       "beach",
-      "sky"
+      "sky",
+      "plains"
     ],
     "base_rarity": 2
   },
@@ -66,8 +66,8 @@
     "type2": "psychic",
     "evolved_at": 25,
     "environments": [
-      "forest",
       "swamp",
+      "forest",
       "ruins"
     ],
     "base_rarity": 2
@@ -78,12 +78,12 @@
     "type1": "ground",
     "evolved_at": 1,
     "environments": [
+      "tundra",
+      "mountain",
+      "volcano",
       "cave",
       "plains",
-      "mountain",
-      "desert",
-      "volcano",
-      "tundra"
+      "desert"
     ],
     "base_rarity": 0
   },
@@ -93,14 +93,14 @@
     "type1": "ground",
     "evolved_at": 28,
     "environments": [
-      "cave",
-      "plains",
-      "desert",
+      "mountain",
       "volcano",
       "tundra",
-      "mountain"
+      "cave",
+      "plains",
+      "desert"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "106": {
     "base_pokemon_id": 106,
@@ -141,8 +141,8 @@
     "type1": "poison",
     "evolved_at": 1,
     "environments": [
-      "swamp",
-      "forest"
+      "forest",
+      "swamp"
     ],
     "base_rarity": 0
   },
@@ -176,11 +176,11 @@
     "evolved_at": 1,
     "environments": [
       "cave",
-      "plains",
-      "tundra",
       "mountain",
+      "plains",
       "desert",
       "volcano",
+      "tundra",
       "ruins"
     ],
     "base_rarity": 3
@@ -192,12 +192,12 @@
     "type2": "rock",
     "evolved_at": 42,
     "environments": [
-      "volcano",
       "tundra",
       "mountain",
-      "desert",
-      "cave",
       "plains",
+      "desert",
+      "volcano",
+      "cave",
       "ruins"
     ],
     "base_rarity": 3
@@ -211,7 +211,7 @@
       "forest",
       "plains"
     ],
-    "base_rarity": 1
+    "base_rarity": 2
   },
   "114": {
     "base_pokemon_id": 114,
@@ -219,8 +219,8 @@
     "type1": "grass",
     "evolved_at": 1,
     "environments": [
-      "swamp",
-      "forest"
+      "forest",
+      "swamp"
     ],
     "base_rarity": 1
   },
@@ -241,10 +241,10 @@
     "type1": "water",
     "evolved_at": 1,
     "environments": [
-      "tundra",
       "lake",
       "beach",
-      "swamp"
+      "swamp",
+      "tundra"
     ],
     "base_rarity": 3
   },
@@ -254,10 +254,10 @@
     "type1": "water",
     "evolved_at": 32,
     "environments": [
-      "swamp",
       "tundra",
-      "lake",
-      "beach"
+      "beach",
+      "swamp",
+      "lake"
     ],
     "base_rarity": 3
   },
@@ -267,9 +267,9 @@
     "type1": "water",
     "evolved_at": 1,
     "environments": [
-      "beach",
       "tundra",
       "lake",
+      "beach",
       "swamp"
     ],
     "base_rarity": 0
@@ -280,12 +280,12 @@
     "type1": "water",
     "evolved_at": 33,
     "environments": [
-      "beach",
       "tundra",
       "lake",
+      "beach",
       "swamp"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "12": {
     "base_pokemon_id": 12,
@@ -294,13 +294,13 @@
     "type2": "flying",
     "evolved_at": 10,
     "environments": [
-      "swamp",
       "forest",
-      "mountain",
+      "swamp",
       "sky",
+      "mountain",
       "beach"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "120": {
     "base_pokemon_id": 120,
@@ -309,9 +309,9 @@
     "evolved_at": 1,
     "environments": [
       "beach",
-      "tundra",
+      "swamp",
       "lake",
-      "swamp"
+      "tundra"
     ],
     "base_rarity": 0
   },
@@ -322,10 +322,10 @@
     "type2": "psychic",
     "evolved_at": 25,
     "environments": [
-      "swamp",
       "tundra",
       "lake",
       "beach",
+      "swamp",
       "ruins"
     ],
     "base_rarity": 2
@@ -338,8 +338,8 @@
     "evolved_at": 0,
     "environments": [
       "ruins",
-      "forest",
-      "lake"
+      "lake",
+      "forest"
     ],
     "base_rarity": 3
   },
@@ -350,13 +350,13 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "forest",
       "swamp",
-      "sky",
+      "forest",
       "mountain",
-      "beach"
+      "beach",
+      "sky"
     ],
-    "base_rarity": 3
+    "base_rarity": 2
   },
   "124": {
     "base_pokemon_id": 124,
@@ -365,10 +365,10 @@
     "type2": "psychic",
     "evolved_at": 30,
     "environments": [
-      "mountain",
-      "beach",
-      "tundra",
       "lake",
+      "beach",
+      "mountain",
+      "tundra",
       "ruins"
     ],
     "base_rarity": 2
@@ -379,9 +379,9 @@
     "type1": "electric",
     "evolved_at": 30,
     "environments": [
-      "plains",
+      "sky",
       "beach",
-      "sky"
+      "plains"
     ],
     "base_rarity": 3
   },
@@ -403,8 +403,8 @@
     "type1": "bug",
     "evolved_at": 1,
     "environments": [
-      "swamp",
-      "forest"
+      "forest",
+      "swamp"
     ],
     "base_rarity": 3
   },
@@ -414,8 +414,8 @@
     "type1": "normal",
     "evolved_at": 1,
     "environments": [
-      "forest",
-      "plains"
+      "plains",
+      "forest"
     ],
     "base_rarity": 3
   },
@@ -426,9 +426,9 @@
     "evolved_at": 1,
     "environments": [
       "swamp",
-      "lake",
+      "tundra",
       "beach",
-      "tundra"
+      "lake"
     ],
     "base_rarity": 0
   },
@@ -451,13 +451,13 @@
     "type2": "flying",
     "evolved_at": 20,
     "environments": [
-      "beach",
       "tundra",
-      "lake",
+      "beach",
       "swamp",
-      "sky",
+      "lake",
+      "forest",
       "mountain",
-      "forest"
+      "sky"
     ],
     "base_rarity": 2
   },
@@ -469,9 +469,9 @@
     "evolved_at": 1,
     "environments": [
       "tundra",
-      "lake",
       "beach",
       "swamp",
+      "lake",
       "mountain"
     ],
     "base_rarity": 3
@@ -482,8 +482,8 @@
     "type1": "normal",
     "evolved_at": 1,
     "environments": [
-      "forest",
-      "plains"
+      "plains",
+      "forest"
     ],
     "base_rarity": 3
   },
@@ -504,10 +504,10 @@
     "type1": "water",
     "evolved_at": 25,
     "environments": [
-      "lake",
       "beach",
+      "swamp",
       "tundra",
-      "swamp"
+      "lake"
     ],
     "base_rarity": 2
   },
@@ -515,11 +515,11 @@
     "base_pokemon_id": 135,
     "name": "jolteon",
     "type1": "electric",
-    "evolved_at": 1,
+    "evolved_at": 25,
     "environments": [
       "sky",
-      "beach",
-      "plains"
+      "plains",
+      "beach"
     ],
     "base_rarity": 2
   },
@@ -527,11 +527,11 @@
     "base_pokemon_id": 136,
     "name": "flareon",
     "type1": "fire",
-    "evolved_at": 1,
+    "evolved_at": 25,
     "environments": [
+      "volcano",
       "mountain",
-      "desert",
-      "volcano"
+      "desert"
     ],
     "base_rarity": 2
   },
@@ -541,8 +541,8 @@
     "type1": "normal",
     "evolved_at": 1,
     "environments": [
-      "plains",
-      "forest"
+      "forest",
+      "plains"
     ],
     "base_rarity": 3
   },
@@ -553,15 +553,15 @@
     "type2": "water",
     "evolved_at": 1,
     "environments": [
-      "mountain",
-      "desert",
       "volcano",
       "ruins",
+      "mountain",
       "cave",
+      "desert",
       "tundra",
-      "lake",
       "beach",
-      "swamp"
+      "swamp",
+      "lake"
     ],
     "base_rarity": 3
   },
@@ -574,13 +574,13 @@
     "environments": [
       "ruins",
       "mountain",
-      "desert",
       "volcano",
       "cave",
-      "swamp",
+      "desert",
       "tundra",
-      "lake",
-      "beach"
+      "beach",
+      "swamp",
+      "lake"
     ],
     "base_rarity": 3
   },
@@ -591,10 +591,10 @@
     "type2": "poison",
     "evolved_at": 7,
     "environments": [
-      "forest",
-      "swamp"
+      "swamp",
+      "forest"
     ],
-    "base_rarity": 1
+    "base_rarity": 2
   },
   "140": {
     "base_pokemon_id": 140,
@@ -605,13 +605,13 @@
     "environments": [
       "cave",
       "desert",
-      "volcano",
       "ruins",
       "mountain",
+      "volcano",
       "lake",
       "beach",
-      "tundra",
-      "swamp"
+      "swamp",
+      "tundra"
     ],
     "base_rarity": 3
   },
@@ -624,13 +624,13 @@
     "environments": [
       "cave",
       "desert",
-      "volcano",
       "ruins",
       "mountain",
+      "volcano",
       "lake",
-      "beach",
+      "swamp",
       "tundra",
-      "swamp"
+      "beach"
     ],
     "base_rarity": 3
   },
@@ -641,14 +641,14 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "cave",
       "ruins",
       "mountain",
-      "desert",
       "volcano",
-      "forest",
+      "cave",
+      "desert",
       "beach",
-      "sky"
+      "sky",
+      "forest"
     ],
     "base_rarity": 3
   },
@@ -670,12 +670,12 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "beach",
-      "tundra",
       "lake",
+      "tundra",
       "mountain",
-      "sky",
-      "forest"
+      "beach",
+      "forest",
+      "sky"
     ],
     "base_rarity": 5
   },
@@ -701,12 +701,12 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "desert",
-      "volcano",
       "mountain",
-      "forest",
+      "volcano",
+      "desert",
+      "beach",
       "sky",
-      "beach"
+      "forest"
     ],
     "base_rarity": 5
   },
@@ -718,9 +718,9 @@
     "environments": [
       "volcano",
       "sky",
-      "lake",
       "mountain",
-      "cave"
+      "cave",
+      "lake"
     ],
     "base_rarity": 3
   },
@@ -730,11 +730,11 @@
     "type1": "dragon",
     "evolved_at": 30,
     "environments": [
-      "sky",
-      "lake",
       "mountain",
       "volcano",
-      "cave"
+      "sky",
+      "cave",
+      "lake"
     ],
     "base_rarity": 3
   },
@@ -747,13 +747,13 @@
     "environments": [
       "cave",
       "lake",
-      "mountain",
       "volcano",
       "sky",
-      "beach",
-      "forest"
+      "mountain",
+      "forest",
+      "beach"
     ],
-    "base_rarity": 3
+    "base_rarity": 4
   },
   "15": {
     "base_pokemon_id": 15,
@@ -796,11 +796,11 @@
     "environments": [
       "forest",
       "plains",
+      "beach",
       "sky",
-      "mountain",
-      "beach"
+      "mountain"
     ],
-    "base_rarity": 0
+    "base_rarity": 2
   },
   "17": {
     "base_pokemon_id": 17,
@@ -812,10 +812,10 @@
       "forest",
       "plains",
       "mountain",
-      "sky",
-      "beach"
+      "beach",
+      "sky"
     ],
-    "base_rarity": 1
+    "base_rarity": 0
   },
   "18": {
     "base_pokemon_id": 18,
@@ -824,11 +824,11 @@
     "type2": "flying",
     "evolved_at": 36,
     "environments": [
-      "forest",
       "plains",
+      "forest",
+      "mountain",
       "beach",
-      "sky",
-      "mountain"
+      "sky"
     ],
     "base_rarity": 2
   },
@@ -838,8 +838,8 @@
     "type1": "normal",
     "evolved_at": 1,
     "environments": [
-      "plains",
-      "forest"
+      "forest",
+      "plains"
     ],
     "base_rarity": 0
   },
@@ -853,7 +853,7 @@
       "swamp",
       "forest"
     ],
-    "base_rarity": 1
+    "base_rarity": 2
   },
   "20": {
     "base_pokemon_id": 20,
@@ -861,10 +861,10 @@
     "type1": "normal",
     "evolved_at": 20,
     "environments": [
-      "forest",
-      "plains"
+      "plains",
+      "forest"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "21": {
     "base_pokemon_id": 21,
@@ -873,11 +873,11 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "plains",
       "forest",
+      "plains",
+      "sky",
       "mountain",
-      "beach",
-      "sky"
+      "beach"
     ],
     "base_rarity": 0
   },
@@ -888,8 +888,8 @@
     "type2": "flying",
     "evolved_at": 20,
     "environments": [
-      "plains",
       "forest",
+      "plains",
       "sky",
       "mountain",
       "beach"
@@ -916,7 +916,7 @@
       "swamp",
       "forest"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "25": {
     "base_pokemon_id": 25,
@@ -925,8 +925,8 @@
     "evolved_at": 20,
     "environments": [
       "plains",
-      "sky",
-      "beach"
+      "beach",
+      "sky"
     ],
     "base_rarity": 1
   },
@@ -934,11 +934,11 @@
     "base_pokemon_id": 26,
     "name": "raichu",
     "type1": "electric",
-    "evolved_at": 25,
+    "evolved_at": 32,
     "environments": [
       "beach",
-      "sky",
-      "plains"
+      "plains",
+      "sky"
     ],
     "base_rarity": 2
   },
@@ -948,12 +948,12 @@
     "type1": "ground",
     "evolved_at": 1,
     "environments": [
-      "desert",
-      "volcano",
-      "cave",
-      "plains",
       "tundra",
-      "mountain"
+      "cave",
+      "mountain",
+      "plains",
+      "desert",
+      "volcano"
     ],
     "base_rarity": 0
   },
@@ -964,13 +964,13 @@
     "evolved_at": 22,
     "environments": [
       "cave",
-      "plains",
-      "desert",
+      "tundra",
       "volcano",
       "mountain",
-      "tundra"
+      "plains",
+      "desert"
     ],
-    "base_rarity": 2
+    "base_rarity": 1
   },
   "29": {
     "base_pokemon_id": 29,
@@ -981,7 +981,7 @@
       "swamp",
       "forest"
     ],
-    "base_rarity": 0
+    "base_rarity": 1
   },
   "3": {
     "base_pokemon_id": 3,
@@ -990,8 +990,8 @@
     "type2": "poison",
     "evolved_at": 32,
     "environments": [
-      "swamp",
-      "forest"
+      "forest",
+      "swamp"
     ],
     "base_rarity": 2
   },
@@ -1001,10 +1001,127 @@
     "type1": "poison",
     "evolved_at": 16,
     "environments": [
-      "forest",
-      "swamp"
+      "swamp",
+      "forest"
     ],
-    "base_rarity": 1
+    "base_rarity": 2
+  },
+  "31": {
+    "base_pokemon_id": 31,
+    "name": "nidoqueen",
+    "type1": "poison",
+    "type2": "ground",
+    "evolved_at": 32,
+    "environments": [
+      "swamp",
+      "forest",
+      "desert",
+      "volcano",
+      "mountain",
+      "plains",
+      "tundra",
+      "cave"
+    ],
+    "base_rarity": 2
+  },
+  "32": {
+    "base_pokemon_id": 32,
+    "name": "nidoran-m",
+    "type1": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 0
+  },
+  "33": {
+    "base_pokemon_id": 33,
+    "name": "nidorino",
+    "type1": "poison",
+    "evolved_at": 16,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 2
+  },
+  "34": {
+    "base_pokemon_id": 34,
+    "name": "nidoking",
+    "type1": "poison",
+    "type2": "ground",
+    "evolved_at": 32,
+    "environments": [
+      "forest",
+      "swamp",
+      "mountain",
+      "plains",
+      "desert",
+      "volcano",
+      "cave",
+      "tundra"
+    ],
+    "base_rarity": 2
+  },
+  "35": {
+    "base_pokemon_id": 35,
+    "name": "clefairy",
+    "type1": "fairy",
+    "evolved_at": 20,
+    "environments": [
+      "forest",
+      "lake"
+    ],
+    "base_rarity": 0
+  },
+  "36": {
+    "base_pokemon_id": 36,
+    "name": "clefable",
+    "type1": "fairy",
+    "evolved_at": 32,
+    "environments": [
+      "forest",
+      "lake"
+    ],
+    "base_rarity": 2
+  },
+  "37": {
+    "base_pokemon_id": 37,
+    "name": "vulpix",
+    "type1": "fire",
+    "evolved_at": 1,
+    "environments": [
+      "volcano",
+      "desert",
+      "mountain"
+    ],
+    "base_rarity": 2
+  },
+  "38": {
+    "base_pokemon_id": 38,
+    "name": "ninetales",
+    "type1": "fire",
+    "evolved_at": 25,
+    "environments": [
+      "desert",
+      "mountain",
+      "volcano"
+    ],
+    "base_rarity": 2
+  },
+  "39": {
+    "base_pokemon_id": 39,
+    "name": "jigglypuff",
+    "type1": "normal",
+    "type2": "fairy",
+    "evolved_at": 20,
+    "environments": [
+      "plains",
+      "forest",
+      "lake"
+    ],
+    "base_rarity": 0
   },
   "4": {
     "base_pokemon_id": 4,
@@ -1016,7 +1133,134 @@
       "volcano",
       "mountain"
     ],
+    "base_rarity": 2
+  },
+  "40": {
+    "base_pokemon_id": 40,
+    "name": "wigglytuff",
+    "type1": "normal",
+    "type2": "fairy",
+    "evolved_at": 32,
+    "environments": [
+      "forest",
+      "plains",
+      "lake"
+    ],
+    "base_rarity": 1
+  },
+  "41": {
+    "base_pokemon_id": 41,
+    "name": "zubat",
+    "type1": "poison",
+    "type2": "flying",
+    "evolved_at": 1,
+    "environments": [
+      "swamp",
+      "forest",
+      "sky",
+      "mountain",
+      "beach"
+    ],
     "base_rarity": 0
+  },
+  "42": {
+    "base_pokemon_id": 42,
+    "name": "golbat",
+    "type1": "poison",
+    "type2": "flying",
+    "evolved_at": 22,
+    "environments": [
+      "swamp",
+      "forest",
+      "mountain",
+      "beach",
+      "sky"
+    ],
+    "base_rarity": 2
+  },
+  "43": {
+    "base_pokemon_id": 43,
+    "name": "oddish",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "44": {
+    "base_pokemon_id": 44,
+    "name": "gloom",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 21,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "45": {
+    "base_pokemon_id": 45,
+    "name": "vileplume",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 32,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 2
+  },
+  "46": {
+    "base_pokemon_id": 46,
+    "name": "paras",
+    "type1": "bug",
+    "type2": "grass",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 0
+  },
+  "47": {
+    "base_pokemon_id": 47,
+    "name": "parasect",
+    "type1": "bug",
+    "type2": "grass",
+    "evolved_at": 24,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 2
+  },
+  "48": {
+    "base_pokemon_id": 48,
+    "name": "venonat",
+    "type1": "bug",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 0
+  },
+  "49": {
+    "base_pokemon_id": 49,
+    "name": "venomoth",
+    "type1": "bug",
+    "type2": "poison",
+    "evolved_at": 31,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
   },
   "5": {
     "base_pokemon_id": 5,
@@ -1024,11 +1268,135 @@
     "type1": "fire",
     "evolved_at": 16,
     "environments": [
-      "mountain",
       "desert",
+      "mountain",
       "volcano"
     ],
+    "base_rarity": 2
+  },
+  "50": {
+    "base_pokemon_id": 50,
+    "name": "diglett",
+    "type1": "ground",
+    "evolved_at": 1,
+    "environments": [
+      "volcano",
+      "tundra",
+      "mountain",
+      "plains",
+      "desert",
+      "cave"
+    ],
     "base_rarity": 1
+  },
+  "51": {
+    "base_pokemon_id": 51,
+    "name": "dugtrio",
+    "type1": "ground",
+    "evolved_at": 26,
+    "environments": [
+      "volcano",
+      "tundra",
+      "mountain",
+      "cave",
+      "plains",
+      "desert"
+    ],
+    "base_rarity": 1
+  },
+  "52": {
+    "base_pokemon_id": 52,
+    "name": "meowth",
+    "type1": "normal",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "plains"
+    ],
+    "base_rarity": 2
+  },
+  "53": {
+    "base_pokemon_id": 53,
+    "name": "persian",
+    "type1": "normal",
+    "evolved_at": 28,
+    "environments": [
+      "plains",
+      "forest"
+    ],
+    "base_rarity": 1
+  },
+  "54": {
+    "base_pokemon_id": 54,
+    "name": "psyduck",
+    "type1": "water",
+    "evolved_at": 1,
+    "environments": [
+      "tundra",
+      "beach",
+      "swamp",
+      "lake"
+    ],
+    "base_rarity": 1
+  },
+  "55": {
+    "base_pokemon_id": 55,
+    "name": "golduck",
+    "type1": "water",
+    "evolved_at": 33,
+    "environments": [
+      "lake",
+      "tundra",
+      "beach",
+      "swamp"
+    ],
+    "base_rarity": 2
+  },
+  "56": {
+    "base_pokemon_id": 56,
+    "name": "mankey",
+    "type1": "fighting",
+    "evolved_at": 1,
+    "environments": [
+      "tundra",
+      "plains"
+    ],
+    "base_rarity": 3
+  },
+  "57": {
+    "base_pokemon_id": 57,
+    "name": "primeape",
+    "type1": "fighting",
+    "evolved_at": 28,
+    "environments": [
+      "plains",
+      "tundra"
+    ],
+    "base_rarity": 3
+  },
+  "58": {
+    "base_pokemon_id": 58,
+    "name": "growlithe",
+    "type1": "fire",
+    "evolved_at": 1,
+    "environments": [
+      "volcano",
+      "mountain",
+      "desert"
+    ],
+    "base_rarity": 0
+  },
+  "59": {
+    "base_pokemon_id": 59,
+    "name": "arcanine",
+    "type1": "fire",
+    "evolved_at": 25,
+    "environments": [
+      "desert",
+      "mountain",
+      "volcano"
+    ],
+    "base_rarity": 3
   },
   "6": {
     "base_pokemon_id": 6,
@@ -1038,13 +1406,129 @@
     "evolved_at": 36,
     "environments": [
       "mountain",
-      "desert",
       "volcano",
+      "desert",
       "sky",
       "forest",
       "beach"
     ],
     "base_rarity": 2
+  },
+  "60": {
+    "base_pokemon_id": 60,
+    "name": "poliwag",
+    "type1": "water",
+    "evolved_at": 1,
+    "environments": [
+      "swamp",
+      "lake",
+      "beach",
+      "tundra"
+    ],
+    "base_rarity": 0
+  },
+  "61": {
+    "base_pokemon_id": 61,
+    "name": "poliwhirl",
+    "type1": "water",
+    "evolved_at": 25,
+    "environments": [
+      "tundra",
+      "lake",
+      "beach",
+      "swamp"
+    ],
+    "base_rarity": 1
+  },
+  "62": {
+    "base_pokemon_id": 62,
+    "name": "poliwrath",
+    "type1": "water",
+    "type2": "fighting",
+    "evolved_at": 32,
+    "environments": [
+      "lake",
+      "beach",
+      "tundra",
+      "swamp",
+      "plains"
+    ],
+    "base_rarity": 2
+  },
+  "63": {
+    "base_pokemon_id": 63,
+    "name": "abra",
+    "type1": "psychic",
+    "evolved_at": 1,
+    "environments": [
+      "ruins"
+    ],
+    "base_rarity": 3
+  },
+  "64": {
+    "base_pokemon_id": 64,
+    "name": "kadabra",
+    "type1": "psychic",
+    "evolved_at": 16,
+    "environments": [
+      "ruins"
+    ],
+    "base_rarity": 3
+  },
+  "65": {
+    "base_pokemon_id": 65,
+    "name": "alakazam",
+    "type1": "psychic",
+    "evolved_at": 40,
+    "environments": [
+      "ruins"
+    ],
+    "base_rarity": 3
+  },
+  "66": {
+    "base_pokemon_id": 66,
+    "name": "machop",
+    "type1": "fighting",
+    "evolved_at": 1,
+    "environments": [
+      "plains",
+      "tundra"
+    ],
+    "base_rarity": 3
+  },
+  "67": {
+    "base_pokemon_id": 67,
+    "name": "machoke",
+    "type1": "fighting",
+    "evolved_at": 28,
+    "environments": [
+      "tundra",
+      "plains"
+    ],
+    "base_rarity": 3
+  },
+  "68": {
+    "base_pokemon_id": 68,
+    "name": "machamp",
+    "type1": "fighting",
+    "evolved_at": 40,
+    "environments": [
+      "plains",
+      "tundra"
+    ],
+    "base_rarity": 3
+  },
+  "69": {
+    "base_pokemon_id": 69,
+    "name": "bellsprout",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 1
   },
   "7": {
     "base_pokemon_id": 7,
@@ -1052,10 +1536,154 @@
     "type1": "water",
     "evolved_at": 1,
     "environments": [
+      "lake",
       "tundra",
       "beach",
-      "lake",
       "swamp"
+    ],
+    "base_rarity": 0
+  },
+  "70": {
+    "base_pokemon_id": 70,
+    "name": "weepinbell",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 21,
+    "environments": [
+      "forest",
+      "swamp"
+    ],
+    "base_rarity": 2
+  },
+  "71": {
+    "base_pokemon_id": 71,
+    "name": "victreebel",
+    "type1": "grass",
+    "type2": "poison",
+    "evolved_at": 32,
+    "environments": [
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 2
+  },
+  "72": {
+    "base_pokemon_id": 72,
+    "name": "tentacool",
+    "type1": "water",
+    "type2": "poison",
+    "evolved_at": 1,
+    "environments": [
+      "lake",
+      "beach",
+      "tundra",
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 0
+  },
+  "73": {
+    "base_pokemon_id": 73,
+    "name": "tentacruel",
+    "type1": "water",
+    "type2": "poison",
+    "evolved_at": 30,
+    "environments": [
+      "beach",
+      "tundra",
+      "lake",
+      "swamp",
+      "forest"
+    ],
+    "base_rarity": 2
+  },
+  "74": {
+    "base_pokemon_id": 74,
+    "name": "geodude",
+    "type1": "rock",
+    "type2": "ground",
+    "evolved_at": 1,
+    "environments": [
+      "ruins",
+      "cave",
+      "mountain",
+      "desert",
+      "volcano",
+      "tundra",
+      "plains"
+    ],
+    "base_rarity": 3
+  },
+  "75": {
+    "base_pokemon_id": 75,
+    "name": "graveler",
+    "type1": "rock",
+    "type2": "ground",
+    "evolved_at": 25,
+    "environments": [
+      "mountain",
+      "desert",
+      "ruins",
+      "cave",
+      "volcano",
+      "plains",
+      "tundra"
+    ],
+    "base_rarity": 3
+  },
+  "76": {
+    "base_pokemon_id": 76,
+    "name": "golem",
+    "type1": "rock",
+    "type2": "ground",
+    "evolved_at": 40,
+    "environments": [
+      "ruins",
+      "cave",
+      "mountain",
+      "desert",
+      "volcano",
+      "plains",
+      "tundra"
+    ],
+    "base_rarity": 3
+  },
+  "77": {
+    "base_pokemon_id": 77,
+    "name": "ponyta",
+    "type1": "fire",
+    "evolved_at": 1,
+    "environments": [
+      "desert",
+      "volcano",
+      "mountain"
+    ],
+    "base_rarity": 3
+  },
+  "78": {
+    "base_pokemon_id": 78,
+    "name": "rapidash",
+    "type1": "fire",
+    "evolved_at": 40,
+    "environments": [
+      "volcano",
+      "mountain",
+      "desert"
+    ],
+    "base_rarity": 3
+  },
+  "79": {
+    "base_pokemon_id": 79,
+    "name": "slowpoke",
+    "type1": "water",
+    "type2": "psychic",
+    "evolved_at": 1,
+    "environments": [
+      "lake",
+      "tundra",
+      "beach",
+      "swamp",
+      "ruins"
     ],
     "base_rarity": 0
   },
@@ -1065,12 +1693,27 @@
     "type1": "water",
     "evolved_at": 16,
     "environments": [
-      "beach",
       "tundra",
-      "lake",
-      "swamp"
+      "beach",
+      "swamp",
+      "lake"
     ],
     "base_rarity": 1
+  },
+  "80": {
+    "base_pokemon_id": 80,
+    "name": "slowbro",
+    "type1": "water",
+    "type2": "psychic",
+    "evolved_at": 37,
+    "environments": [
+      "lake",
+      "beach",
+      "swamp",
+      "tundra",
+      "ruins"
+    ],
+    "base_rarity": 2
   },
   "81": {
     "base_pokemon_id": 81,
@@ -1079,12 +1722,12 @@
     "type2": "steel",
     "evolved_at": 1,
     "environments": [
-      "sky",
-      "beach",
       "plains",
-      "cave",
+      "beach",
+      "sky",
+      "ruins",
       "desert",
-      "ruins"
+      "cave"
     ],
     "base_rarity": 0
   },
@@ -1095,9 +1738,9 @@
     "type2": "steel",
     "evolved_at": 30,
     "environments": [
+      "plains",
       "beach",
       "sky",
-      "plains",
       "ruins",
       "desert",
       "cave"
@@ -1111,8 +1754,8 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "forest",
       "plains",
+      "forest",
       "mountain",
       "beach",
       "sky"
@@ -1126,11 +1769,11 @@
     "type2": "flying",
     "evolved_at": 1,
     "environments": [
-      "forest",
       "plains",
+      "forest",
+      "sky",
       "mountain",
-      "beach",
-      "sky"
+      "beach"
     ],
     "base_rarity": 0
   },
@@ -1141,11 +1784,11 @@
     "type2": "flying",
     "evolved_at": 31,
     "environments": [
-      "plains",
       "forest",
+      "plains",
+      "sky",
       "mountain",
-      "beach",
-      "sky"
+      "beach"
     ],
     "base_rarity": 2
   },
@@ -1156,9 +1799,9 @@
     "evolved_at": 1,
     "environments": [
       "lake",
-      "swamp",
       "tundra",
-      "beach"
+      "beach",
+      "swamp"
     ],
     "base_rarity": 0
   },
@@ -1169,10 +1812,10 @@
     "type2": "ice",
     "evolved_at": 34,
     "environments": [
-      "swamp",
       "lake",
       "tundra",
       "beach",
+      "swamp",
       "mountain"
     ],
     "base_rarity": 2
@@ -1186,7 +1829,7 @@
       "swamp",
       "forest"
     ],
-    "base_rarity": 0
+    "base_rarity": 1
   },
   "89": {
     "base_pokemon_id": 89,
@@ -1205,10 +1848,10 @@
     "type1": "water",
     "evolved_at": 36,
     "environments": [
+      "beach",
       "swamp",
-      "lake",
       "tundra",
-      "beach"
+      "lake"
     ],
     "base_rarity": 2
   },
@@ -1219,9 +1862,9 @@
     "evolved_at": 1,
     "environments": [
       "lake",
+      "beach",
       "swamp",
-      "tundra",
-      "beach"
+      "tundra"
     ],
     "base_rarity": 0
   },
@@ -1232,8 +1875,8 @@
     "type2": "ice",
     "evolved_at": 25,
     "environments": [
-      "swamp",
       "beach",
+      "swamp",
       "tundra",
       "lake",
       "mountain"
@@ -1273,8 +1916,8 @@
     "type2": "poison",
     "evolved_at": 40,
     "environments": [
-      "ruins",
       "swamp",
+      "ruins",
       "forest"
     ],
     "base_rarity": 3
@@ -1286,13 +1929,13 @@
     "type2": "ground",
     "evolved_at": 1,
     "environments": [
+      "desert",
       "cave",
       "volcano",
       "ruins",
       "mountain",
-      "desert",
-      "tundra",
-      "plains"
+      "plains",
+      "tundra"
     ],
     "base_rarity": 3
   },
@@ -1323,9 +1966,9 @@
     "evolved_at": 1,
     "environments": [
       "tundra",
-      "lake",
       "beach",
-      "swamp"
+      "swamp",
+      "lake"
     ],
     "base_rarity": 0
   },
@@ -1335,10 +1978,10 @@
     "type1": "water",
     "evolved_at": 28,
     "environments": [
+      "beach",
       "swamp",
       "tundra",
-      "lake",
-      "beach"
+      "lake"
     ],
     "base_rarity": 2
   }

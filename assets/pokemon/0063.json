@@ -4,8 +4,21 @@
   "base_experience": 62,
   "growth_rate": "medium-slow",
   "capture_rate": 200,
-  "moves_learned_by_level": {},
+  "moves_learned_by_level": {
+    "1": {
+      "id": 33,
+      "name": "tackle",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    }
+  },
   "evolution_chain": {
+    "1": [
+      63
+    ],
     "16": [
       64
     ],

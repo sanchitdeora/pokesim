@@ -48,7 +48,7 @@ func (g *Gui) renderMenuItems() layout.FlexChild {
 		screen Screen
 	}{
 		{"Home", HomeScreen},
-		{"Trainer", TrainerScreen},
+		{"Party", PartyScreen},
 		{"Bag", BagScreen},
 		{"Box", BoxScreen},
 	}
@@ -100,6 +100,8 @@ func (g *Gui) RenderCurrentScreen(gtx layout.Context) layout.Dimensions {
 		return g.RenderBattleScreen(gtx)
 	case TrainerScreen:
 		return g.RenderTrainerScreen(gtx)
+	case GymTrainerScreen:
+		return g.RenderGymTrainerScreen(gtx)
 	case WildScreen:
 		return g.RenderWildScreen(gtx)
 	case PartyScreen:

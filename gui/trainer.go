@@ -12,12 +12,35 @@ import (
 	"gioui.org/widget/material"
 )
 
+func DefaultTrainerProps() TrainerProps {
+	return TrainerProps{
+		TrainerList: &widget.List{
+			List: layout.List{Axis: layout.Vertical},
+		},
+		Trainers: SetupTrainersList(),
+	}
+}
+
+func DefaultGymTrainerProps() TrainerProps {
+	return TrainerProps{
+		TrainerList: &widget.List{
+			List: layout.List{Axis: layout.Vertical},
+		},
+		Trainers: SetupGymTrainersList(),
+	}
+}
+
+type TrainerProps struct {
+	TrainerList *widget.List
+	Trainers    []TrainerUI
+}
+
 func (g *Gui) RenderTrainerScreen(gtx layout.Context) layout.Dimensions {
 	// Use a vertical layout for screen elements
 	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 		// Title
 		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-			title := material.H4(g.Theme, "Trainer Screen")
+			title := material.H4(g.Theme, "Trainers")
 			title.Font.Weight = font.Bold
 			return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
 		}),
@@ -28,8 +51,31 @@ func (g *Gui) RenderTrainerScreen(gtx layout.Context) layout.Dimensions {
 				Spacing: layout.SpaceBetween,
 			}.Layout(gtx,
 				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-					trainers := setupTrainersList()
+					trainers := g.TrainerProps.Trainers
 					return g.renderTrainerGallery(gtx, trainers)
+				}))
+		}),
+	)
+}
+
+func (g *Gui) RenderGymTrainerScreen(gtx layout.Context) layout.Dimensions {
+	// Use a vertical layout for screen elements
+	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+		// Title
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			title := material.H4(g.Theme, "Gym Trainers")
+			title.Font.Weight = font.Bold
+			return layout.Inset(layout.Inset{Bottom: unit.Dp(25)}).Layout(gtx, func(gtx layout.Context) layout.Dimensions { return title.Layout(gtx) })
+		}),
+
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			return layout.Flex{
+				Axis:    layout.Vertical,
+				Spacing: layout.SpaceBetween,
+			}.Layout(gtx,
+				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+					gymTrainers := g.GymTrainerProps.Trainers
+					return g.renderTrainerGallery(gtx, gymTrainers)
 				}))
 		}),
 	)
@@ -41,7 +87,7 @@ func (g *Gui) renderTrainerGallery(gtx layout.Context, trainers []TrainerUI) lay
 	return layout.Flex{}.Layout(gtx,
 		// Expanding the list container to fill available height
 		layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
-			return material.List(g.Theme, g.TrainerList).Layout(gtx, len(trainers), func(gtx layout.Context, index int) layout.Dimensions {
+			return material.List(g.Theme, g.TrainerProps.TrainerList).Layout(gtx, len(trainers), func(gtx layout.Context, index int) layout.Dimensions {
 				return g.renderTrainerRow(gtx, trainers, index)
 			})
 		}),
@@ -90,15 +136,16 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 			// Trainer Image
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
 				img := trainer.Image
+				newCtx := gtx
+				newCtx.Constraints.Max = cardDims
+				newCtx.Constraints.Max.Y -= 50
 				if !trainer.Unlocked {
 					// Grey out the image for locked trainers
-					newCtx := gtx
-					newCtx.Constraints.Max = cardDims
 
 					return g.greyedOutImage(newCtx, img)
 				}
 				img.Fit = widget.Contain
-				return img.Layout(gtx)
+				return img.Layout(newCtx)
 			}),
 			// Trainer Name
 			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
@@ -109,14 +156,14 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 				})
 			}),
 			// Clickable Overlay for unlocked trainers
-			layout.Expanded(func(gtx layout.Context) layout.Dimensions {
+			layout.Stacked(func(gtx layout.Context) layout.Dimensions {
 				if trainer.Unlocked {
-					if g.Buttons[BattleScreen].Clicked(gtx) {
+					if trainer.TrainerBtn.Clicked(gtx) {
 						g.Battle = g.NewTrainerBattle(g.opts.UserManager.GetUser(), trainer.Trainer)
 						return g.LoadBattle(gtx)
 					}
 
-					return g.Buttons[BattleScreen].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+					return trainer.TrainerBtn.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 						return layout.Dimensions{Size: cardDims}
 					})
 				}
@@ -125,15 +172,6 @@ func (g *Gui) renderTrainerCard(gtx layout.Context, trainer TrainerUI) layout.Di
 		)
 	})
 }
-
-// func (g *Gui) renderPlaceholderCard(gtx layout.Context) layout.Dimensions {
-// 	return layout.Dimensions{
-// 		Size: image.Point{
-// 			X: gtx.Constraints.Max.X / 4, // Same width as trainer cards
-// 			Y: gtx.Dp(unit.Dp(250)),      // Same height as trainer cards
-// 		},
-// 	}
-// }
 
 func (g *Gui) greyedOutImage(gtx layout.Context, img widget.Image) layout.Dimensions {
 	// Render the image first

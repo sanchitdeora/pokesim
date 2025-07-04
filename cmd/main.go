@@ -3,8 +3,7 @@ package main
 import (
 	"github.com/sanchitdeora/PokeSim/gui"
 
-	// "github.com/sanchitdeora/PokeSim/logger"
-
+	"github.com/sanchitdeora/PokeSim/logger"
 )
 
 const (
@@ -12,7 +11,8 @@ const (
 )
 
 func main() {
-	// logger.InitLogger()
+	logger.InitLogger()
+	// logger.InitTestLogger()
 	
 	// initialize GUI
 	gui.InitializeGUI()

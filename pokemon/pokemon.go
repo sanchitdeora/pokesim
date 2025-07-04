@@ -64,35 +64,39 @@ func (p *PokemonImpl) Evolve(pokemon *data.Pokemon) {
 		return
 	}
 
-	evolvedBasePokemonPath := pokemon.EvolutionChain[pokemon.Level]
+	var evolvedBasePokemonIDs []data.BasePokemonID
 	for lvl, evolutionChain := range pokemon.EvolutionChain {
-		if pokemon.Level > lvl {
-			evolvedBasePokemonPath = evolutionChain
+		if pokemon.Level >= lvl && !utils.Contains(evolutionChain, pokemon.ID) {
+			evolvedBasePokemonIDs = pokemon.EvolutionChain[pokemon.Level]
 		}
 	}
-	
-	if len(evolvedBasePokemonPath) > 1 {
-		//TODO: add option to choose which pokemon to evolve to
-		panic("implemenet multiple pokemon evolution")
-	
-	} else if len(evolvedBasePokemonPath) == 0 {
-		slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name)
-	} else {
 
-		evolvedBasePokemon, err := getBasePokemonByID(evolvedBasePokemonPath[0])
-		if err != nil {
-			slog.Error("pokemon cannot evolve", "pokemon", pokemon.Name, "error", err)
+	if len(evolvedBasePokemonIDs) == 0 {
+		slog.Warn("pokemon cannot evolve", "pokemon", pokemon.Name)
+
+		// } else if len(evolvedBasePokemonPath) > 1 {
+		// 	//TODO: add option to choose which pokemon to evolve to
+		// 	panic("implemenet multiple pokemon evolution")
+
+	} else {
+		var evolvedBasePokemons []data.BasePokemon
+		for _, evolvedBasePokemonID := range evolvedBasePokemonIDs {
+			evolvedBasePokemon, err := data.GetBasePokemonByID(int(evolvedBasePokemonID))
+			if err != nil {
+				slog.Error("error getting base pokemon from ID", "pokemon", pokemon.Name, "pokemonID", evolvedBasePokemonID, "error", err)
+			}
+			evolvedBasePokemons = append(evolvedBasePokemons, evolvedBasePokemon)
 		}
 
-		responseEvolveBody := p.shouldPokemonEvolve(pokemon, evolvedBasePokemon)
+		responseEvolveBody := p.shouldPokemonEvolve(pokemon, evolvedBasePokemons)
+		slog.Debug("evolve response", "body", responseEvolveBody)
 
 		if !responseEvolveBody.AcceptEvolution {
 			pokemon.EvolutionRejected = true
-			return
+		} else {
+			pokemon.BasePokemon = responseEvolveBody.EvolvedBasePokemon
 		}
 
-		pokemon.BasePokemon = evolvedBasePokemon
-		slog.Info("user info", "user", p.opts.GameStateManager.Get().User.Party[0])
 	}
 
 	p.statUpgrades(pokemon)
@@ -261,7 +265,7 @@ func (p *PokemonImpl) GetExperienceRequiredForNextLevel(pokemon *data.Pokemon) i
 }
 
 func (p *PokemonImpl) GenerateStarterPokemon(basePokemon data.BasePokemon) *data.Pokemon {
-	return generatePokemon(basePokemon, 5)
+	return GeneratePokemon(basePokemon, 5, 10)
 }
 
 func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
@@ -331,7 +335,7 @@ func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
 				minLvl = encounter.EvolvedAt
 			}
 			lvl := int(math.Round(utils.RandomGenerator(float64(minLvl), float64(maxLvl))))
-			basePokemon, err := getBasePokemonByID(encounter.BasePokemonID)
+			basePokemon, err := data.GetBasePokemonByID(int(encounter.BasePokemonID))
 			if err != nil {
 				slog.Error("failed to get base pokemon", "error", err)
 				return nil
@@ -339,7 +343,7 @@ func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
 
 			slog.Info("min level: %d, max level: %d", "minLvl", minLvl, "maxLvl", maxLvl, "level", lvl)
 
-			return generatePokemon(basePokemon, lvl)
+			return GeneratePokemon(basePokemon, lvl, 0)
 		}
 	}
 	return nil
@@ -347,38 +351,42 @@ func (p *PokemonImpl) SearchWildPokemon(env data.Environment) *data.Pokemon {
 
 func canPokemonEvolve(pokemon *data.Pokemon) bool {
 	if pokemon.EvolutionRejected {
+		slog.Debug("pokemon evolution rejected", "pokemon", pokemon.Name)
 		return false
 	}
 
 	startLevel := 1
 	for level, evolutions := range pokemon.EvolutionChain {
-		if evolutions[0] == pokemon.BasePokemon.ID && pokemon.Level > level {
+		slog.Debug("level-evo kv pair", "level", level, "evolutions", evolutions, "pokemon", pokemon.Name, "pokemonID", pokemon.BasePokemon.ID, "pokemon level", pokemon.Level)
+		if utils.Contains(evolutions, pokemon.BasePokemon.ID) && pokemon.Level > level {
 			startLevel = level + 1
 			break
 		}
 	}
 	for i := startLevel; i <= pokemon.Level; i++ {
-		if _, exists := pokemon.EvolutionChain[i]; exists && pokemon.EvolutionChain[i][0] != pokemon.BasePokemon.ID {
+		if _, exists := pokemon.EvolutionChain[i]; exists && !utils.Contains(pokemon.EvolutionChain[i], pokemon.BasePokemon.ID) {
 			return true
 		}
 	}
 
+	slog.Debug("pokemon cannot evolve", "pokemon", pokemon.Name, "level", pokemon.Level, "next evolve", startLevel)
+
 	return false
 }
 
-func (p *PokemonImpl) shouldPokemonEvolve(pokemon *data.Pokemon, evolvedBasePokemon data.BasePokemon) data.ResponseEvolveBody {
-	slog.Info("pokemon can evolve", "pokemon", pokemon.Name, "evolving to", evolvedBasePokemon.Name)
+func (p *PokemonImpl) shouldPokemonEvolve(pokemon *data.Pokemon, evolvedBasePokemons []data.BasePokemon) data.ResponseEvolveBody {
+	slog.Info("pokemon can evolve", "pokemon", pokemon.Name)
 
 	// ask user if evolve?
 	p.opts.LvlUpActions.SendEvent(data.LevelUpEvent{
 		EventType: data.LevelUpEventEvolve,
 		Body: data.EventEvolveBody{
-			PokemonUUID:        pokemon.PokemonUUID,
-			CurrentBasePokemon: pokemon.BasePokemon,
-			EvolvedBasePokemon: evolvedBasePokemon,
+			PokemonUUID:         pokemon.PokemonUUID,
+			CurrentBasePokemon:  pokemon.BasePokemon,
+			EvolvedBasePokemons: evolvedBasePokemons,
 		}})
 
-	// receive response from user. TODO: add UI to accept and send back response
+	// receive response from user.
 	var evolveBody data.ResponseEvolveBody
 	for {
 		action := p.opts.LvlUpActions.ReceiveResponse()
@@ -481,16 +489,7 @@ func adjustRarityByProgress(encounter data.WildEncounter, minLvl, maxLvl int) fl
 	return 1.0
 }
 
-func getBasePokemonByID(ID data.BasePokemonID) (data.BasePokemon, error) {
-	path := fmt.Sprintf("/assets/pokemon/%04d.json", ID)
-	pokemon, err := utils.ReadJsonFromFile[data.BasePokemon](path)
-	if err != nil {
-		return data.BasePokemon{}, err
-	}
-	return pokemon, nil
-}
-
-func generatePokemon(basePokemon data.BasePokemon, level int) *data.Pokemon {
+func GeneratePokemon(basePokemon data.BasePokemon, level int, minIV int) *data.Pokemon {
 	if level < 1 {
 		slog.Info("level is less than 1", "level", level)
 		level = 1
@@ -504,15 +503,42 @@ func generatePokemon(basePokemon data.BasePokemon, level int) *data.Pokemon {
 		Level:          level,
 		ExperienceLeft: 0,
 		Stats: data.PokemonStats{
-			HP:             generatePokemonHPStat(basePokemon.BaseStats.HP.Value, level),
-			Attack:         generatePokemonOtherStat(basePokemon.BaseStats.Attack.Value, level),
-			Defense:        generatePokemonOtherStat(basePokemon.BaseStats.Defense.Value, level),
-			SpecialAttack:  generatePokemonOtherStat(basePokemon.BaseStats.SpecialAttack.Value, level),
-			SpecialDefense: generatePokemonOtherStat(basePokemon.BaseStats.SpecialDefense.Value, level),
-			Speed:          generatePokemonOtherStat(basePokemon.BaseStats.Speed.Value, level),
+			HP:             generatePokemonHPStat(basePokemon.BaseStats.HP.Value, level, minIV),
+			Attack:         generatePokemonOtherStat(basePokemon.BaseStats.Attack.Value, level, minIV),
+			Defense:        generatePokemonOtherStat(basePokemon.BaseStats.Defense.Value, level, minIV),
+			SpecialAttack:  generatePokemonOtherStat(basePokemon.BaseStats.SpecialAttack.Value, level, minIV),
+			SpecialDefense: generatePokemonOtherStat(basePokemon.BaseStats.SpecialDefense.Value, level, minIV),
+			Speed:          generatePokemonOtherStat(basePokemon.BaseStats.Speed.Value, level, minIV),
 		},
-		Moveset: setupMoveset(basePokemon, level),
+		Moveset: setupMoveset(getMovesetInclPreevolutions(basePokemon, level), level),
 	}
-
 	return pokemon
+}
+
+func getMovesetInclPreevolutions(p data.BasePokemon, pokemonLvl int) []map[int]data.Moves {
+	cumulativeMoveset := []map[int]data.Moves{}
+
+	for evoLvl := range pokemonLvl + 1 {
+		evolutionIds, ok := p.EvolutionChain[evoLvl]
+		if ok {
+			if evoLvl <= pokemonLvl {
+				var bp data.BasePokemon
+				lvlSpecificMoveset := map[int]data.Moves{}
+
+				if utils.Contains(evolutionIds, p.ID) {
+					bp = p
+				} else {
+					bp, _ = data.GetBasePokemonByID(int(evolutionIds[0]))
+				}
+				for moveLvl, move := range bp.MovesLearned {
+					if moveLvl <= pokemonLvl {
+						lvlSpecificMoveset[moveLvl] = move
+					}
+				}
+				cumulativeMoveset = append(cumulativeMoveset, lvlSpecificMoveset)
+			}
+		}
+	}
+	return cumulativeMoveset
+
 }

@@ -23,7 +23,7 @@ func TestMigration(t *testing.T) {
 	defer opts.CsvFile.Close()
 	defer opts.CsvWriter.Flush()
 
-	opts.MigratePokemonToAsset("https://pokeapi.co/api/v2/pokemon/81/")
+	opts.MigratePokemonToAsset("https://pokeapi.co/api/v2/pokemon/133/")
 
 	assert.True(t, true)
 }

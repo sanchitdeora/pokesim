@@ -1,0 +1,155 @@
+{
+  "name": "Misty",
+  "party": [
+    {
+      "base_pokemon_id": 120,
+      "pokemon_uuid": "645ae440-f8d5-418f-8cb4-d1564f28e07e",
+      "stats": {
+        "hp": {
+          "value": 33,
+          "iv": 18,
+          "ev": 0
+        },
+        "attack": {
+          "value": 20,
+          "iv": 27,
+          "ev": 0
+        },
+        "defense": {
+          "value": 23,
+          "iv": 29,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 26,
+          "iv": 23,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 22,
+          "iv": 23,
+          "ev": 0
+        },
+        "speed": {
+          "value": 30,
+          "iv": 28,
+          "ev": 0
+        }
+      },
+      "level": 13,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 55,
+          "name": "water-gun",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "water"
+        },
+        "move3": {
+          "id": 229,
+          "name": "rapid-spin",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 121,
+      "pokemon_uuid": "82c1faea-0152-436d-b3a5-2753c3ce5cc1",
+      "stats": {
+        "hp": {
+          "value": 47,
+          "iv": 31,
+          "ev": 0
+        },
+        "attack": {
+          "value": 31,
+          "iv": 26,
+          "ev": 0
+        },
+        "defense": {
+          "value": 33,
+          "iv": 19,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 38,
+          "iv": 21,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 33,
+          "iv": 22,
+          "ev": 0
+        },
+        "speed": {
+          "value": 42,
+          "iv": 20,
+          "ev": 0
+        }
+      },
+      "level": 15,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 55,
+          "name": "water-gun",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "water"
+        },
+        "move3": {
+          "id": 229,
+          "name": "rapid-spin",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "cascade-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_misty.png"
+}

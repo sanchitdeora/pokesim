@@ -42,7 +42,11 @@
       "type": "rock"
     }
   },
-  "evolution_chain": {},
+  "evolution_chain": {
+    "1": [
+      150
+    ]
+  },
   "sprites": {
     "back_default": "./assets/pokemon/img/back/0150.png",
     "front_default": "./assets/pokemon/img/0150.png"

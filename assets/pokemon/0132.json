@@ -5,7 +5,11 @@
   "growth_rate": "medium",
   "capture_rate": 35,
   "moves_learned_by_level": {},
-  "evolution_chain": {},
+  "evolution_chain": {
+    "1": [
+      132
+    ]
+  },
   "sprites": {
     "back_default": "./assets/pokemon/img/back/0132.png",
     "front_default": "./assets/pokemon/img/0132.png"

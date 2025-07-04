@@ -65,7 +65,7 @@ func main() {
 		slog.Info("Migrating pokemon", "id", i)
 		opts.MigratePokemonToAsset(fmt.Sprintf("%s/%s/%d/", PokeApiBaseUrl, PokemonResource, i))
 		fmt.Println("==============================================================================")
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 3)
 	}
 
 	// save wild encounters
@@ -217,6 +217,9 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 	stage := data.PreEvolution
 
 	evolutionChain := loadedEvolution.Chain
+
+	loadedSpecies, _ := GetPokemonSpecies(evolutionChain.Species.Url)
+	evolutionMap[1] = append(evolutionMap[1], data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber))
 	for {
 		evolvesTo := evolutionChain.EvolvesTo
 		if len(evolvesTo) < 1 {
@@ -237,26 +240,28 @@ func (opts *migrationOpts) EvolutionChainMapper(EvolutionChainUrl string) map[in
 			slog.Error("evolves to more than one pokemon", "evolvesTo", speciesListStr)
 		}
 
-		evolvesToChain := evolvesTo[0]
+		// evolvesToChain := evolvesTo[0]
+		for _, evolvesToChain := range evolvesTo {
+			if evolvesToChain.EvolutionDetails[0].Trigger.Name != "level-up" || evolvesToChain.EvolutionDetails[0].MinLevel == 0 {
+				opts.reportManualAdjustmentReq(
+					evolutionChain.Species.Name,
+					" missing min level with trigger: "+evolvesToChain.EvolutionDetails[0].Trigger.Name,
+					" Decide a level",
+				)
+			}
 
-		if evolvesToChain.EvolutionDetails[0].Trigger.Name != "level-up" || evolvesToChain.EvolutionDetails[0].MinLevel == 0 {
-			opts.reportManualAdjustmentReq(
-				evolutionChain.Species.Name,
-				"missing min level with trigger: "+evolvesToChain.EvolutionDetails[0].Trigger.Name,
-				"Decide a level",
-			)
+			minLevel := GetAdjustedEvolutionLevel(evolvesToChain.EvolutionDetails[0], stage)
+			loadedSpecies, err := GetPokemonSpecies(evolvesToChain.Species.Url)
+			if err != nil {
+				slog.Error("error loading pokemon species json", "error", err)
+			}
+
+			evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber))
+
+			evolutionChain = evolvesToChain
 		}
-
-		minLevel := GetAdjustedEvolutionLevel(evolvesToChain.EvolutionDetails[0], stage)
-		loadedSpecies, err := GetPokemonSpecies(evolvesToChain.Species.Url)
-		if err != nil {
-			slog.Error("error loading pokemon species json", "error", err)
-		}
-
-		evolutionMap[minLevel] = append(evolutionMap[minLevel], data.BasePokemonID(loadedSpecies.PokedexNumbers[0].EntryNumber))
-
-		evolutionChain = evolvesToChain
 		stage++
+
 	}
 
 	return evolutionMap
@@ -337,7 +342,8 @@ func (opts *migrationOpts) reportManualAdjustmentReq(pokemonName string, reason 
 
 func GetAdjustedEvolutionLevel(details types.EvolutionDetails, stage data.EvolutionStage) int {
 
-	if details.Trigger.Name == "level-up" {
+	switch details.Trigger.Name {
+	case "level-up":
 		// Handle level-based evolutions
 		if details.MinLevel > 0 {
 			return details.MinLevel
@@ -371,17 +377,32 @@ func GetAdjustedEvolutionLevel(details types.EvolutionDetails, stage data.Evolut
 		if details.Location.Name != "" {
 			return 35
 		}
-	}
 
-	// Handle trade-based evolutions (e.g., Scyther → Scizor)
-	if details.Trigger.Name == "trade" {
+		if details.KnownMove.Name != "" {
+			if stage == data.PreEvolution {
+				return 30
+			}
+			return 40
+		}
+
+		return details.MinLevel
+
+	case "trade":
+		if stage == data.PreEvolution {
+			return 28
+		}
+		return 40
+
+	case "use-item":
+		if stage == data.PreEvolution {
+			return 25
+		}
+		return 32
+
+	default:
+		if stage == data.PreEvolution {
+			return 30
+		}
 		return 40
 	}
-
-	// Handle use-item evolutions (e.g., Poliwhirl → Politoed with King's Rock)
-	if details.Trigger.Name == "use-item" {
-		return 25
-	}
-
-	return details.MinLevel
 }

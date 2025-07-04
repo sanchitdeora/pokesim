@@ -1,0 +1,139 @@
+{
+  "name": "Test Trainer",
+  "party": [
+    {
+      "base_pokemon_id": 120,
+      "pokemon_uuid": "a4135902-f8ec-4538-a3a5-4a67a75e0a37",
+      "stats": {
+        "hp": {
+          "value": 32,
+          "iv": 15,
+          "ev": 0
+        },
+        "attack": {
+          "value": 18,
+          "iv": 17,
+          "ev": 0
+        },
+        "defense": {
+          "value": 22,
+          "iv": 25,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 26,
+          "iv": 24,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 21,
+          "iv": 20,
+          "ev": 0
+        },
+        "speed": {
+          "value": 29,
+          "iv": 17,
+          "ev": 0
+        }
+      },
+      "level": 13,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 55,
+          "name": "water-gun",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "water"
+        },
+        "move3": {
+          "id": 229,
+          "name": "rapid-spin",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 121,
+      "pokemon_uuid": "681c8044-3831-4220-9fc6-a4522e325b32",
+      "stats": {
+        "hp": {
+          "value": 47,
+          "iv": 27,
+          "ev": 0
+        },
+        "attack": {
+          "value": 31,
+          "iv": 26,
+          "ev": 0
+        },
+        "defense": {
+          "value": 33,
+          "iv": 21,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 38,
+          "iv": 25,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 34,
+          "iv": 25,
+          "ev": 0
+        },
+        "speed": {
+          "value": 43,
+          "iv": 28,
+          "ev": 0
+        }
+      },
+      "level": 15,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 408,
+          "name": "power-gem",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 80,
+          "damage_class": "special",
+          "type": "rock"
+        },
+        "move2": null,
+        "move3": null,
+        "move4": null
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "boulder-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_test trainer.png"
+}

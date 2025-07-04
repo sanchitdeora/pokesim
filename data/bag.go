@@ -28,11 +28,6 @@ const (
 	PokeBalls    ItemCategory = "PokeBalls"
 )
 
-type BadgeType struct {
-	Name   string `json:"name"`
-	Region string `json:"region"`
-}
-
 var AllItems = []ItemName{
 	Potion,
 	SuperPotion,
@@ -43,6 +38,7 @@ var AllItems = []ItemName{
 	MasterBall,
 }
 
+// Store
 type StoreItem struct {
 	Name ItemName `json:"name"`
 	Item Item     `json:"item"`
@@ -52,7 +48,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: Potion,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    MedicalItems,
 			CostPrice:   200,
 			SellPrice:   50,
@@ -63,7 +59,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: SuperPotion,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    MedicalItems,
 			CostPrice:   700,
 			SellPrice:   175,
@@ -74,7 +70,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: HyperPotion,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    MedicalItems,
 			CostPrice:   1500,
 			SellPrice:   375,
@@ -85,7 +81,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: PokeBall,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    PokeBalls,
 			CostPrice:   200,
 			SellPrice:   50,
@@ -96,7 +92,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: GreatBall,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    PokeBalls,
 			CostPrice:   600,
 			SellPrice:   150,
@@ -107,7 +103,7 @@ var StoreItems = []StoreItem{
 	{
 		Name: UltraBall,
 		Item: Item{
-			Count: 1,
+			Count:       1,
 			Category:    PokeBalls,
 			CostPrice:   800,
 			SellPrice:   200,

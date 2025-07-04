@@ -10,6 +10,7 @@ import (
 
 type BattleAI struct {
 	BattleTrainerImpl
+	TrainerType data.TrainerClass
 }
 
 func NewBattleAI(opts BattleTrainerOpts, trainer *data.Trainer) BattleTrainer {
@@ -24,6 +25,7 @@ func NewBattleAI(opts BattleTrainerOpts, trainer *data.Trainer) BattleTrainer {
 	}
 
 	return &BattleAI{
+		TrainerType: trainer.Type,
 		BattleTrainerImpl: BattleTrainerImpl{
 			BattleTrainerOpts: opts,
 			Trainer:           &trainer.BaseTrainer,
@@ -33,6 +35,11 @@ func NewBattleAI(opts BattleTrainerOpts, trainer *data.Trainer) BattleTrainer {
 			Logger:            logger.NewDefaultLogger(),
 		},
 	}
+}
+
+
+func (b *BattleAI) GetTrainerType() data.TrainerClass {
+	return b.TrainerType
 }
 
 func (b *BattleAI) HandleUseBag(action data.BattleAction) error {

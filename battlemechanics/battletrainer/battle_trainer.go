@@ -188,6 +188,8 @@ func (b *BattleTrainerImpl) CalculateResult(opponent BattleTrainer) data.Result 
 		b.SendBattleLog(fmt.Sprintf("%s has won the battle!", utils.ToCapitalizeFirstLetterOfEachWord(b.GetTrainer().Name)))
 		b.SendBattleLog(fmt.Sprintf("You got %v ₽!", result.Money))
 
+		slog.Debug("Rewards", "rewards", opponent.GetRewards(), "trainerType", opponent.GetTrainerType())
+
 		// if gym battle; earn badge
 		if opponent.GetTrainerType() == data.GymLeaderPrefix {
 			result.BadgeEarned = opponent.GetRewards().Badge

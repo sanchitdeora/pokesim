@@ -1,0 +1,224 @@
+{
+  "name": "Erika",
+  "party": [
+    {
+      "base_pokemon_id": 44,
+      "pokemon_uuid": "2adbae54-b9f2-4f6e-8f74-972888d25ec2",
+      "stats": {
+        "hp": {
+          "value": 57,
+          "iv": 31,
+          "ev": 0
+        },
+        "attack": {
+          "value": 34,
+          "iv": 23,
+          "ev": 0
+        },
+        "defense": {
+          "value": 36,
+          "iv": 26,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 41,
+          "iv": 23,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 39,
+          "iv": 29,
+          "ev": 0
+        },
+        "speed": {
+          "value": 25,
+          "iv": 29,
+          "ev": 0
+        }
+      },
+      "level": 19,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 71,
+          "name": "absorb",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 20,
+          "damage_class": "special",
+          "type": "grass"
+        },
+        "move2": {
+          "id": 51,
+          "name": "acid",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move3": {
+          "id": 72,
+          "name": "mega-drain",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "grass"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 70,
+      "pokemon_uuid": "880ff6bc-c263-4da2-8f75-9f84aaaa1e38",
+      "stats": {
+        "hp": {
+          "value": 62,
+          "iv": 30,
+          "ev": 0
+        },
+        "attack": {
+          "value": 46,
+          "iv": 26,
+          "ev": 0
+        },
+        "defense": {
+          "value": 29,
+          "iv": 22,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 44,
+          "iv": 29,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 28,
+          "iv": 28,
+          "ev": 0
+        },
+        "speed": {
+          "value": 32,
+          "iv": 28,
+          "ev": 0
+        }
+      },
+      "level": 20,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 22,
+          "name": "vine-whip",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 45,
+          "damage_class": "physical",
+          "type": "grass"
+        },
+        "move2": {
+          "id": 35,
+          "name": "wrap",
+          "accuracy": 90,
+          "priority": 0,
+          "power": 15,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move3": null,
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 114,
+      "pokemon_uuid": "e787e4d7-1fb9-475e-bc8e-b615211f47f1",
+      "stats": {
+        "hp": {
+          "value": 64,
+          "iv": 29,
+          "ev": 0
+        },
+        "attack": {
+          "value": 33,
+          "iv": 25,
+          "ev": 0
+        },
+        "defense": {
+          "value": 58,
+          "iv": 26,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 51,
+          "iv": 22,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 26,
+          "iv": 23,
+          "ev": 0
+        },
+        "speed": {
+          "value": 36,
+          "iv": 29,
+          "ev": 0
+        }
+      },
+      "level": 21,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 132,
+          "name": "constrict",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 10,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 491,
+          "name": "acid-spray",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move3": {
+          "id": 22,
+          "name": "vine-whip",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 45,
+          "damage_class": "physical",
+          "type": "grass"
+        },
+        "move4": {
+          "id": 458,
+          "name": "double-hit",
+          "accuracy": 90,
+          "priority": 0,
+          "power": 35,
+          "damage_class": "physical",
+          "type": "normal"
+        }
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "rainbow-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_erika.png"
+}

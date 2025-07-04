@@ -1,0 +1,232 @@
+{
+  "name": "Lt. Surge",
+  "party": [
+    {
+      "base_pokemon_id": 100,
+      "pokemon_uuid": "2b15034d-e703-4254-805a-7d9a65d81b79",
+      "stats": {
+        "hp": {
+          "value": 43,
+          "iv": 29,
+          "ev": 0
+        },
+        "attack": {
+          "value": 18,
+          "iv": 24,
+          "ev": 0
+        },
+        "defense": {
+          "value": 25,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 25,
+          "iv": 21,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 26,
+          "iv": 26,
+          "ev": 0
+        },
+        "speed": {
+          "value": 41,
+          "iv": 31,
+          "ev": 0
+        }
+      },
+      "level": 16,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 33,
+          "name": "tackle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 84,
+          "name": "thunder-shock",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "electric"
+        },
+        "move3": {
+          "id": 209,
+          "name": "spark",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "physical",
+          "type": "electric"
+        },
+        "move4": {
+          "id": 205,
+          "name": "rollout",
+          "accuracy": 90,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "rock"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 25,
+      "pokemon_uuid": "551afc3b-9fd1-4495-a47a-e0fb457b5a4e",
+      "stats": {
+        "hp": {
+          "value": 43,
+          "iv": 28,
+          "ev": 0
+        },
+        "attack": {
+          "value": 28,
+          "iv": 28,
+          "ev": 0
+        },
+        "defense": {
+          "value": 22,
+          "iv": 24,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 27,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 25,
+          "iv": 23,
+          "ev": 0
+        },
+        "speed": {
+          "value": 39,
+          "iv": 21,
+          "ev": 0
+        }
+      },
+      "level": 17,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 609,
+          "name": "nuzzle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 20,
+          "damage_class": "physical",
+          "type": "electric"
+        },
+        "move2": {
+          "id": 24,
+          "name": "double-kick",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "fighting"
+        },
+        "move3": {
+          "id": 364,
+          "name": "feint",
+          "accuracy": 100,
+          "priority": 2,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 26,
+      "pokemon_uuid": "446de686-32e3-4f14-b4a8-c34fc2501fbc",
+      "stats": {
+        "hp": {
+          "value": 53,
+          "iv": 24,
+          "ev": 0
+        },
+        "attack": {
+          "value": 41,
+          "iv": 21,
+          "ev": 0
+        },
+        "defense": {
+          "value": 29,
+          "iv": 25,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 41,
+          "iv": 21,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 37,
+          "iv": 21,
+          "ev": 0
+        },
+        "speed": {
+          "value": 48,
+          "iv": 23,
+          "ev": 0
+        }
+      },
+      "level": 18,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 609,
+          "name": "nuzzle",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 20,
+          "damage_class": "physical",
+          "type": "electric"
+        },
+        "move2": {
+          "id": 24,
+          "name": "double-kick",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "fighting"
+        },
+        "move3": {
+          "id": 364,
+          "name": "feint",
+          "accuracy": 100,
+          "priority": 2,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "thunder-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_lt_surge.png"
+}

@@ -1,6 +1,7 @@
 package data
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/sanchitdeora/PokeSim/utils"
@@ -132,13 +133,14 @@ const (
 )
 
 type EventEvolveBody struct {
-	PokemonUUID        string      `json:"pokemon_uuid"`
-	CurrentBasePokemon BasePokemon `json:"current_base_pokemon"`
-	EvolvedBasePokemon BasePokemon `json:"evolved_base_pokemon"`
+	PokemonUUID         string        `json:"pokemon_uuid"`
+	CurrentBasePokemon  BasePokemon   `json:"current_base_pokemon"`
+	EvolvedBasePokemons []BasePokemon `json:"evolved_base_pokemons"`
 }
 
 type ResponseEvolveBody struct {
-	AcceptEvolution bool `json:"accept_evolution"`
+	AcceptEvolution    bool        `json:"accept_evolution"`
+	EvolvedBasePokemon BasePokemon `json:"evolved_base_pokemon"`
 }
 
 type EventLearnMoveBody struct {
@@ -157,8 +159,7 @@ var StartPokemonIds = []BasePokemonID{
 }
 
 func (s *PokemonSave) ToPokemon() *Pokemon {
-	path := fmt.Sprintf("/assets/pokemon/%04d.json", s.BasePokemonID)
-	basePokemon, _ := utils.ReadJsonFromFile[BasePokemon](path)
+	basePokemon, _ := GetBasePokemonByID(int(s.BasePokemonID))
 	return &Pokemon{
 		PokemonUUID:       s.PokemonUUID,
 		BasePokemon:       basePokemon,
@@ -187,4 +188,16 @@ func (p *Pokemon) ToPokemonSave() *PokemonSave {
 		Moveset:           p.Moveset,
 		EvolutionRejected: p.EvolutionRejected,
 	}
+}
+
+func GetBasePokemonByID(id int) (BasePokemon, error) {
+	if id > 151 {
+		return BasePokemon{}, errors.New("pokemon above Gen I is not supported")
+	}
+	path := fmt.Sprintf("/assets/pokemon/%04d.json", id)
+	pokemon, err := utils.ReadJsonFromFile[BasePokemon](path)
+	if err != nil {
+		return BasePokemon{}, err
+	}
+	return pokemon, nil
 }

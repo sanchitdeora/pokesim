@@ -1,0 +1,69 @@
+{
+  "id": 45,
+  "name": "vileplume",
+  "base_experience": 221,
+  "growth_rate": "medium-slow",
+  "capture_rate": 45,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 585,
+      "name": "moonblast",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 95,
+      "damage_class": "special",
+      "type": "fairy"
+    }
+  },
+  "evolution_chain": {
+    "1": [
+      43
+    ],
+    "21": [
+      44
+    ],
+    "32": [
+      45
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0045.png",
+    "front_default": "./assets/pokemon/img/0045.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 75,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 80,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 85,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 110,
+      "iv": 0,
+      "ev": 3
+    },
+    "special_defense": {
+      "value": 90,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

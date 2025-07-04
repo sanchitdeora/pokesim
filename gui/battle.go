@@ -878,26 +878,65 @@ func (g *Gui) renderEvolveDialog(gtx layout.Context) layout.Dimensions {
 
 								return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
 
-									// Pokémon Image
-									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
+									// Base Pokémon Image
+									layout.Flexed(0.3, func(gtx layout.Context) layout.Dimensions {
 										img := loadImage(evolveBody.CurrentBasePokemon.SpritesURL.FrontPath)
 										img.Fit = widget.Contain
 										img.Position = layout.Center
 										return img.Layout(gtx)
 									}),
-									// Name and HP bar
-									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
+									// Evo Arrow
+									layout.Flexed(0.1, func(gtx layout.Context) layout.Dimensions {
 										img := loadImage("assets/trainer/img/new_game_img.png")
 										img.Fit = widget.Contain
 										img.Position = layout.Center
 										return img.Layout(gtx)
 									}),
 									// Pokémon Image
-									layout.Flexed(1.0/3.0, func(gtx layout.Context) layout.Dimensions {
-										img := loadImage(evolveBody.EvolvedBasePokemon.SpritesURL.FrontPath)
-										img.Fit = widget.Contain
-										img.Position = layout.Center
-										return img.Layout(gtx)
+									layout.Flexed(1.0, func(gtx layout.Context) layout.Dimensions {
+										var evolvedPokemonFlexChildren []layout.FlexChild
+
+										for i, basePokemon := range evolveBody.EvolvedBasePokemons {
+
+											isSelected := g.Battle.EvolutionProps.SelectedEvolveBasePokemon == &evolveBody.EvolvedBasePokemons[i]
+											bgColor := SecondaryBackgroundColor // Default background
+											if isSelected {
+												bgColor = SelectedColor // Highlighted background
+											}
+
+											if g.Battle.EvolutionProps.EvolvedPokemonSelectedBtns[i] != nil && g.Battle.EvolutionProps.EvolvedPokemonSelectedBtns[i].Clicked(gtx) {
+												g.Battle.EvolutionProps.SelectedEvolveBasePokemon = &evolveBody.EvolvedBasePokemons[i]
+												slog.Info("evo pokemon Selected Clicked", "index", i, "selectedPokemon", g.Battle.EvolutionProps.SelectedEvolveBasePokemon.Name)
+											}
+
+											evolvedPokemonFlexChildren = append(evolvedPokemonFlexChildren,
+												layout.Flexed(1.0/float32(len(evolveBody.EvolvedBasePokemons)), func(gtx layout.Context) layout.Dimensions {
+													cardDims := gtx.Constraints.Max
+
+													drawRoundedBorder(gtx, cardDims, CardBorderColor, unit.Dp(1), unit.Dp(8))
+													fillRoundedShape(gtx, image.Rectangle{Max: cardDims}, bgColor, 8)
+
+													return layout.Stack{Alignment: layout.Center}.Layout(gtx,
+														layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+															img := loadImage(basePokemon.SpritesURL.FrontPath)
+															img.Fit = widget.Contain
+															img.Position = layout.Center
+															return img.Layout(gtx)
+														}),
+														layout.Stacked(func(gtx layout.Context) layout.Dimensions {
+															if g.Battle.EvolutionProps.EvolvedPokemonSelectedBtns[i] == nil {
+																return layout.Dimensions{Size: cardDims}
+															}
+															return g.Battle.EvolutionProps.EvolvedPokemonSelectedBtns[i].Layout(gtx, func(gtx layout.Context) layout.Dimensions {
+																return layout.Dimensions{Size: cardDims}
+															})
+														}),
+													)
+												}),
+											)
+										}
+
+										return layout.Flex{Axis: layout.Vertical, Spacing: layout.SpaceBetween}.Layout(gtx, evolvedPokemonFlexChildren...)
 									}),
 								)
 							}),
@@ -907,25 +946,39 @@ func (g *Gui) renderEvolveDialog(gtx layout.Context) layout.Dimensions {
 
 								return layout.Flex{Axis: layout.Horizontal, Spacing: layout.SpaceBetween}.Layout(gtx,
 									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-										btn := material.Button(g.Theme, g.Battle.ActionButtons[EvolveBtn], "Evolve!")
-										btn.Color = TextColor
-										btn.Background = PrimaryBackgroundColor
-										if g.Battle.ActionButtons[EvolveBtn].Clicked(gtx) {
+										isBtnDisabled := g.Battle.EvolutionProps.SelectedEvolveBasePokemon == nil
+
+										btnBgColor := SecondaryBackgroundColor // Grey background for disabled
+										if isBtnDisabled {
+											btnBgColor = ButtonDisabledColor // Active background (blue)
+										}
+
+										if g.Battle.EvolutionProps.EvolveBtn.Clicked(gtx) && !isBtnDisabled {
 											g.SendLevelUpResponse(gtx, data.LevelUpEvent{
 												EventType: data.LevelUpEventEvolve,
 												Body: data.ResponseEvolveBody{
-													AcceptEvolution: true,
+													AcceptEvolution:    true,
+													EvolvedBasePokemon: *g.Battle.EvolutionProps.SelectedEvolveBasePokemon,
 												}},
 											)
 											g.Battle.DialogActionArea = MainBattle
 											g.SetActionBtns(EndBattle)
+											g.Battle.EvolutionProps.SelectedEvolveBasePokemon = nil
 										}
+										if g.Battle.EvolutionProps.EvolveBtn.Hovered() {
+											btnBgColor = ButtonHoveredColor
+										}
+
+										btn := material.Button(g.Theme, g.Battle.EvolutionProps.EvolveBtn, "Evolve!")
+										btn.Color = TextColor
+										btn.Background = btnBgColor
 										return layout.Center.Layout(gtx, btn.Layout)
 									}),
 									layout.Flexed(0.5, func(gtx layout.Context) layout.Dimensions {
-										btn := material.Button(g.Theme, g.Battle.ActionButtons[CancelSwitchBtn], "Cancel")
+										btn := material.Button(g.Theme, g.Battle.EvolutionProps.CancelEvolveBtn, "Cancel")
 										btn.Background = RedBtnColor
-										if g.Battle.ActionButtons[CancelSwitchBtn].Clicked(gtx) {
+
+										if g.Battle.EvolutionProps.CancelEvolveBtn.Clicked(gtx) {
 											g.SendLevelUpResponse(gtx, data.LevelUpEvent{
 												EventType: data.LevelUpEventEvolve,
 												Body: data.ResponseEvolveBody{
@@ -1161,4 +1214,11 @@ func (g *Gui) SendLearnNewMoveResponse(gtx layout.Context, selectedIndex int, le
 			ReplacedMove:   replacedMove,
 		}},
 	)
+}
+
+type EvolutionProps struct {
+	SelectedEvolveBasePokemon  *data.BasePokemon
+	EvolvedPokemonSelectedBtns []*widget.Clickable
+	EvolveBtn                  *widget.Clickable
+	CancelEvolveBtn            *widget.Clickable
 }

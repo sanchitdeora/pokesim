@@ -1,0 +1,128 @@
+{
+  "id": 53,
+  "name": "persian",
+  "base_experience": 154,
+  "growth_rate": "medium",
+  "capture_rate": 90,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 364,
+      "name": "feint",
+      "accuracy": 100,
+      "priority": 2,
+      "power": 30,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "12": {
+      "id": 6,
+      "name": "pay-day",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "16": {
+      "id": 44,
+      "name": "bite",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "22": {
+      "id": 185,
+      "name": "feint-attack",
+      "accuracy": 0,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "24": {
+      "id": 372,
+      "name": "assurance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 60,
+      "damage_class": "physical",
+      "type": "dark"
+    },
+    "31": {
+      "id": 154,
+      "name": "fury-swipes",
+      "accuracy": 80,
+      "priority": 0,
+      "power": 18,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "42": {
+      "id": 163,
+      "name": "slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "normal"
+    },
+    "61": {
+      "id": 400,
+      "name": "night-slash",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 70,
+      "damage_class": "physical",
+      "type": "dark"
+    }
+  },
+  "evolution_chain": {
+    "1": [
+      52
+    ],
+    "28": [
+      53
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0053.png",
+    "front_default": "./assets/pokemon/img/0053.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 70,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 60,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 115,
+      "iv": 0,
+      "ev": 2
+    }
+  },
+  "type1": "normal",
+  "is_legendary": false,
+  "is_mythical": false
+}

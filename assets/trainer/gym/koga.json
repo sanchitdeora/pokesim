@@ -1,0 +1,240 @@
+{
+  "name": "Koga",
+  "party": [
+    {
+      "base_pokemon_id": 109,
+      "pokemon_uuid": "23318cba-4668-4bd3-8392-934f24581f17",
+      "stats": {
+        "hp": {
+          "value": 55,
+          "iv": 25,
+          "ev": 0
+        },
+        "attack": {
+          "value": 39,
+          "iv": 29,
+          "ev": 0
+        },
+        "defense": {
+          "value": 52,
+          "iv": 27,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 37,
+          "iv": 29,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 30,
+          "iv": 26,
+          "ev": 0
+        },
+        "speed": {
+          "value": 27,
+          "iv": 31,
+          "ev": 0
+        }
+      },
+      "level": 22,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 124,
+          "name": "sludge",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move2": {
+          "id": 123,
+          "name": "smog",
+          "accuracy": 70,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move3": {
+          "id": 499,
+          "name": "clear-smog",
+          "accuracy": 0,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move4": {
+          "id": 372,
+          "name": "assurance",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "dark"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 89,
+      "pokemon_uuid": "1800af12-80ac-49f1-91e1-31d60e7ff57b",
+      "stats": {
+        "hp": {
+          "value": 87,
+          "iv": 25,
+          "ev": 0
+        },
+        "attack": {
+          "value": 60,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 46,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 41,
+          "iv": 28,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 57,
+          "iv": 28,
+          "ev": 0
+        },
+        "speed": {
+          "value": 34,
+          "iv": 27,
+          "ev": 0
+        }
+      },
+      "level": 23,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 1,
+          "name": "pound",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 124,
+          "name": "sludge",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move3": {
+          "id": 426,
+          "name": "mud-bomb",
+          "accuracy": 85,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "special",
+          "type": "ground"
+        },
+        "move4": null
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 110,
+      "pokemon_uuid": "47e63cda-5ebf-45e3-a488-a13906391458",
+      "stats": {
+        "hp": {
+          "value": 71,
+          "iv": 28,
+          "ev": 0
+        },
+        "attack": {
+          "value": 54,
+          "iv": 25,
+          "ev": 0
+        },
+        "defense": {
+          "value": 70,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 52,
+          "iv": 26,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 44,
+          "iv": 26,
+          "ev": 0
+        },
+        "speed": {
+          "value": 40,
+          "iv": 26,
+          "ev": 0
+        }
+      },
+      "level": 24,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 124,
+          "name": "sludge",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move2": {
+          "id": 123,
+          "name": "smog",
+          "accuracy": 70,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move3": {
+          "id": 499,
+          "name": "clear-smog",
+          "accuracy": 0,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "special",
+          "type": "poison"
+        },
+        "move4": {
+          "id": 372,
+          "name": "assurance",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "dark"
+        }
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "soul-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_koga.png"
+}

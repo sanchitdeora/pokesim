@@ -1,0 +1,248 @@
+{
+  "name": "Giovanni",
+  "party": [
+    {
+      "base_pokemon_id": 33,
+      "pokemon_uuid": "827bf9a0-f41f-4df7-a88b-1fbc5cd1da01",
+      "stats": {
+        "hp": {
+          "value": 83,
+          "iv": 31,
+          "ev": 0
+        },
+        "attack": {
+          "value": 55,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 46,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 45,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 45,
+          "iv": 30,
+          "ev": 0
+        },
+        "speed": {
+          "value": 51,
+          "iv": 30,
+          "ev": 0
+        }
+      },
+      "level": 29,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 40,
+          "name": "poison-sting",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 15,
+          "damage_class": "physical",
+          "type": "poison"
+        },
+        "move2": {
+          "id": 64,
+          "name": "peck",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 35,
+          "damage_class": "physical",
+          "type": "flying"
+        },
+        "move3": {
+          "id": 31,
+          "name": "fury-attack",
+          "accuracy": 85,
+          "priority": 0,
+          "power": 15,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": {
+          "id": 24,
+          "name": "double-kick",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "fighting"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 111,
+      "pokemon_uuid": "96331426-2055-4ca3-b544-872f58c3060c",
+      "stats": {
+        "hp": {
+          "value": 94,
+          "iv": 30,
+          "ev": 0
+        },
+        "attack": {
+          "value": 63,
+          "iv": 31,
+          "ev": 0
+        },
+        "defense": {
+          "value": 69,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 31,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 31,
+          "iv": 30,
+          "ev": 0
+        },
+        "speed": {
+          "value": 28,
+          "iv": 30,
+          "ev": 0
+        }
+      },
+      "level": 29,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 88,
+          "name": "rock-throw",
+          "accuracy": 90,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "rock"
+        },
+        "move2": {
+          "id": 498,
+          "name": "chip-away",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 70,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move3": {
+          "id": 249,
+          "name": "rock-smash",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "fighting"
+        },
+        "move4": {
+          "id": 30,
+          "name": "horn-attack",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "physical",
+          "type": "normal"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 34,
+      "pokemon_uuid": "5a25339d-3679-45ff-a23b-437236529f48",
+      "stats": {
+        "hp": {
+          "value": 97,
+          "iv": 30,
+          "ev": 0
+        },
+        "attack": {
+          "value": 75,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 60,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 65,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 59,
+          "iv": 31,
+          "ev": 0
+        },
+        "speed": {
+          "value": 65,
+          "iv": 31,
+          "ev": 0
+        }
+      },
+      "level": 30,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 30,
+          "name": "horn-attack",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 65,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 64,
+          "name": "peck",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 35,
+          "damage_class": "physical",
+          "type": "flying"
+        },
+        "move3": {
+          "id": 31,
+          "name": "fury-attack",
+          "accuracy": 85,
+          "priority": 0,
+          "power": 15,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": {
+          "id": 24,
+          "name": "double-kick",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 30,
+          "damage_class": "physical",
+          "type": "fighting"
+        }
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "earth-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_giovanni.png"
+}

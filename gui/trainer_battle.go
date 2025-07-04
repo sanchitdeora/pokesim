@@ -43,8 +43,8 @@ const (
 	EndBattleBtn    = "End Battle"
 	SwitchDialogBtn = "Switch"
 	CancelSwitchBtn = "Cancel"
-	EvolveBtn       = "Evolve"
-	LearnMoveBtn    = "LearnMove"
+	// EvolveBtn       = "Evolve"
+	LearnMoveBtn = "LearnMove"
 )
 
 type Battle struct {
@@ -53,7 +53,7 @@ type Battle struct {
 	Opponent      battletrainer.BattleTrainer
 
 	CatchPokemonEnabled bool
-	RunBattleEnabled   bool
+	RunBattleEnabled    bool
 
 	ActionChan chan data.BattleAction
 
@@ -73,6 +73,9 @@ type Battle struct {
 
 	// Learn New Move Props
 	LearnNewMove LearnNewMoveUI
+
+	// Evolution Props
+	EvolutionProps EvolutionProps
 }
 
 func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
@@ -108,8 +111,8 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
 		Move4Btn:        new(widget.Clickable),
 		EndBattleBtn:    new(widget.Clickable),
 		CancelSwitchBtn: new(widget.Clickable),
-		EvolveBtn:       new(widget.Clickable),
-		LearnMoveBtn:    new(widget.Clickable),
+		// EvolveBtn:       new(widget.Clickable),
+		LearnMoveBtn: new(widget.Clickable),
 	}
 	pokemonSwitchBtns := make([]*widget.Clickable, len(battleUser.GetParty()))
 	for i := range pokemonSwitchBtns {
@@ -132,7 +135,7 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
 		User:          battleUser,
 
 		CatchPokemonEnabled: false,
-		RunBattleEnabled:   false,
+		RunBattleEnabled:    false,
 
 		ActionChan: battleAction,
 
@@ -154,6 +157,13 @@ func (g *Gui) NewTrainerBattle(user *data.User, opponent *data.Trainer) Battle {
 		LearnNewMove: LearnNewMoveUI{
 			SelectedIndex:   -1,
 			ForgetMovesBtns: forgetMovesBtns,
+		},
+
+		EvolutionProps: EvolutionProps{
+			SelectedEvolveBasePokemon:  nil,
+			EvolvedPokemonSelectedBtns: make([]*widget.Clickable, 10),
+			EvolveBtn:                  new(widget.Clickable),
+			CancelEvolveBtn:            new(widget.Clickable),
 		},
 	}
 }
@@ -193,9 +203,10 @@ func (g *Gui) ReceiveChannelActions(gtx layout.Context) {
 		case events := <-g.Battle.LevelUpEventsChan:
 			slog.Info("receiving level up events", "data", events)
 			g.Battle.LevelUpBody = events.Body
-			if events.EventType == data.LevelUpEventEvolve {
+			switch events.EventType {
+			case data.LevelUpEventEvolve:
 				g.Battle.DialogActionArea = EvolveDialog
-			} else if events.EventType == data.LevelUpEventLearnMove {
+			case data.LevelUpEventLearnMove:
 				slog.Info("receiving level up events", "data", events, "body", events.Body.(data.EventLearnMoveBody))
 				g.Battle.DialogActionArea = LearnMoveDialog
 			}

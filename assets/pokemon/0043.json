@@ -1,0 +1,105 @@
+{
+  "id": 43,
+  "name": "oddish",
+  "base_experience": 64,
+  "growth_rate": "medium-slow",
+  "capture_rate": 255,
+  "moves_learned_by_level": {
+    "1": {
+      "id": 71,
+      "name": "absorb",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 20,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "12": {
+      "id": 72,
+      "name": "mega-drain",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "grass"
+    },
+    "28": {
+      "id": 585,
+      "name": "moonblast",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 95,
+      "damage_class": "special",
+      "type": "fairy"
+    },
+    "4": {
+      "id": 51,
+      "name": "acid",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 40,
+      "damage_class": "special",
+      "type": "poison"
+    },
+    "40": {
+      "id": 80,
+      "name": "petal-dance",
+      "accuracy": 100,
+      "priority": 0,
+      "power": 120,
+      "damage_class": "special",
+      "type": "grass"
+    }
+  },
+  "evolution_chain": {
+    "1": [
+      43
+    ],
+    "21": [
+      44
+    ],
+    "32": [
+      45
+    ]
+  },
+  "sprites": {
+    "back_default": "./assets/pokemon/img/back/0043.png",
+    "front_default": "./assets/pokemon/img/0043.png"
+  },
+  "base_stats": {
+    "hp": {
+      "value": 45,
+      "iv": 0,
+      "ev": 0
+    },
+    "attack": {
+      "value": 50,
+      "iv": 0,
+      "ev": 0
+    },
+    "defense": {
+      "value": 55,
+      "iv": 0,
+      "ev": 0
+    },
+    "special_attack": {
+      "value": 75,
+      "iv": 0,
+      "ev": 1
+    },
+    "special_defense": {
+      "value": 65,
+      "iv": 0,
+      "ev": 0
+    },
+    "speed": {
+      "value": 30,
+      "iv": 0,
+      "ev": 0
+    }
+  },
+  "type1": "grass",
+  "type2": "poison",
+  "is_legendary": false,
+  "is_mythical": false
+}

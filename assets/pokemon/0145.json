@@ -78,7 +78,11 @@
       "type": "flying"
     }
   },
-  "evolution_chain": {},
+  "evolution_chain": {
+    "1": [
+      145
+    ]
+  },
   "sprites": {
     "back_default": "./assets/pokemon/img/back/0145.png",
     "front_default": "./assets/pokemon/img/0145.png"

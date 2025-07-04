@@ -18,4 +18,5 @@ type EvolutionDetails struct {
 	HeldItem     BaseStruct `json:"held_item"`
 	TimeOfDay    string     `json:"time_of_day"`
 	Location     BaseStruct `json:"location"`
+	KnownMove    BaseStruct `json:"known_move"`
 }

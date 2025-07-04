@@ -5,9 +5,9 @@ type BattlePokemon struct {
 	BattleHP     int
 	PokemonFaced []string
 
-	// deprecated
-	CanEvolve bool
-	IsFainted bool
+	// // deprecated
+	// CanEvolve bool
+	// IsFainted bool
 }
 
 type BattleResultStatus string
@@ -22,8 +22,6 @@ type Result struct {
 	Money       int
 	BonusItems  ItemMap
 	BadgeEarned BadgeType
-	// deprecated
-	UserWin bool
 }
 
 type BattleOpts struct {

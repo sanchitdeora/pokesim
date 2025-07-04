@@ -139,9 +139,9 @@ func (g *Gui) renderActionCard(gtx layout.Context) layout.Dimensions {
 		icon   *widget.Icon // Placeholder for icon (if needed)
 		screen Screen       // Navigation target
 	}{
-		{"Trainers", nil, TrainerScreen},
 		{"Wild", nil, WildScreen},
-		{"Tournaments", nil, ToBeReplaced},
+		{"Trainers", nil, TrainerScreen},
+		{"Gym Trainers", nil, GymTrainerScreen},
 		{"PokéShop", nil, ShopScreen},
 		// {"Save", nil, ToBeReplaced},
 	}
@@ -262,6 +262,7 @@ func (g *Gui) renderQuickAccess(gtx layout.Context) layout.Dimensions {
 
 	lenParty := len(g.opts.UserManager.GetUser().Party)
 	itemCount := g.opts.UserManager.GetUser().GetBagItemCount()
+	boxCount := len(*g.opts.GameManager.GetBox())
 
 	quickAccessItems := []struct {
 		icon      *widget.Icon
@@ -272,7 +273,8 @@ func (g *Gui) renderQuickAccess(gtx layout.Context) layout.Dimensions {
 	}{
 		{icon: i1, title: "Party", subtext: fmt.Sprintf("You have %v/6 Pokemon", lenParty), buttonTxt: "View Party", page: PartyScreen},
 		{icon: i2, title: "Bag", subtext: fmt.Sprintf("You have %v items", itemCount), buttonTxt: "View Bag", page: BagScreen},
-		{icon: i3, title: "Pokédex", subtext: fmt.Sprintf("%v Pokemon seen", 7), buttonTxt: "Open", page: ToBeReplaced},
+		{icon: i3, title: "Box", subtext: fmt.Sprintf("%v Pokemon in box", boxCount), buttonTxt: "Open", page: BoxScreen},
+		// {icon: i3, title: "Pokédex", subtext: fmt.Sprintf("%v Pokemon seen", 7), buttonTxt: "Open", page: ToBeReplaced},
 	}
 
 	// slog.Info("Total Width", "gtx", gtx.Constraints.Max, "gtx min", gtx.Constraints.Min)

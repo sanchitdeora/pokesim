@@ -47,8 +47,6 @@ func TestBattleTester_GetActivePokemon(t *testing.T) {
 	assert.Equal(t, data.BasePokemonID(1), tester.GetActivePokemon().Pokemon.ID)
 	assert.Equal(t, "bulbasaur", tester.GetActivePokemon().Pokemon.Name)
 	assert.Equal(t, 75, tester.GetActivePokemon().Pokemon.Level)
-	assert.False(t, tester.GetActivePokemon().IsFainted)
-	assert.False(t, tester.GetActivePokemon().CanEvolve)
 	assert.Equal(t, 152, tester.GetActivePokemon().BattleHP)
 }
 
@@ -61,8 +59,6 @@ func TestBattleTester_TestGetParty(t *testing.T) {
 	assert.Equal(t, data.BasePokemonID(4), tester.GetParty()[0].Pokemon.ID)
 	assert.Equal(t, "charmander", tester.GetParty()[0].Pokemon.Name)
 	assert.Equal(t, 75, tester.GetParty()[0].Pokemon.Level)
-	assert.False(t, tester.GetParty()[0].IsFainted)
-	assert.False(t, tester.GetActivePokemon().CanEvolve)
 	assert.Equal(t, 152, tester.GetActivePokemon().BattleHP)
 }
 

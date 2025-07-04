@@ -1,0 +1,248 @@
+{
+  "name": "Blaine",
+  "party": [
+    {
+      "base_pokemon_id": 58,
+      "pokemon_uuid": "3007dcde-c84e-4c39-80c3-d8158d795704",
+      "stats": {
+        "hp": {
+          "value": 75,
+          "iv": 31,
+          "ev": 0
+        },
+        "attack": {
+          "value": 50,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 37,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 50,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 39,
+          "iv": 29,
+          "ev": 0
+        },
+        "speed": {
+          "value": 45,
+          "iv": 30,
+          "ev": 0
+        }
+      },
+      "level": 27,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 682,
+          "name": "burn-up",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 130,
+          "damage_class": "special",
+          "type": "fire"
+        },
+        "move2": {
+          "id": 44,
+          "name": "bite",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "dark"
+        },
+        "move3": {
+          "id": 172,
+          "name": "flame-wheel",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "fire"
+        },
+        "move4": {
+          "id": 245,
+          "name": "extreme-speed",
+          "accuracy": 100,
+          "priority": 2,
+          "power": 80,
+          "damage_class": "physical",
+          "type": "normal"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 77,
+      "pokemon_uuid": "0634a89c-051a-412c-92b9-d776825efc74",
+      "stats": {
+        "hp": {
+          "value": 72,
+          "iv": 30,
+          "ev": 0
+        },
+        "attack": {
+          "value": 59,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 42,
+          "iv": 29,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 48,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 48,
+          "iv": 30,
+          "ev": 0
+        },
+        "speed": {
+          "value": 61,
+          "iv": 30,
+          "ev": 0
+        }
+      },
+      "level": 27,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 488,
+          "name": "flame-charge",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 50,
+          "damage_class": "physical",
+          "type": "fire"
+        },
+        "move2": {
+          "id": 52,
+          "name": "ember",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 40,
+          "damage_class": "special",
+          "type": "fire"
+        },
+        "move3": {
+          "id": 458,
+          "name": "double-hit",
+          "accuracy": 90,
+          "priority": 0,
+          "power": 35,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move4": {
+          "id": 98,
+          "name": "quick-attack",
+          "accuracy": 100,
+          "priority": 1,
+          "power": 40,
+          "damage_class": "physical",
+          "type": "normal"
+        }
+      },
+      "evolution_rejected": false
+    },
+    {
+      "base_pokemon_id": 59,
+      "pokemon_uuid": "087f9ee8-ec5f-4815-baed-bb962af87c63",
+      "stats": {
+        "hp": {
+          "value": 96,
+          "iv": 29,
+          "ev": 0
+        },
+        "attack": {
+          "value": 75,
+          "iv": 30,
+          "ev": 0
+        },
+        "defense": {
+          "value": 58,
+          "iv": 30,
+          "ev": 0
+        },
+        "special_attack": {
+          "value": 69,
+          "iv": 31,
+          "ev": 0
+        },
+        "special_defense": {
+          "value": 58,
+          "iv": 30,
+          "ev": 0
+        },
+        "speed": {
+          "value": 66,
+          "iv": 29,
+          "ev": 0
+        }
+      },
+      "level": 28,
+      "experience_left": 0,
+      "moveset": {
+        "move1": {
+          "id": 245,
+          "name": "extreme-speed",
+          "accuracy": 100,
+          "priority": 2,
+          "power": 80,
+          "damage_class": "physical",
+          "type": "normal"
+        },
+        "move2": {
+          "id": 682,
+          "name": "burn-up",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 130,
+          "damage_class": "special",
+          "type": "fire"
+        },
+        "move3": {
+          "id": 172,
+          "name": "flame-wheel",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 60,
+          "damage_class": "physical",
+          "type": "fire"
+        },
+        "move4": {
+          "id": 514,
+          "name": "retaliate",
+          "accuracy": 100,
+          "priority": 0,
+          "power": 70,
+          "damage_class": "physical",
+          "type": "normal"
+        }
+      },
+      "evolution_rejected": false
+    }
+  ],
+  "bag": {
+    "potion": 2
+  },
+  "type": "gym-leader",
+  "rewards": {
+    "items": null,
+    "badge_type": {
+      "name": "volcano-badge",
+      "region": "kanto"
+    }
+  },
+  "image_path": "assets/trainer/gym/img/gym_trainer_blaine.png"
+}

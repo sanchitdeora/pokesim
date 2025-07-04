@@ -72,13 +72,13 @@ func calculateExperienceGained(level int, baseExp int, winningPokemon *data.Poke
 }
 
 // generate starter pokemon
-func generatePokemonIVs() int {
+func generatePokemonIVs(minIV int) int {
 	randIndex := rand.Float64()
-	return int(math.Round(randIndex * (31)))
+	return int(math.Round(randIndex*float64(31-minIV) + float64(minIV)))
 }
 
-func generatePokemonHPStat(value, level int) data.PokemonStat {
-	iv := generatePokemonIVs()
+func generatePokemonHPStat(value, level int, minIV int) data.PokemonStat {
+	iv := generatePokemonIVs(minIV)
 	return data.PokemonStat{
 		Value: calculateHPStatUpgrade(value, iv, 0, level),
 		IV:    iv,
@@ -86,8 +86,8 @@ func generatePokemonHPStat(value, level int) data.PokemonStat {
 	}
 }
 
-func generatePokemonOtherStat(value, level int) data.PokemonStat {
-	iv := generatePokemonIVs()
+func generatePokemonOtherStat(value, level int, minIV int) data.PokemonStat {
+	iv := generatePokemonIVs(minIV)
 	return data.PokemonStat{
 		Value: calculateOtherStatUpgrade(value, iv, 0, level),
 		IV:    iv,
@@ -95,26 +95,54 @@ func generatePokemonOtherStat(value, level int) data.PokemonStat {
 	}
 }
 
-func setupMoveset(basePokemon data.BasePokemon, level int) data.Moveset {
+func setupMoveset(movesList []map[int]data.Moves, level int) data.Moveset {
 	var moveset data.Moveset
 
 	moveIdx := 0
-	for lvl := range level {
-		move, ok := basePokemon.MovesLearned[lvl]
-		if ok {
-			switch moveIdx % 4 {
-			case 0:
-				moveset.Move1 = &move
-			case 1:
-				moveset.Move2 = &move
-			case 2:
-				moveset.Move3 = &move
-			case 3:
-				moveset.Move4 = &move
+
+	for _, moves := range movesList {
+		for lvl := range level + 1 {
+			move, ok := moves[lvl]
+			if ok {
+				// ignore if the move already exists
+				if (moveset.Move1 != nil && move == *moveset.Move1) ||
+					(moveset.Move2 != nil && move == *moveset.Move2) ||
+					(moveset.Move3 != nil && move == *moveset.Move3) ||
+					(moveset.Move4 != nil && move == *moveset.Move4) {
+					continue
+				}
+
+				switch moveIdx % 4 {
+				case 0:
+					moveset.Move1 = &move
+				case 1:
+					moveset.Move2 = &move
+				case 2:
+					moveset.Move3 = &move
+				case 3:
+					moveset.Move4 = &move
+				}
+				moveIdx++
 			}
-			moveIdx++
 		}
 	}
+
+	// for lvl := range level + 1 {
+	// 	move, ok := moves[lvl]
+	// 	if ok {
+	// 		switch moveIdx % 4 {
+	// 		case 0:
+	// 			moveset.Move1 = &move
+	// 		case 1:
+	// 			moveset.Move2 = &move
+	// 		case 2:
+	// 			moveset.Move3 = &move
+	// 		case 3:
+	// 			moveset.Move4 = &move
+	// 		}
+	// 		moveIdx++
+	// 	}
+	// }
 
 	return moveset
 }

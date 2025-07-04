@@ -12,9 +12,9 @@ import (
 
 func DefaultWildEnvironmentProps() WildEnvironmentProps {
 	return WildEnvironmentProps{
-		WildEnvironmentList:       &widget.List{
-				List: layout.List{Axis: layout.Vertical},
-			},
+		WildEnvironmentList: &widget.List{
+			List: layout.List{Axis: layout.Vertical},
+		},
 		Environments: getEnvironments(),
 	}
 }
@@ -57,7 +57,6 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 		Move4Btn:        new(widget.Clickable),
 		EndBattleBtn:    new(widget.Clickable),
 		CancelSwitchBtn: new(widget.Clickable),
-		EvolveBtn:       new(widget.Clickable),
 		LearnMoveBtn:    new(widget.Clickable),
 	}
 
@@ -74,6 +73,11 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 	forgetMovesBtns := make([]*widget.Clickable, 5)
 	for i := range forgetMovesBtns {
 		forgetMovesBtns[i] = new(widget.Clickable)
+	}
+
+	evolvedPokemonSelectedBtns := make([]*widget.Clickable, 10)
+	for i := range evolvedPokemonSelectedBtns {
+		evolvedPokemonSelectedBtns[i] = new(widget.Clickable)
 	}
 
 	return Battle{
@@ -104,6 +108,13 @@ func (g *Gui) NewWildBattle(user *data.User, wild *data.Pokemon) Battle {
 		LearnNewMove: LearnNewMoveUI{
 			SelectedIndex:   -1,
 			ForgetMovesBtns: forgetMovesBtns,
+		},
+
+		EvolutionProps: EvolutionProps{
+			SelectedEvolveBasePokemon:  nil,
+			EvolvedPokemonSelectedBtns: evolvedPokemonSelectedBtns,
+			EvolveBtn:                  new(widget.Clickable),
+			CancelEvolveBtn:            new(widget.Clickable),
 		},
 	}
 }

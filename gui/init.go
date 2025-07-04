@@ -28,6 +28,7 @@ import (
 var (
 	PrimaryBackgroundColor   = color.NRGBA{R: 248, G: 248, B: 251, A: 255}
 	SecondaryBackgroundColor = color.NRGBA{R: 232, G: 232, B: 243, A: 255}
+	TertiaryBackgroundColor  = color.NRGBA{R: 216, G: 216, B: 235, A: 255}
 	SelectedColor            = color.NRGBA{R: 203, G: 203, B: 212, A: 255}
 
 	ButtonDisabledColor = color.NRGBA{R: 232, G: 232, B: 243, A: 63}
@@ -49,6 +50,7 @@ const (
 	HomeScreen
 	BattleScreen
 	TrainerScreen
+	GymTrainerScreen
 	WildScreen
 	PartyScreen
 	PokemonSummaryScreen
@@ -72,7 +74,8 @@ type Gui struct {
 	Buttons       map[Screen]*widget.Clickable
 
 	// Trainer/Wild and Battle Props
-	TrainerList          *widget.List
+	TrainerProps         TrainerProps
+	GymTrainerProps      TrainerProps
 	WildEnvironmentProps WildEnvironmentProps
 	Battle               Battle
 
@@ -104,8 +107,9 @@ func InitializeGUI() {
 			LoadGameScreen:       new(widget.Clickable),
 			NewGameScreen:        new(widget.Clickable),
 			HomeScreen:           new(widget.Clickable),
-			TrainerScreen:        new(widget.Clickable),
 			WildScreen:           new(widget.Clickable),
+			TrainerScreen:        new(widget.Clickable),
+			GymTrainerScreen:     new(widget.Clickable),
 			BattleScreen:         new(widget.Clickable),
 			PartyScreen:          new(widget.Clickable),
 			PokemonSummaryScreen: new(widget.Clickable),
@@ -125,11 +129,8 @@ func InitializeGUI() {
 			Theme:         theme,
 			Buttons:       buttons,
 
-			TrainerList: &widget.List{
-				List: layout.List{Axis: layout.Vertical},
-			},
-
-			// WildEnvironmentProps: DefaultWildEnvironmentProps(),
+			TrainerProps:    DefaultTrainerProps(),
+			GymTrainerProps: DefaultGymTrainerProps(),
 
 			// Party:          DefaultPartyProps(),
 			SummaryPokemon: nil,

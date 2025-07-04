@@ -109,17 +109,14 @@ func (bp *BasePokemon) IsPokemonPseudoLegendary() bool {
 }
 
 func (bp *BasePokemon) GetEvolutionStage() EvolutionStage {
-	for lvl, ids := range bp.EvolutionChain {
-		if utils.Contains(ids, bp.ID) {
-			if bp.FinalEvolutionLevel() == lvl {
-				return FinalEvolution
-			} else {
-				return MidEvolution
-			}
+	for lvl := range bp.EvolutionChain {
+		if lvl == 1 {
+			return PreEvolution
+		} else if bp.FinalEvolutionLevel() == lvl {
+			return FinalEvolution
 		}
 	}
-
-	return PreEvolution
+	return MidEvolution
 }
 
 func (bp *BasePokemon) FinalEvolutionLevel() int {
@@ -134,7 +131,7 @@ func (bp *BasePokemon) FinalEvolutionLevel() int {
 }
 
 func (bp *BasePokemon) IsUniqueSpecies() bool {
-	return len(bp.EvolutionChain) == 0 && bp.BaseStatTotal() > 400
+	return len(bp.EvolutionChain) == 1 && bp.BaseStatTotal() > 400
 }
 
 func (w WildEncounter) PrimaryTypeMatchesEnv(env Environment) bool {
